@@ -28,18 +28,7 @@ class LoginViewModel : ViewModel() {
         val username = _uiState.value.username.trim()
         val password = _uiState.value.password.trim()
 
-        val error = when {
-            username.isBlank() && password.isBlank() ->
-                "Cal introduir l'usuari i la contrasenya per iniciar sessió."
-
-            username.isBlank() ->
-                "Cal introduir el nom d'usuari."
-
-            password.isBlank() ->
-                "Cal introduir la contrasenya."
-
-            else -> null
-        }
+        val error = validateCredentials(username, password)
 
         if (error != null) {
             _uiState.value = _uiState.value.copy(errorMessage = error)
@@ -66,6 +55,18 @@ class LoginViewModel : ViewModel() {
                     errorMessage = error.message ?: "Error desconegut"
                 )
             }
+        }
+    }
+
+    fun validateCredentials(username: String, password: String): String? {
+        return when {
+            username.isBlank() && password.isBlank() ->
+                "Cal introduir l'usuari i la contrasenya per iniciar sessió."
+            username.isBlank() ->
+                "Cal introduir el nom d'usuari."
+            password.isBlank() ->
+                "Cal introduir la contrasenya."
+            else -> null
         }
     }
 

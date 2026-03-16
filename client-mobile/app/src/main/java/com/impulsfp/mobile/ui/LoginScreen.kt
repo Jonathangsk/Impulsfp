@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -20,6 +19,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
@@ -71,7 +71,9 @@ fun LoginScreen(
                 value = uiState.username,
                 onValueChange = { loginViewModel.onUsernameChange(it)},
                 label = { Text("Usuari")},
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .testTag("usernameField"),
                 singleLine = true
             )
 
@@ -79,7 +81,9 @@ fun LoginScreen(
                 value = uiState.password,
                 onValueChange = { loginViewModel.onPasswordChange(it) },
                 label = { Text("Contrasenya")},
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .testTag("passwordField"),
                 singleLine = true,
                 visualTransformation = PasswordVisualTransformation()
             )
@@ -94,7 +98,9 @@ fun LoginScreen(
             Button(
                 onClick = { loginViewModel.login() },
                 enabled = !uiState.isLoading,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .testTag("loginButton")
             ) {
                 if (uiState.isLoading) {
                     CircularProgressIndicator()
@@ -109,7 +115,3 @@ fun LoginScreen(
 
 }
 
-@Composable
-fun Image() {
-    TODO("Not yet implemented")
-}
