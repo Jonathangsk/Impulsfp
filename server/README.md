@@ -1,0 +1,1 @@
+És important que tingueu instal·lat el jdk 21 per poder executar el projecte
