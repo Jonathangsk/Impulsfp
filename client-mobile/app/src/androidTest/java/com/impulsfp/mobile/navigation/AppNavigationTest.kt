@@ -1,55 +1,75 @@
 package com.impulsfp.mobile.navigation
 
-import androidx.compose.ui.test.junit4.createAndroidComposeRule
-import androidx.compose.ui.test.onAllNodesWithTag
-import androidx.compose.ui.test.onAllNodesWithText
+import androidx.compose.material3.Button
+import androidx.compose.material3.Text
+import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
-import androidx.compose.ui.test.performTextInput
-import com.impulsfp.mobile.MainActivity
-import org.junit.Ignore
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import org.junit.Rule
 import org.junit.Test
-import kotlin.collections.isNotEmpty
 
 /**
- * Test instrumentats de navegació de l'aplicació
+ * Tests instrumentats de navegació de l'aplicació.
+ *
+ * Verifiquen:
+ * - que la navegació va del login al menú
+ * - que el logout retorna a la pantalla de login
  */
 class AppNavigationTest {
 
     @get:Rule
-    val composeRule = createAndroidComposeRule<MainActivity>()
+    val composeRule = createComposeRule()
 
-    @Ignore("Depèn de credencials fake. S'adaptarà quan hi hagi backend real.")
     @Test
     fun valid_login_navigates_to_menu() {
-        composeRule.onNodeWithTag("usernameField").performTextInput("alumne")
-        composeRule.onNodeWithTag("passwordField").performTextInput("1234")
-        composeRule.onNodeWithTag("loginButton").performClick()
-
-        composeRule.waitUntil(3000) {
-            composeRule
-                .onAllNodesWithText("Menú alumne")
-                .fetchSemanticsNodes().isNotEmpty()
+        composeRule.setContent {
+            AppNavigation(
+                loginScreen = { onLoginSuccess ->
+                    Button(
+                        onClick = onLoginSuccess,
+                        modifier = Modifier.testTag("fakeLoginButton")
+                    ) {
+                        Text("Fake Login")
+                    }
+                },
+                menuScreen = {
+                    Text("Menú alumne")
+                }
+            )
         }
 
+        composeRule.onNodeWithTag("fakeLoginButton").performClick()
         composeRule.onNodeWithText("Menú alumne").assertExists()
     }
-    @Ignore("Depèn del backend real i del flux complex de login/logout")
+
     @Test
     fun logout_returns_to_login_screen() {
-        composeRule.onNodeWithTag("usernameField").performTextInput("alumne")
-        composeRule.onNodeWithTag("passwordField").performTextInput("1234")
-        composeRule.onNodeWithTag("loginButton").performClick()
-
-        composeRule.waitUntil(3000) {
-            composeRule
-                .onAllNodesWithTag("logoutButton")
-                .fetchSemanticsNodes().isNotEmpty()
+        composeRule.setContent {
+            AppNavigation(
+                loginScreen = { onLoginSuccess ->
+                    Button(
+                        onClick = onLoginSuccess,
+                        modifier = Modifier.testTag("fakeLoginButton")
+                    ) {
+                        Text("Fake Login")
+                    }
+                },
+                menuScreen = { onLogout ->
+                    Button(
+                        onClick = onLogout,
+                        modifier = Modifier.testTag("logoutButton")
+                    ) {
+                        Text("Tancar sessió")
+                    }
+                }
+            )
         }
 
+        composeRule.onNodeWithTag("fakeLoginButton").performClick()
         composeRule.onNodeWithTag("logoutButton").performClick()
-        composeRule.onNodeWithText("Iniciar Sessió").assertExists()
+        composeRule.onNodeWithTag("fakeLoginButton").assertExists()
     }
 }

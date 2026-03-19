@@ -11,9 +11,10 @@ import kotlinx.coroutines.launch
  * Gestopma les accions disponibles un cop l'usuari ha iniciat sessió,
  * especialment el tancament de sessió
  */
-class MenuViewModel : ViewModel() {
+class MenuViewModel(
+    private val authController: AuthController = AuthController()
+) : ViewModel() {
 
-    private val authController = AuthController()
 
     /**
      * Tanca la sessió de l'usuari actual.

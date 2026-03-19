@@ -9,12 +9,18 @@ import com.impulsfp.mobile.ui.MenuScreen
 
 sealed class AppScreen(val route: String) {
     object Login : AppScreen("login")
-
     object Menu : AppScreen("menu")
 }
 
 @Composable
-fun AppNavigation() {
+fun AppNavigation(
+    loginScreen: @Composable ((() -> Unit) -> Unit) = { onLoginSuccess ->
+        LoginScreen(onLoginSuccess = onLoginSuccess)
+    },
+    menuScreen: @Composable ((() -> Unit) -> Unit) = { onLogout ->
+        MenuScreen(onLogout = onLogout)
+    }
+) {
     val navController = rememberNavController()
 
     NavHost(
@@ -22,23 +28,19 @@ fun AppNavigation() {
         startDestination = AppScreen.Login.route
     ) {
         composable(AppScreen.Login.route) {
-            LoginScreen(
-                onLoginSuccess = {
-                    navController.navigate(AppScreen.Menu.route) {
-                        popUpTo(AppScreen.Login.route) { inclusive = true }
-                    }
+            loginScreen {
+                navController.navigate(AppScreen.Menu.route) {
+                    popUpTo(AppScreen.Login.route) { inclusive = true }
                 }
-            )
+            }
         }
 
         composable(AppScreen.Menu.route) {
-            MenuScreen(
-                onLogout = {
-                    navController.navigate(AppScreen.Login.route) {
-                        popUpTo(0)
-                    }
+            menuScreen {
+                navController.navigate(AppScreen.Login.route) {
+                    popUpTo(0)
                 }
-            )
+            }
         }
     }
 }

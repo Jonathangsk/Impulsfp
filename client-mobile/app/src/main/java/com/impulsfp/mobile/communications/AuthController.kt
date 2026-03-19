@@ -3,9 +3,7 @@ package com.impulsfp.mobile.communications
 import com.impulsfp.mobile.data.User
 import com.impulsfp.mobile.network.ApiClient
 import com.impulsfp.mobile.network.LoginRequest
-import com.impulsfp.mobile.network.LoginResponse
 import com.impulsfp.mobile.network.LogoutRequest
-import kotlinx.coroutines.delay
 
 /**
  * Classe encarregada de gestionar la comunicació amb el servidor
@@ -14,7 +12,7 @@ import kotlinx.coroutines.delay
  * Aquesta classe envia les peticions de login i logout al backend
  * i transforma les respostes del servidor en objectes útils per a l'app.
  */
-class AuthController {
+open class AuthController {
 
     private val apiService = ApiClient.authApiService
 
@@ -31,7 +29,7 @@ class AuthController {
      *
      *     Si hi ha error, retorna una excepció amb un missatge explicatiu.
      */
-    suspend fun login (username: String, password: String): Result<User> {
+    open suspend fun login (username: String, password: String): Result<User> {
         return try {
             val response = apiService.login(
                 LoginRequest(
@@ -54,10 +52,10 @@ class AuthController {
                     Result.failure(Exception("Resposta buida del servidor"))
                 }
             } else {
-                Result.failure(Exception("usuari o contrasenya incorrectes"))
+                Result.failure(Exception("Usuari o contrasenya incorrectes"))
             }
         } catch (e: Exception) {
-            Result.failure(Exception("Error de connexió amb el servidr"))
+            Result.failure(Exception("Error de connexió amb el servidor"))
         }
     }
 
@@ -69,7 +67,7 @@ class AuthController {
      *     Si va bé, retorna èxit
      *     Si falla, retorna una excepció amb un missatge d'error.
      */
-    suspend fun logout(sessionId: String): Result<Unit> {
+    open suspend fun logout(sessionId: String): Result<Unit> {
         return try {
             val response = apiService.logout(
                 LogoutRequest(sessionId = sessionId)

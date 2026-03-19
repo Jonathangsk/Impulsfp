@@ -1,17 +1,24 @@
 package com.impulsfp.mobile.ui
 
+import com.impulsfp.mobile.communications.AuthController
 import com.impulsfp.mobile.data.SessionData
+import com.impulsfp.mobile.data.User
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.*
 import org.junit.After
 import org.junit.Assert.*
 import org.junit.Before
-import org.junit.Ignore
 import org.junit.Test
 
 /**
  * Test unitaris del LoginViewModel
+ * Verifica:
+ * - la validació de credencials
+ * - l'actualització de l'estat de la UI
+ * - l'emmagatzematge de la sessió quan el login és correcte
+ * - la gestió d'erors quan el login falla
+ * - el reinici de l'estat loginSuccess
  *
  */
 
@@ -32,6 +39,23 @@ class LoginViewModelTest {
         SessionData.logout()
     }
 
+    private class FakeAuthControllerSuccess : AuthController() {
+        override suspend fun login(username: String, password: String): Result<User> {
+            return Result.success(
+                User(
+                    username = username,
+                    role = "ADMIN",
+                    sessionId = "session-123"
+                )
+            )
+        }
+    }
+
+    private class FakeAuthControllerFailure : AuthController() {
+        override suspend fun login(username: String, password: String): Result<User> {
+            return Result.failure(Exception("Usuari o contrasenya incorrectes"))
+        }
+    }
     @Test
     fun validateCredentials_returnsError_whenUsernameAndPasswordAreBlank() {
         val viewModel = LoginViewModel()
@@ -75,6 +99,7 @@ class LoginViewModelTest {
         viewModel.onPasswordChange("")
 
         viewModel.login()
+        advanceUntilIdle()
 
         val state = viewModel.uiState.value
         assertFalse(state.isLoading)
@@ -86,15 +111,14 @@ class LoginViewModelTest {
         assertNull(SessionData.currentUser)
     }
 
-    @Ignore("Depèn de credencials fake. S'adaptarà quan hi hagi backend real.")
     @Test
     fun login_updatesUiStateAndSession_whenCredentialsAreCorrect() = runTest {
-        val viewModel = LoginViewModel()
+        val viewModel = LoginViewModel(FakeAuthControllerSuccess())
 
         viewModel.onUsernameChange("admin")
         viewModel.onPasswordChange("1234")
-        viewModel.login()
 
+        viewModel.login()
         advanceUntilIdle()
 
         val state = viewModel.uiState.value
@@ -105,36 +129,33 @@ class LoginViewModelTest {
         assertNotNull(SessionData.currentUser)
         assertEquals("admin", SessionData.currentUser?.username)
         assertEquals("ADMIN", SessionData.currentUser?.role)
+        assertEquals("session-123", SessionData.currentUser?.sessionId)
     }
 
-    @Ignore("Dependrà del missatge que retorni el backend real")
     @Test
     fun login_showsError_whenCredentialsAreIncorrect() = runTest {
-        val viewModel = LoginViewModel()
+        val viewModel = LoginViewModel(FakeAuthControllerFailure())
 
         viewModel.onUsernameChange("pep")
         viewModel.onPasswordChange("9999")
 
         viewModel.login()
-
         advanceUntilIdle()
 
         val state = viewModel.uiState.value
         assertFalse(state.isLoading)
         assertFalse(state.loginSuccess)
-        assertEquals("Credencials incorrectes", state.errorMessage)
+        assertEquals("Usuari o contrasenya incorrectes", state.errorMessage)
         assertNull(SessionData.currentUser)
     }
 
-
-
-    @Ignore("Depèn de credencials fake. S'adaptarà quan hi hagi backend real.")
     @Test
     fun resetLoginSuccess_setsLoginSuccessToFalse() = runTest {
-        val viewModel = LoginViewModel()
+        val viewModel = LoginViewModel(FakeAuthControllerSuccess())
 
         viewModel.onUsernameChange("admin")
         viewModel.onPasswordChange("1234")
+
         viewModel.login()
         advanceUntilIdle()
 

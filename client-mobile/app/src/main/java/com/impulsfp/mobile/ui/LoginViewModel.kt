@@ -19,9 +19,11 @@ import kotlinx.coroutines.launch
  * - l'actualització de l'estat de la UI
  *
  */
-class LoginViewModel : ViewModel() {
+class LoginViewModel(
+    private val authController: AuthController = AuthController()
+) : ViewModel() {
 
-    private val authController = AuthController()
+
     private val _uiState = MutableStateFlow(LoginUiState())
     val uiState: StateFlow<LoginUiState> = _uiState.asStateFlow()
 
