@@ -13,7 +13,7 @@ import org.junit.Test
 
 /**
  * Test unitaris del LoginViewModel
- * Verifica:
+ * Verifica amb dades simulades (fakes):
  * - la validació de credencials
  * - l'actualització de l'estat de la UI
  * - l'emmagatzematge de la sessió quan el login és correcte

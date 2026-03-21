@@ -20,7 +20,7 @@ import kotlin.test.assertTrue
 
 /**
  * Tests unitaris del ViewModel del menú.
- * Verifiquen que el procés de logout:
+ * Verifiquen que el procés de logout amb dades simulades (fakes).
  * - neteja la sessió local
  * - executa l'acció final indicada
  */

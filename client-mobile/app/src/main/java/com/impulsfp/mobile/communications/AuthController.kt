@@ -59,19 +59,10 @@ open class AuthController {
         }
     }
 
-    /**
-     * Envia una petició de logout al servidor per finalitzar la sessió actual.
-     *
-     * @param sessionId Identificador de la sessió activa
-     * @return Result<Unit>
-     *     Si va bé, retorna èxit
-     *     Si falla, retorna una excepció amb un missatge d'error.
-     */
+
     open suspend fun logout(sessionId: String): Result<Unit> {
         return try {
-            val response = apiService.logout(
-                LogoutRequest(sessionId = sessionId)
-            )
+            val response = apiService.logout(sessionId)
 
             if (response.isSuccessful) {
                 Result.success(Unit)
