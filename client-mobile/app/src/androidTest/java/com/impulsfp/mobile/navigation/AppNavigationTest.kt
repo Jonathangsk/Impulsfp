@@ -17,6 +17,8 @@ import org.junit.Test
  * Verifiquen:
  * - que la navegació va del login al menú
  * - que el logout retorna a la pantalla de login
+ *
+ *  @author abenitez
  */
 class AppNavigationTest {
 

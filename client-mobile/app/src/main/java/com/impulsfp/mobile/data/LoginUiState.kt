@@ -2,8 +2,14 @@ package com.impulsfp.mobile.data
 
 /**
  * Representa l'estat de la pantalla de login.
- * Guarda les dades introduïdes per l'usuari (username i password),
- * així com l'estat del procés d'autenticació (carregant, error o èxit).
+ *
+ * Aquesta classe conté:
+ * - Les dades introduïdes per l'usuari (username i password),
+ * - L'estat del procés d'autenticació (carregant, error o èxit).
+ *
+ * S'utilitza per gestionar i observar l'estat de la UI del login
+ *
+ * @author abenitez
  */
 
 data class LoginUiState(

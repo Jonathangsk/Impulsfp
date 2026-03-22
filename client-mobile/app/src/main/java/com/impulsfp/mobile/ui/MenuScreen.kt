@@ -19,11 +19,19 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.impulsfp.mobile.data.SessionData
 
 /**
- * Pantalla principal després del login.
- * Mostra informació bàsica de l'usuari autenticat
- * i permet tancar sessió.
+ * Pantalla principal de l'aplicació després del l'autenticació.
  *
- * Pantalla provisional, es canviarà més endevant
+ * Mostra informació bàsica de l'usuari autenticat i adapta el contingut
+ * segons el seu rol (ADMIN, EMPRESA o ALUMNE).
+ *
+ * Permet també tancar la sessió mitjançant el botó de logout.
+ *
+ * Nota: Aquesta pantalla és provisional i es completarà en futurs Sprints.
+ *
+ * @param onLogout Funció que s'executa quan l'usuari tanca sessió
+ * @param menuViewModel ViewModel encarregat de gestionar el procés de logout
+ *
+ * @author abenitez
  */
 @Composable
 fun MenuScreen(

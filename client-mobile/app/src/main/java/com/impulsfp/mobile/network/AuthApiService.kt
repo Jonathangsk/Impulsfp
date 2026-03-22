@@ -3,6 +3,7 @@ package com.impulsfp.mobile.network
 import retrofit2.Response
 import retrofit2.http.POST
 import retrofit2.http.Body
+import retrofit2.http.Query
 
 /**
  * Interfície que defineix les crides HTTP relacionades amb l'autenticació
@@ -13,21 +14,18 @@ import retrofit2.http.Body
  * Endpoints disponibles:
  * -POST /auth/login
  * -POST /auth/logout
+ *
+ * @author abenitez
  */
 
 
 interface AuthApiService {
 
     /**
-     * Envia una petició de login al servidor.
-     * Endpoint:
-     * POST /auth/login
+     * Realitza la petició de login al servidor.
      *
-     * @param request conté el username i la password que envia el client.
-     * @return Response<LoginResponse>
-     *     Si la petició és correcta contindrà:
-     *     - sessionId
-     *     - userType
+     * @param request Objecte amb les credencials de l'usuari
+     * @return Resposta HTTP amb el resultat del login
      */
     @POST("auth/login")
     suspend fun login(
@@ -35,17 +33,13 @@ interface AuthApiService {
     ): Response<LoginResponse>
 
     /**
-     * Envia una petició per tancar la sessió d'un usuari autenticat
-     * Endpoint:
-     * POST /auth/logout
+     * Realitza la petició de logout al servidor.
      *
-     * @param request conté el sessionId que identifica la sessió activa.
-     * @return Response<LogoutResponse>
-     *     Si la petició és correcta retornarà un missatge indicant
-     *     que la sessió s'ha tancat correctament.
+     * @param sessionId Identificador de sessió de l'usuari autenticat
+     * @return Resposta HTTP amb el resultat del logout
      */
     @POST("auth/logout")
     suspend fun logout(
-        @Body request: LogoutRequest
+        @Query("sessionId") sessionId: String
     ): Response<LogoutResponse>
 }

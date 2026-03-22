@@ -12,12 +12,17 @@ import kotlinx.coroutines.launch
 
 /**
  * ViewModel de la pantalla de login.
- * Gestiona:
- * - els valors introduïts per l'usuari
- * - la validació de credencials
- * - la crida al servidor per fer login
- * - l'actualització de l'estat de la UI
  *
+ * Gestiona:
+ * - Els valors introduïts per l'usuari
+ * - La validació de credencials
+ * - La comunicació amb el servidor per fer login
+ * - L'actualització de l'estat de la UI
+ *
+ * @property authController Controlador encarregat de gestionar
+ * les operacions d'autenticació contra el servidor.
+ *
+ * @author abenitez
  */
 class LoginViewModel(
     private val authController: AuthController = AuthController()
@@ -25,17 +30,25 @@ class LoginViewModel(
 
 
     private val _uiState = MutableStateFlow(LoginUiState())
+
+    /**
+     * Estat observable de la pantalla de login.
+     */
     val uiState: StateFlow<LoginUiState> = _uiState.asStateFlow()
 
     /**
      * Actualitza el username introduït a la UI.
+     *
+     * @param value Nou valor del camp username
      */
     fun onUsernameChange(value: String) {
         _uiState.value = _uiState.value.copy(username = value)
     }
 
     /**
-     * Actualitza la contrasenya introduïda a la UI-
+     * Actualitza la contrasenya introduïda a la UI.
+     *
+     * @param value Nou valor del camp password
      */
     fun onPasswordChange(value: String) {
         _uiState.value = _uiState.value.copy(password = value)
@@ -43,7 +56,11 @@ class LoginViewModel(
 
     /**
      * Valida les dades introduïdes i, si són correctes,
-     * intenta iniciar sessió contra el servidor.
+     * inicia el procés de login contra el servidor.
+     *
+     * Si l'autenticació és correcta, guarda l'usuari a [SessionData]
+     * i actualutza l'estat perquè la interfície pugui navegar.
+     * Si hi ha error, actualitza l'estat amb el missatge corresponent.
      */
     fun login() {
         val username = _uiState.value.username.trim()
@@ -81,7 +98,11 @@ class LoginViewModel(
 
     /**
      * Comprova que username i password no estiguin buits.
-     * @return missatge d'error si la validació falla, o null si és correcta.
+     *
+     * @param username Nom d'usuari introduït per l'usuari
+     * @param password Contrasenya introduïda per l'usuari
+     *
+     * @return Missatge d'error si la validació falla, o null si és correcta.
      */
     fun validateCredentials(username: String, password: String): String? {
         return when {
@@ -97,7 +118,7 @@ class LoginViewModel(
 
     /**
      * Reinicia l'estat de loginSuccess després de navegar,
-     * per evitar navegacions repetides
+     * per evitar navegacions repetides.
      */
     fun resetLoginSuccess() {
         _uiState.value = _uiState.value.copy (loginSuccess = false)

@@ -10,6 +10,8 @@ import org.junit.Test
  * - si l'apliació detecta correctament quan hi ha una sessió activa
  * - si el logout elimina correctament l'usuari actual
  * - si es pot recuperar el sessionId de la sessió activa
+ *
+ *  @author abenitez
  */
 class SessionDataTest {
 

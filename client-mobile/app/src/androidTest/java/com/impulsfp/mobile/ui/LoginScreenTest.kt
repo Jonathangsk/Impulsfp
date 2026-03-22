@@ -21,6 +21,8 @@ import org.junit.Test
  * - la validació quan els camps són buits
  * - la visualització quan els camps són buits
  * - l'execució del callback quan el login és correcte
+ *
+ *  @author abenitez
  */
 class LoginScreenTest {
 

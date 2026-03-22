@@ -27,7 +27,22 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.impulsfp.mobile.R
 
-
+/**
+ * Pantalla de login de l'aplicació.
+ *
+ * Mostra la interfície d'autenticació de l'usuari, permetent introduir
+ * el nom d'usuari i la contrasenya, mostrar errors de validació o
+ * autenticació i iniciar el procés de login.
+ *
+ * Qual l'autenticació finalitza correctament, s'executa el callback
+ * [onLoginSuccess] i es reinicia l'estat de navegació del ViewModel.
+ *
+ * @param onLoginSuccess Funció que s'executa quan el login és correcte
+ * @param loginViewModel ViewModel encarregat de gestionar l'estat i la
+ * lògica de la pantalla de login
+ *
+ * @author abenitez
+ */
 @Composable
 fun LoginScreen(
     onLoginSuccess: () -> Unit,
