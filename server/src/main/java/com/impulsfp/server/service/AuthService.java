@@ -10,6 +10,8 @@ import java.util.Optional;
 
 /**
  * Clase Service que implementa la lògica d'autenticació dels usuaris. Verifica les credencials i gestiona les sessions.
+ *
+ * @author Jonathan Giraldo Giraldo
  */
 @Service
 public class AuthService {
@@ -23,8 +25,8 @@ public class AuthService {
     /**
      * Mètode amb la lògica iniciar sessió; verifica les credencials de l'usuari i, si són correctes, crea una sessió i retorna un objecte DTO de resposta amb les dades de sessió (sessionId i userType)
      * Si les credencials no són correctes, retorna null.
-     * @param username
-     * @param password
+     * @param username nom d'usuari
+     * @param password contrasenya
      * @return
      */
     public LoginResponseDto login(String username, String password) {

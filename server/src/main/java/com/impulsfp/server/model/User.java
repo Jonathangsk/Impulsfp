@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 
 /**
  * Entitat que representa un usuari del sistema, amb camps per a nom d'usuari, contrasenya i rol; aquesta classe es mapeja a la taula "users" de la base de dades.
+ *
+ * @author Jonathan Giraldo Giraldo
  */
 @Entity
 @Table(name = "users")

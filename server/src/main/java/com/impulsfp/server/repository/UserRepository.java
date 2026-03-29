@@ -9,6 +9,8 @@ import java.util.Optional;
 
 /**
  * Repository per accedir a les dades dels usuaris; Proporciona mètode per buscar usuaris per nom d'usuari.
+ *
+ * @author Jonathan Giraldo Giraldo
  */
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
