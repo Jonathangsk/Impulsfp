@@ -4,48 +4,37 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.impulsfp.mobile.ui.EditProfileScreen
 import com.impulsfp.mobile.ui.LoginScreen
 import com.impulsfp.mobile.ui.MenuScreen
+import com.impulsfp.mobile.ui.ProfileScreen
 
 /**
  * Defineix les rutes de navegació de l'aplicació.
  *
- * Cada objecte representa una pantalla accessible dins del sistema de navegació.
- *
- * @property route Ruta associada a cada pantalla
+ * @property route Ruta associada a cada pantalla.
  *
  * @author abenitez
  */
-
 sealed class AppScreen(val route: String) {
     object Login : AppScreen("login")
     object Menu : AppScreen("menu")
+    object Profile : AppScreen("profile")
+    object EditProfile : AppScreen("edit_profile")
 }
 
 /**
- * Gestiona la navegació principal de l'aplicació utilitzant Navigation Compose.
+ * Gestiona la navegació principal de l'aplicació.
  *
- * Defineix el flux entre pantalles:
- * - Login -> Menu d'usuari (quan el login és correcte)
- * - Menu d'usuari -> Login (quan es fa el logout)
- *
- * Permet injectar implementacions personalitzades de les pantalles,
- * facilitant la realitzacií de proves.
- *
- * @param loginScreen Composable de la pantalla de login
- * @param menuScreen Composable de la pantalla de menú d'usuari
+ * @param loginScreen Pantalla de login.
+ * @param menuScreen Pantalla de menú.
+ * @param profileScreen Pantalla de perfil.
+ * @param editProfileScreen Pantalla d'edició del perfil.
  *
  * @author abenitez
  */
 @Composable
-fun AppNavigation(
-    loginScreen: @Composable ((() -> Unit) -> Unit) = { onLoginSuccess ->
-        LoginScreen(onLoginSuccess = onLoginSuccess)
-    },
-    menuScreen: @Composable ((() -> Unit) -> Unit) = { onLogout ->
-        MenuScreen(onLogout = onLogout)
-    }
-) {
+fun AppNavigation() {
     val navController = rememberNavController()
 
     NavHost(
@@ -53,19 +42,65 @@ fun AppNavigation(
         startDestination = AppScreen.Login.route
     ) {
         composable(AppScreen.Login.route) {
-            loginScreen {
-                navController.navigate(AppScreen.Menu.route) {
-                    popUpTo(AppScreen.Login.route) { inclusive = true }
+            LoginScreen(
+                onLoginSuccess = {
+                    navController.navigate(AppScreen.Menu.route) {
+                        popUpTo(AppScreen.Login.route) { inclusive = true }
+                    }
                 }
-            }
+            )
         }
 
         composable(AppScreen.Menu.route) {
-            menuScreen {
-                navController.navigate(AppScreen.Login.route) {
-                    popUpTo(0)
+            MenuScreen(
+                onLogout = {
+                    navController.navigate(AppScreen.Login.route) {
+                        popUpTo(0)
+                    }
+                },
+                onProfileClick = {
+                    navController.navigate(AppScreen.Profile.route)
                 }
-            }
+            )
+        }
+
+        composable(AppScreen.Profile.route) {
+            ProfileScreen(
+                onHomeClick = {
+                    navController.navigate(AppScreen.Menu.route) {
+                        popUpTo(AppScreen.Menu.route) { inclusive = false }
+                    }
+                },
+                onEditProfile = {
+                    navController.navigate(AppScreen.EditProfile.route)
+                },
+                onLogout = {
+                    navController.navigate(AppScreen.Login.route) {
+                        popUpTo(0)
+                    }
+                }
+            )
+        }
+
+        composable(AppScreen.EditProfile.route) {
+            EditProfileScreen(
+                onHomeClick = {
+                    navController.navigate(AppScreen.Menu.route) {
+                        popUpTo(AppScreen.Menu.route) { inclusive = false }
+                    }
+                },
+                onSaveSuccess = {
+                    navController.popBackStack()
+                },
+                onProfileClick = {
+                    navController.popBackStack()
+                },
+                onLogout = {
+                    navController.navigate(AppScreen.Login.route) {
+                        popUpTo(0)
+                    }
+                }
+            )
         }
     }
 }

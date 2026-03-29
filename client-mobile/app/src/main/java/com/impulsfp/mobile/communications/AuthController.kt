@@ -3,6 +3,10 @@ package com.impulsfp.mobile.communications
 import com.impulsfp.mobile.data.User
 import com.impulsfp.mobile.network.ApiClient
 import com.impulsfp.mobile.network.LoginRequest
+import java.io.IOException
+import java.net.ConnectException
+import java.net.SocketTimeoutException
+import java.net.UnknownHostException
 
 /**
  * Classe encarregada de gestionar la comunicació amb el servidor
@@ -19,18 +23,15 @@ open class AuthController {
 
     /**
      * Realitza el login contra el servidor.
+     *
      * @param username Nom d'usuari introduït a la pantalla del login
      * @param password Contrasenya introduïda a la pantalla del login
      *
      * @return Result<User>
-     *     Si tot va bé retorna un User amb:
-     *     - username: nom introduït per l'usuari
-     *     - role: rol intern de l'app (ALUMNE, EMPRESA, ADMIN)
-     *     - sessionId: sessió retornada pel servidor
-     *
-     *     Si hi ha error, retorna una excepció amb un missatge explicatiu.
+     * - Si tot va bé retorna un User
+     * - Si hi ha error, retorna una excepció amb un missatge explicatiu
      */
-    open suspend fun login (username: String, password: String): Result<User> {
+    open suspend fun login(username: String, password: String): Result<User> {
         return try {
             val response = apiService.login(
                 LoginRequest(
@@ -53,15 +54,27 @@ open class AuthController {
                     Result.failure(Exception("Resposta buida del servidor"))
                 }
             } else {
-                Result.failure(Exception("Usuari o contrasenya incorrectes"))
+                when (response.code()) {
+                    401, 403 -> Result.failure(Exception("Usuari o contrasenya incorrectes"))
+                    500, 502, 503 -> Result.failure(Exception("El servidor no està disponible temporalment"))
+                    else -> Result.failure(Exception("Error del servidor: ${response.code()}"))
+                }
             }
+        } catch (e: UnknownHostException) {
+            Result.failure(Exception("No s'ha pogut localitzar el servidor"))
+        } catch (e: ConnectException) {
+            Result.failure(Exception("No s'ha pogut connectar amb el servidor"))
+        } catch (e: SocketTimeoutException) {
+            Result.failure(Exception("Temps d'espera esgotat en connectar amb el servidor"))
+        } catch (e: IOException) {
+            Result.failure(Exception("Error de xarxa en connectar amb el servidor"))
         } catch (e: Exception) {
-            Result.failure(Exception("Error de connexió amb el servidor"))
+            Result.failure(Exception("S'ha produït un error inesperat"))
         }
     }
 
     /**
-     * Realitza el logout contra el servidor utilitzant l'identificador de sessió
+     * Realitza el logout contra el servidor utilitzant l'identificador de sessió.
      *
      * @param sessionId Identificador de sessió de l'usuari autenticat
      *
@@ -76,12 +89,25 @@ open class AuthController {
             if (response.isSuccessful) {
                 Result.success(Unit)
             } else {
-                Result.failure(Exception("Sessió no vàlida"))
+                when (response.code()) {
+                    401, 403 -> Result.failure(Exception("Sessió no vàlida"))
+                    500, 502, 503 -> Result.failure(Exception("El servidor no està disponible temporalment"))
+                    else -> Result.failure(Exception("Error del servidor: ${response.code()}"))
+                }
             }
+        } catch (e: UnknownHostException) {
+            Result.failure(Exception("No s'ha pogut localitzar el servidor"))
+        } catch (e: ConnectException) {
+            Result.failure(Exception("No s'ha pogut connectar amb el servidor"))
+        } catch (e: SocketTimeoutException) {
+            Result.failure(Exception("Temps d'espera esgotat en connectar amb el servidor"))
+        } catch (e: IOException) {
+            Result.failure(Exception("Error de xarxa en connectar amb el servidor"))
         } catch (e: Exception) {
-            Result.failure(Exception("Error de connexió amb el servidor"))
+            Result.failure(Exception("S'ha produït un error inesperat"))
         }
     }
+
     /**
      * Converteix el tipus d'usuari retornat pel backend al rol intern
      * utilitzat per la interfície de l'app.

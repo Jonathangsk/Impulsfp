@@ -26,8 +26,8 @@ object ApiClient {
      * al localhost de la màquina host.
      */
 
-    private var baseUrl: String = "http://10.0.2.2:8080/" //Servidor en local
-    //private var baseUrl: String = "http://0bb0dfb7-9b4c-40bc-a0be.5b8c35470a40.bastion.elmeuescriptori.cat/" //Servidor en Isard
+    //private var baseUrl: String = "http://10.0.2.2:8080/" //Servidor en local
+    private var baseUrl: String = "http://0bb0dfb7-9b4c-40bc-a0be.5b8c35470a40.bastion.elmeuescriptori.cat/" //Servidor en Isard
 
     /**
      * Instància única de Retrofit configurada amb:
