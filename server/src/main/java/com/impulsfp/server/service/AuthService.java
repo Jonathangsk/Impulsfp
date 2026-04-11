@@ -6,11 +6,14 @@ import com.impulsfp.server.exception.ErrorCode;
 import com.impulsfp.server.model.User;
 import com.impulsfp.server.repository.UserRepository;
 import com.impulsfp.server.session.SessionManager;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.impulsfp.server.dto.RegisterStudentRequestDto;
 import com.impulsfp.server.dto.RegisterCompanyRequestDto;
 import com.impulsfp.server.model.*;
 import com.impulsfp.server.repository.*;
+import org.springframework.transaction.annotation.Transactional;
+
 
 import java.util.Optional;
 
@@ -27,6 +30,8 @@ public class AuthService {
     private final CompanyRepository companyRepository; //repositori per accedir a les dades de les empreses (base de dades)
     private final StudentSkillRepository studentSkillRepository; //repositori per accedir a les dades de les habilitats dels estudiants (base de dades)
     private final CompanyTechnologyRepository companyTechnologyRepository; //repositori per accedir a les dades de les tecnologies de les empreses (base de dades)
+
+    private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder(); //encoder per encriptar les contrasenyes
 
 
     /**
@@ -65,7 +70,7 @@ public class AuthService {
         if(userOpt.isPresent()) {
             User user = userOpt.get();
 
-            if(user.getPassword().equals(password)) {
+            if(passwordEncoder.matches(password, user.getPassword())) { //verifica que la contrasenya proporcionada coincideix amb la contrasenya encriptada  a la base de dades per l'usuario
                 String sessionId = SessionManager.createSession(username);
                 return new LoginResponseDto(sessionId, user.getRole());
             }
@@ -82,6 +87,7 @@ public class AuthService {
      * @param dto
      * @return
      */
+    @Transactional
     public LoginResponseDto registerStudent(RegisterStudentRequestDto dto) {
 
         validarDadesStudiant(dto); //crida a mètode per validar les dades del DTO proporcionat
@@ -89,7 +95,7 @@ public class AuthService {
         //crea un nou usuari amb les dades proporcionades al DTO i el rol "STUDENT"
         User user = new User();
         user.setUsername(dto.getUsername());
-        user.setPassword(dto.getPassword());
+        user.setPassword(passwordEncoder.encode(dto.getPassword())); //encripta la contrasenya abans de guardar-la a la base de dades (hash)
         user.setRole("STUDENT");
 
         //guarda el nou usuari a la base de dades
@@ -139,6 +145,7 @@ public class AuthService {
      * @param dto objecte DTO que representa les dades de la petició de registre d'empresa
      * @return
      */
+    @Transactional
     public LoginResponseDto registerCompany(RegisterCompanyRequestDto dto) {
 
         validarDadesEmpresa(dto); //crida a mètode per validar les dades del DTO proporcionat
@@ -146,7 +153,7 @@ public class AuthService {
         //crea un nou usuari amb les dades proporcionades al DTO i el rol "COMPANY"
         User user = new User();
         user.setUsername(dto.getUsername());
-        user.setPassword(dto.getPassword());
+        user.setPassword(passwordEncoder.encode(dto.getPassword())); //encripta la contrasenya abans de guardar-la a la base de dades (hash)
         user.setRole("COMPANY");
         userRepository.save(user);
 
@@ -193,9 +200,18 @@ public class AuthService {
             throw new ApiException(ErrorCode.USER_ALREADY_EXISTS, "El nom d'usuari ja existeix. Si us plau, tria un altre nom d'usuari.");
         }
 
-        if (!dto.getPassword().matches("^(?=.*[A-Z])(?=.*\\d)(?=.*[a-z]).{6,}$")) { //el regex verifica que la contrasenya té al menys 6 caracteres, una mayúscula, una minúscula y un número
+        if (dto.getPassword() == null || !dto.getPassword().matches("^(?=.*[A-Z])(?=.*\\d)(?=.*[a-z]).{6,}$")) { //el regex verifica que la contrasenya té al menys 6 caracteres, una mayúscula, una minúscula y un número
             throw new ApiException(ErrorCode.INVALID_PASSWORD, "La contrasenya no és vàlida; > 6 caracteres, mínim una majúscula, una minúscula i un número.");
         }
+
+        if(dto.getEmail() == null || !dto.getEmail().matches("^[A-Za-z0-9+_.-]+@(.+)$")){ //el regex verifica que tingui un format d'email bàsic
+            throw new ApiException(ErrorCode.INVALID_EMAIL, "El format de l'email no és vàlid.");
+        }
+
+        if (studentRepository.findByEmail(dto.getEmail()).isPresent()) {
+            throw new ApiException(ErrorCode.USER_ALREADY_EXISTS, "Email ja registrat; l'estudiant ha de triar un altre email");
+        }
+
     }
 
 
@@ -220,8 +236,16 @@ public class AuthService {
             throw new ApiException(ErrorCode.USER_ALREADY_EXISTS, "El nom d'usuari ja existeix. L'usuari ha de triar un altre.");
         }
 
-        if (!dto.getPassword().matches("^(?=.*[A-Z])(?=.*\\d)(?=.*[a-z]).{6,}$")) { //el regex verifica que la contrasenya té al menys 6 caracteres, una mayúscula, una minúscula y un número
+        if (dto.getPassword() == null || !dto.getPassword().matches("^(?=.*[A-Z])(?=.*\\d)(?=.*[a-z]).{6,}$")) { //el regex verifica que la contrasenya té al menys 6 caracteres, una mayúscula, una minúscula y un número
             throw new ApiException(ErrorCode.INVALID_PASSWORD, "La contrasenya no és vàlida; > 6 caracteres, mínim una majúscula, una minúscula i un número.");
+        }
+
+        if(dto.getEmail() == null || !dto.getEmail().matches("^[A-Za-z0-9+_.-]+@(.+)$")){ //el regex verifica que tingui un format d'email bàsic
+            throw new ApiException(ErrorCode.INVALID_EMAIL, "El format de l'email no és vàlid.");
+        }
+
+        if (companyRepository.findByEmail(dto.getEmail()).isPresent()) {
+            throw new ApiException(ErrorCode.USER_ALREADY_EXISTS, "Email ja registrat; l'empresa ha de triar un altre email");
         }
     }
 
