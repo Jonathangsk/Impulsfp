@@ -2,10 +2,11 @@ package com.impulsfp.server.service;
 
 import com.impulsfp.server.dto.LoginResponseDto;
 import com.impulsfp.server.model.User;
-import com.impulsfp.server.repository.UserRepository;
+import com.impulsfp.server.repository.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+
 
 import java.util.Optional;
 
@@ -24,14 +25,30 @@ public class AuthServiceTest {
 
     private AuthService authService;
     private UserRepository userRepository;
+    private StudentRepository studentRepository;
+    private CompanyRepository companyRepository;
+    private StudentSkillRepository studentSkillRepository;
+    private CompanyTechnologyRepository companyTechnologyRepository;
 
     /**
      * Inicialitza el mock del repositori abans de cada test.
      */
+
     @BeforeEach
     void setUp() {
         userRepository = Mockito.mock(UserRepository.class);
-        authService = new AuthService(userRepository);
+        studentRepository = Mockito.mock(StudentRepository.class);
+        companyRepository = Mockito.mock(CompanyRepository.class);
+        studentSkillRepository = Mockito.mock(StudentSkillRepository.class);
+        companyTechnologyRepository = Mockito.mock(CompanyTechnologyRepository.class);
+
+        authService = new AuthService(
+                userRepository,
+                studentRepository,
+                companyRepository,
+                studentSkillRepository,
+                companyTechnologyRepository
+        );
     }
 
     /**

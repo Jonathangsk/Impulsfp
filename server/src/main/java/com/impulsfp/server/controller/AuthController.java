@@ -2,6 +2,8 @@ package com.impulsfp.server.controller;
 
 import com.impulsfp.server.dto.LoginRequestDto;
 import com.impulsfp.server.dto.LoginResponseDto;
+import com.impulsfp.server.dto.RegisterCompanyRequestDto;
+import com.impulsfp.server.dto.RegisterStudentRequestDto;
 import com.impulsfp.server.service.AuthService;
 import com.impulsfp.server.session.SessionManager;
 import org.springframework.http.ResponseEntity;
@@ -58,6 +60,32 @@ public class AuthController {
         SessionManager.removeSession(sessionId); //si el sessionId és vàlid, elimina la sessió corresponent i retorna un missatge de confirmació
 
         return ResponseEntity.ok("{\"message\":\"Sessió finalitzada correctament\"}");
+    }
+
+    @PostMapping("/register/student")
+    public ResponseEntity<?> registerStudent(@RequestBody RegisterStudentRequestDto request){
+
+        LoginResponseDto response = authService.registerStudent(request);
+
+        if(response == null){
+            return ResponseEntity.status(400)
+                    .body("{\"error\":\"Error en el registre\"}");
+        }
+
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/register/company")
+    public ResponseEntity<?> registerCompany(@RequestBody RegisterCompanyRequestDto request){
+
+        LoginResponseDto response = authService.registerCompany(request);
+
+        if(response == null){
+            return ResponseEntity.status(400)
+                    .body("{\"error\":\"Error en el registre\"}");
+        }
+
+        return ResponseEntity.ok(response);
     }
 
     /**
