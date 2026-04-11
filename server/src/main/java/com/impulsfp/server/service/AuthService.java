@@ -1,6 +1,8 @@
 package com.impulsfp.server.service;
 
 import com.impulsfp.server.dto.LoginResponseDto;
+import com.impulsfp.server.exception.ApiException;
+import com.impulsfp.server.exception.ErrorCode;
 import com.impulsfp.server.model.User;
 import com.impulsfp.server.repository.UserRepository;
 import com.impulsfp.server.session.SessionManager;
@@ -82,9 +84,7 @@ public class AuthService {
      */
     public LoginResponseDto registerStudent(RegisterStudentRequestDto dto) {
 
-        if(userRepository.findByUsername(dto.getUsername()).isPresent()){
-            return null;
-        }
+        validarDadesStudiant(dto); //crida a mètode per validar les dades del DTO proporcionat
 
         //crea un nou usuari amb les dades proporcionades al DTO i el rol "STUDENT"
         User user = new User();
@@ -141,10 +141,7 @@ public class AuthService {
      */
     public LoginResponseDto registerCompany(RegisterCompanyRequestDto dto) {
 
-        //verifica que el nom d'usuari proporcionat al DTO no existeix a la base de dades; si ja existeix, retorna null
-        if(userRepository.findByUsername(dto.getUsername()).isPresent()){
-            return null;
-        }
+        validarDadesEmpresa(dto); //crida a mètode per validar les dades del DTO proporcionat
 
         //crea un nou usuari amb les dades proporcionades al DTO i el rol "COMPANY"
         User user = new User();
@@ -178,6 +175,54 @@ public class AuthService {
         String sessionId = SessionManager.createSession(user.getUsername());
 
         return new LoginResponseDto(sessionId, user.getRole());
+    }
+
+
+    /**
+     * Mètode per validar les dades proporcionades al DTO de registre d'estudiant; verifica que el nom d'usuari no existeix a la base de dades, que el nom d'usuari és vàlid segons un regex, i que la contrasenya és vàlida segons un regex.
+     * Si alguna de les validacions falla, llança una excepció ApiException amb un codi d'error i un missatge descriptiu.
+     * @param dto
+     */
+    private void validarDadesStudiant(RegisterStudentRequestDto dto) {
+
+        if(dto.getUsername() == null || !dto.getUsername().matches("^[a-zA-Z0-9]{4,20}$")){ //el regex verifica que el nom d'usuari només conté lletres i números (sense espais), i tingui entre 4 y 20 caracteres
+            throw new ApiException(ErrorCode.INVALID_USERNAME, "El nom d'usuari no és vàlid. Ha de tenir entre 4 I 20 caracteres; només lletres i números.");
+        }
+
+        if(userRepository.findByUsername(dto.getUsername()).isPresent()){
+            throw new ApiException(ErrorCode.USER_ALREADY_EXISTS, "El nom d'usuari ja existeix. Si us plau, tria un altre nom d'usuari.");
+        }
+
+        if (!dto.getPassword().matches("^(?=.*[A-Z])(?=.*\\d)(?=.*[a-z]).{6,}$")) { //el regex verifica que la contrasenya té al menys 6 caracteres, una mayúscula, una minúscula y un número
+            throw new ApiException(ErrorCode.INVALID_PASSWORD, "La contrasenya no és vàlida; > 6 caracteres, mínim una majúscula, una minúscula i un número.");
+        }
+    }
+
+
+
+    /**
+     * Mètode per validar les dades proporcionades al DTO de registre d'empresa; verifica que el nom d'usuari no existeix a la base de dades,
+     * que el nom d'usuari és vàlid segons un regex, i que la contrasenya és vàlida segons un regex.
+     *
+
+     * Nota: aquí només validem username/password/existència per mantenir consistència amb estudiant.
+     * Pots afegir més validacions (NIF/CIF, email, etc.) si ho necessites.
+     *
+     * @param dto
+     */
+    private void validarDadesEmpresa(RegisterCompanyRequestDto dto) {
+
+        if (dto.getUsername() == null || !dto.getUsername().matches("^[a-zA-Z0-9]{4,20}$")) { //el regex verifica que el nom d'usuari només conté lletres i números (sense espais), i tingui entre 4 y 20 caracteres
+            throw new ApiException(ErrorCode.INVALID_USERNAME, "El nom d'usuari no és vàlid. Ha de tenir entre 4 I 20 caracteres; només lletres i números.");
+        }
+
+        if (userRepository.findByUsername(dto.getUsername()).isPresent()) {
+            throw new ApiException(ErrorCode.USER_ALREADY_EXISTS, "El nom d'usuari ja existeix. L'usuari ha de triar un altre.");
+        }
+
+        if (!dto.getPassword().matches("^(?=.*[A-Z])(?=.*\\d)(?=.*[a-z]).{6,}$")) { //el regex verifica que la contrasenya té al menys 6 caracteres, una mayúscula, una minúscula y un número
+            throw new ApiException(ErrorCode.INVALID_PASSWORD, "La contrasenya no és vàlida; > 6 caracteres, mínim una majúscula, una minúscula i un número.");
+        }
     }
 
 

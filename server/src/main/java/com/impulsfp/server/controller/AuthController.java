@@ -62,6 +62,12 @@ public class AuthController {
         return ResponseEntity.ok("{\"message\":\"Sessió finalitzada correctament\"}");
     }
 
+
+    /**
+     * Endpoint per registrar un nou estudiant
+     * @param request objecte DTO que representa les dades de la petició de registre d'estudiant, amb camps per a nom d'usuari, contrasenya, nom complet i habilitats
+     * @return ResponseEntity amb les dades de resposta o un error 400 si hi ha un error en el registre
+     */
     @PostMapping("/register/student")
     public ResponseEntity<?> registerStudent(@RequestBody RegisterStudentRequestDto request){
 
@@ -75,6 +81,12 @@ public class AuthController {
         return ResponseEntity.ok(response);
     }
 
+
+    /**
+     * Endpoint per registrar una nova empresa
+     * @param request objecte DTO que representa les dades de la petició de registre d'empresa, amb camps per a nom d'usuari, contrasenya, nom de l'empresa i tecnologies
+     * @return ResponseEntity amb les dades de resposta o un error 400 si hi ha un error en el registre
+     */
     @PostMapping("/register/company")
     public ResponseEntity<?> registerCompany(@RequestBody RegisterCompanyRequestDto request){
 
