@@ -25,6 +25,10 @@ namespace IMPULS_Desktop
 
         public string ProfilePhoto { get; set; }
 
+        public string Username { get; set; }
+
+        public string Password { get; set; }
+        
         public List<Oferta> ActiveOffers { get; set; } = new List<Oferta>();
     }
 }

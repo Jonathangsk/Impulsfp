@@ -16,8 +16,8 @@ namespace IMPULS_Desktop
     {
         public static string SessionId; // ID de sessió de l'usuari
       //  public static string apiBase = "http://10.2.163.125:8080/auth";
-//        public static string apiBase = "http://0bb0dfb7-9b4c-40bc-a0be.5b8c35470a40.bastion.elmeuescriptori.cat:80/auth";
-                private readonly string apiBase = "http://localhost:8080/auth"; // URL de l'API d'autenticació
+        public static string apiBase = "http://0bb0dfb7-9b4c-40bc-a0be.5b8c35470a40.bastion.elmeuescriptori.cat:80/auth";
+         //       private readonly string apiBase = "http://localhost:8080/auth"; // URL de l'API d'autenticació
 
 
         public PantallaPrincipal()
@@ -38,6 +38,8 @@ namespace IMPULS_Desktop
             {
                 using (var client = new HttpClient())
                 {
+                    client.Timeout = TimeSpan.FromSeconds(5);
+
                     var url = $"{apiBase}/login";
                     var requestObj = new { username = usuari, password = contrasenya };
                     var json = JsonSerializer.Serialize(requestObj);
@@ -67,9 +69,17 @@ namespace IMPULS_Desktop
                     }
                 }
             }
+            catch (HttpRequestException)
+            {
+                MessageBox.Show("No es pot connectar amb el servidor (Isard apagat o URL incorrecta)");
+            }
+            catch (TaskCanceledException)
+            {
+                MessageBox.Show("Temps d'espera esgotat (servidor no respon)");
+            }
             catch (Exception ex)
             {
-                MessageBox.Show("Error conectando con el servidor: " + ex.Message);
+                MessageBox.Show("Error inesperat: " + ex.Message);
             }
 
             return (false, null);
@@ -77,7 +87,7 @@ namespace IMPULS_Desktop
         /// <summary>
         /// Event del botó de login. Obre el formulari corresponent segons el tipus d'usuari.
         /// </summary>
-        
+
         private async void button1_Click(object sender, EventArgs e)
         {
             string usuari = textBoxUsuario.Text;
