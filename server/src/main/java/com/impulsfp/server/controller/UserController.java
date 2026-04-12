@@ -28,11 +28,20 @@ public class UserController {
      * @param sessionId
      * @return ResponseEntity amb un missatge de confirmació si el compte s'ha eliminat correctament, o un error 401 si el sessionId no és vàlid
      */
+
+    /**
+     * Endpoint per eliminar el compte d'un usuari; rep un identificador de sessió com a paràmetre i una contrasenya al cos de la petició, i elimina el compte associat a aquesta sessió si la contrasenya és correcta.
+     * @param sessionId identificador de sessió que s'ha d'utilitzar per identificar l'usuari que vol eliminar el seu compte, proporcionat com a paràmetre de la petició
+     * @param body objecte JSON que conté la contrasenya de l'usuari, proporcionat al cos de la petició; s'espera que el JSON tingui un camp "password" amb la contrasenya de l'usuari
+     * @return
+     */
     @DeleteMapping("/me")
-    public ResponseEntity<?> deleteAccount(@RequestParam String sessionId){
+    public ResponseEntity<?> deleteAccount(
+            @RequestParam String sessionId,
+            @RequestBody Map<String, String> body){ //map que representa el cos de la petició, esperant un camp "password" amb la contrasenya de l'usuari
 
-        userService.deleteAccount(sessionId);
+        userService.deleteAccount(sessionId, body.get("password"));
+
         return ResponseEntity.ok(Map.of("message", "Compte eliminat correctament"));
-
     }
 }
