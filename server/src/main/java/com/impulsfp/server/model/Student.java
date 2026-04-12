@@ -2,6 +2,8 @@ package com.impulsfp.server.model;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 /**
  * Entitat que representa un estudiant a la base de dades; conté informació personal, acadèmica i professional de l'estudiant, així com una relació amb l'entitat User per gestionar l'autenticació i autorització.
  *
@@ -32,6 +34,11 @@ public class Student {
     private String languages;
     private String preferredRoles;
 
+    // relació one-to-many amb StudentSkill, on un estudiant pot tenir moltes habilitats, però cada habilitat està associada a un sol estudiant
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<StudentSkill> skills;
+
+    //relació one-to-one amb User, on un estudiant està associat a un sol usuari, i cada usuari pot ser associat a un sol estudiant
     @OneToOne
     @JoinColumn(name = "user_id")
     private User user;

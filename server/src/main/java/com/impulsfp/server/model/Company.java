@@ -2,6 +2,8 @@ package com.impulsfp.server.model;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 /**
  * Entitat que representa una empresa dins del sistema; conté informació bàsica de l'empresa i està associada a un usuari.
  *
@@ -25,6 +27,10 @@ public class Company {
 
     private String niche;
     private Integer activeOffers;
+
+    //relació one-to-many amb CompanyTechnology, on una empresa pot tenir moltes tecnologies, però cada tecnologia está associada a una sola empresa
+    @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<CompanyTechnology> technologies;
 
     @OneToOne
     @JoinColumn(name = "user_id")
