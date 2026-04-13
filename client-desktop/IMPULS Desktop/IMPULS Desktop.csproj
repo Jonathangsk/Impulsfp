@@ -93,43 +93,87 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Form1.cs">
+    <Compile Include="Candidats.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Candidats.Designer.cs">
+      <DependentUpon>Candidats.cs</DependentUpon>
     </Compile>
-    <Compile Include="Form2.cs">
+    <Compile Include="CanviContrasenya.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form2.Designer.cs">
-      <DependentUpon>Form2.cs</DependentUpon>
+    <Compile Include="CanviContrasenya.Designer.cs">
+      <DependentUpon>CanviContrasenya.cs</DependentUpon>
     </Compile>
-    <Compile Include="Form4.cs">
+    <Compile Include="Empresa.cs" />
+    <Compile Include="PerfilDeEmpresa.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form4.Designer.cs">
-      <DependentUpon>Form4.cs</DependentUpon>
+    <Compile Include="PerfilDeEmpresa.Designer.cs">
+      <DependentUpon>PerfilDeEmpresa.cs</DependentUpon>
     </Compile>
-    <Compile Include="Form3.cs">
+    <Compile Include="Oferta.cs" />
+    <Compile Include="OfertesDeTreball.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form3.Designer.cs">
-      <DependentUpon>Form3.cs</DependentUpon>
+    <Compile Include="OfertesDeTreball.Designer.cs">
+      <DependentUpon>OfertesDeTreball.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RegistreNovaEmpresa.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RegistreNovaEmpresa.Designer.cs">
+      <DependentUpon>RegistreNovaEmpresa.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Pantalla Principal.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Pantalla Principal.Designer.cs">
+      <DependentUpon>Pantalla Principal.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Administrador.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Administrador.Designer.cs">
+      <DependentUpon>Administrador.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PantallaEmpresa.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PantallaEmpresa.Designer.cs">
+      <DependentUpon>PantallaEmpresa.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="PublicarOferta.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PublicarOferta.Designer.cs">
+      <DependentUpon>PublicarOferta.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Candidats.resx">
+      <DependentUpon>Candidats.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form2.resx">
-      <DependentUpon>Form2.cs</DependentUpon>
+    <EmbeddedResource Include="CanviContrasenya.resx">
+      <DependentUpon>CanviContrasenya.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form4.resx">
-      <DependentUpon>Form4.cs</DependentUpon>
+    <EmbeddedResource Include="PerfilDeEmpresa.resx">
+      <DependentUpon>PerfilDeEmpresa.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form3.resx">
-      <DependentUpon>Form3.cs</DependentUpon>
+    <EmbeddedResource Include="OfertesDeTreball.resx">
+      <DependentUpon>OfertesDeTreball.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pantalla Principal.resx">
+      <DependentUpon>Pantalla Principal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Administrador.resx">
+      <DependentUpon>Administrador.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PantallaEmpresa.resx">
+      <DependentUpon>PantallaEmpresa.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RegistreNovaEmpresa.resx">
+      <DependentUpon>RegistreNovaEmpresa.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -140,6 +184,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="PublicarOferta.resx">
+      <DependentUpon>PublicarOferta.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

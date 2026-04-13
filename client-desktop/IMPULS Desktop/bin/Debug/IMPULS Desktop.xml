@@ -4,14 +4,99 @@
         <name>IMPULS Desktop</name>
     </assembly>
     <members>
-        <member name="T:IMPULS_Desktop.Form1">
+        <member name="F:IMPULS_Desktop.Candidats.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:IMPULS_Desktop.Candidats.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:IMPULS_Desktop.Candidats.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="F:IMPULS_Desktop.CanviContrasenya.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:IMPULS_Desktop.CanviContrasenya.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:IMPULS_Desktop.CanviContrasenya.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="F:IMPULS_Desktop.PerfilDeEmpresa.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:IMPULS_Desktop.PerfilDeEmpresa.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:IMPULS_Desktop.PerfilDeEmpresa.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="F:IMPULS_Desktop.OfertesDeTreball.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:IMPULS_Desktop.OfertesDeTreball.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:IMPULS_Desktop.OfertesDeTreball.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="F:IMPULS_Desktop.RegistreNovaEmpresa.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:IMPULS_Desktop.RegistreNovaEmpresa.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:IMPULS_Desktop.RegistreNovaEmpresa.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:IMPULS_Desktop.PantallaPrincipal">
             <summary>
             <author>Josep Mª</author>
             Formulari principal de l'aplicació IMPULS_Desktop.
             Gestiona el login i obre el formulari segons el tipus d'usuari.
             </summary>
         </member>
-        <member name="M:IMPULS_Desktop.Form1.ValidarUsuarioAPI(System.String,System.String)">
+        <member name="M:IMPULS_Desktop.PantallaPrincipal.ValidarUsuarioAPI(System.String,System.String)">
             <summary>
             Valida un usuari mitjançant l'API.
             </summary>
@@ -19,187 +104,134 @@
             <param name="contrasenya">Contrasenya de l'usuari.</param>
             <returns>Tupla amb l'èxit del login i el tipus d'usuari.</returns>
         </member>
-        <member name="M:IMPULS_Desktop.Form1.button1_Click(System.Object,System.EventArgs)">
+        <member name="M:IMPULS_Desktop.PantallaPrincipal.button1_Click(System.Object,System.EventArgs)">
             <summary>
             Event del botó de login. Obre el formulari corresponent segons el tipus d'usuari.
             </summary>
         </member>
-        <member name="T:IMPULS_Desktop.Form1.LoginResponse">
+        <member name="T:IMPULS_Desktop.PantallaPrincipal.LoginResponse">
             <summary>
             Representa la resposta de l'API de login.
             </summary>
         </member>
-        <member name="F:IMPULS_Desktop.Form1.components">
+        <member name="F:IMPULS_Desktop.PantallaPrincipal.components">
             <summary>
             Variable del diseñador necesaria.
             </summary>
         </member>
-        <member name="M:IMPULS_Desktop.Form1.Dispose(System.Boolean)">
+        <member name="M:IMPULS_Desktop.PantallaPrincipal.Dispose(System.Boolean)">
             <summary>
             Limpiar los recursos que se estén usando.
             </summary>
             <param name="disposing">true si los recursos administrados se deben desechar; false en caso contrario.</param>
         </member>
-        <member name="M:IMPULS_Desktop.Form1.InitializeComponent">
+        <member name="M:IMPULS_Desktop.PantallaPrincipal.InitializeComponent">
             <summary>
             Método necesario para admitir el Diseñador. No se puede modificar
             el contenido de este método con el editor de código.
             </summary>
         </member>
-        <member name="T:IMPULS_Desktop.Form2">
+        <member name="T:IMPULS_Desktop.Administrador">
             <summary>
             <author>Josep Mª</author>
             Formulari de gestió d'usuari administratiu.
             Permet tancar sessió (logout) de l'aplicació contra l'API REST.
             </summary>
         </member>
-        <member name="F:IMPULS_Desktop.Form2.client">
+        <member name="F:IMPULS_Desktop.Administrador.client">
             <summary>
             Client HTTP reutilitzable per fer peticions a l'API.
             </summary>
         </member>
-        <member name="M:IMPULS_Desktop.Form2.#ctor">
+        <member name="M:IMPULS_Desktop.Administrador.#ctor">
             <summary>
             Constructor del formulari.
             Inicialitza els components del formulari.
             </summary>
         </member>
-        <member name="M:IMPULS_Desktop.Form2.Form2_Load(System.Object,System.EventArgs)">
+        <member name="M:IMPULS_Desktop.Administrador.Form2_Load(System.Object,System.EventArgs)">
             <summary>
             Esdeveniment de càrrega del formulari.
             Actualment sense funcionalitat addicional.
             </summary>
         </member>
-        <member name="M:IMPULS_Desktop.Form2.LogoutAPI">
+        <member name="M:IMPULS_Desktop.Administrador.LogoutAPI">
             <summary>
             Realitza el logout de l'usuari a l'API.
             </summary>
             <returns>true si el logout és correcte, false en cas contrari.</returns>
         </member>
-        <member name="M:IMPULS_Desktop.Form2.button1_Click(System.Object,System.EventArgs)">
+        <member name="M:IMPULS_Desktop.Administrador.button1_Click(System.Object,System.EventArgs)">
             <summary>
             Event del botó de logout.
             Invoca LogoutAPI i, si és correcte, neteja la sessió i tanca el formulari.
             </summary>
         </member>
-        <member name="F:IMPULS_Desktop.Form2.components">
+        <member name="F:IMPULS_Desktop.Administrador.components">
             <summary>
             Required designer variable.
             </summary>
         </member>
-        <member name="M:IMPULS_Desktop.Form2.Dispose(System.Boolean)">
+        <member name="M:IMPULS_Desktop.Administrador.Dispose(System.Boolean)">
             <summary>
             Clean up any resources being used.
             </summary>
             <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         </member>
-        <member name="M:IMPULS_Desktop.Form2.InitializeComponent">
+        <member name="M:IMPULS_Desktop.Administrador.InitializeComponent">
             <summary>
             Required method for Designer support - do not modify
             the contents of this method with the code editor.
             </summary>
         </member>
-        <member name="T:IMPULS_Desktop.Form4">
+        <member name="T:IMPULS_Desktop.PantallaEmpresa">
             <summary>
             <author>Josep Mª</author>
             Formulari per a usuaris de tipus "company".
             Permet tancar sessió (logout) de l'aplicació contra l'API REST.
             </summary>
         </member>
-        <member name="F:IMPULS_Desktop.Form4.client">
+        <member name="F:IMPULS_Desktop.PantallaEmpresa.client">
             <summary>
             Client HTTP reutilitzable per fer peticions a l'API.
             </summary>
         </member>
-        <member name="M:IMPULS_Desktop.Form4.#ctor">
+        <member name="M:IMPULS_Desktop.PantallaEmpresa.#ctor">
             <summary>
             Constructor del formulari.
             Inicialitza els components del formulari.
             </summary>
         </member>
-        <member name="M:IMPULS_Desktop.Form4.Form4_Load(System.Object,System.EventArgs)">
+        <member name="M:IMPULS_Desktop.PantallaEmpresa.Form4_Load(System.Object,System.EventArgs)">
             <summary>
             Esdeveniment de càrrega del formulari.
             Actualment sense funcionalitat addicional.
             </summary>
         </member>
-        <member name="M:IMPULS_Desktop.Form4.LogoutAPI">
+        <member name="M:IMPULS_Desktop.PantallaEmpresa.LogoutAPI">
             <summary>
             Realitza el logout de l'usuari a l'API.
             </summary>
             <returns>true si el logout és correcte, false en cas contrari.</returns>
         </member>
-        <member name="M:IMPULS_Desktop.Form4.button1_Click(System.Object,System.EventArgs)">
+        <member name="M:IMPULS_Desktop.PantallaEmpresa.button1_Click(System.Object,System.EventArgs)">
             <summary>
             Event del botó de logout.
             Invoca LogoutAPI i, si és correcte, neteja la sessió i tanca el formulari.
             </summary>
         </member>
-        <member name="F:IMPULS_Desktop.Form4.components">
+        <member name="F:IMPULS_Desktop.PantallaEmpresa.components">
             <summary>
             Required designer variable.
             </summary>
         </member>
-        <member name="M:IMPULS_Desktop.Form4.Dispose(System.Boolean)">
+        <member name="M:IMPULS_Desktop.PantallaEmpresa.Dispose(System.Boolean)">
             <summary>
             Clean up any resources being used.
             </summary>
             <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         </member>
-        <member name="M:IMPULS_Desktop.Form4.InitializeComponent">
-            <summary>
-            Required method for Designer support - do not modify
-            the contents of this method with the code editor.
-            </summary>
-        </member>
-        <member name="T:IMPULS_Desktop.Form3">
-            <summary>
-            <author>Josep Mª</author>
-            Formulari per a usuaris de tipus "student".
-            Permet tancar sessió (logout) de l'aplicació contra l'API REST.
-            </summary>
-        </member>
-        <member name="F:IMPULS_Desktop.Form3.client">
-            <summary>
-            Client HTTP reutilitzable per fer peticions a l'API.
-            </summary>
-        </member>
-        <member name="M:IMPULS_Desktop.Form3.#ctor">
-            <summary>
-            Constructor del formulari.
-            Inicialitza els components del formulari.
-            </summary>
-        </member>
-        <member name="M:IMPULS_Desktop.Form3.Form5_Load(System.Object,System.EventArgs)">
-            <summary>
-            Esdeveniment de càrrega del formulari.
-            Actualment sense funcionalitat addicional.
-            </summary>
-        </member>
-        <member name="M:IMPULS_Desktop.Form3.LogoutAPI">
-            <summary>
-            Realitza el logout de l'usuari a l'API.
-            </summary>
-            <returns>true si el logout és correcte, false en cas contrari.</returns>
-        </member>
-        <member name="M:IMPULS_Desktop.Form3.button1_Click(System.Object,System.EventArgs)">
-            <summary>
-            Event del botó de logout.
-            Invoca LogoutAPI i, si és correcte, neteja la sessió i tanca el formulari.
-            </summary>
-        </member>
-        <member name="F:IMPULS_Desktop.Form3.components">
-            <summary>
-            Required designer variable.
-            </summary>
-        </member>
-        <member name="M:IMPULS_Desktop.Form3.Dispose(System.Boolean)">
-            <summary>
-            Clean up any resources being used.
-            </summary>
-            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-        </member>
-        <member name="M:IMPULS_Desktop.Form3.InitializeComponent">
+        <member name="M:IMPULS_Desktop.PantallaEmpresa.InitializeComponent">
             <summary>
             Required method for Designer support - do not modify
             the contents of this method with the code editor.
@@ -208,6 +240,23 @@
         <member name="M:IMPULS_Desktop.Program.Main">
             <summary>
             Punto de entrada principal para la aplicación.
+            </summary>
+        </member>
+        <member name="F:IMPULS_Desktop.PublicarOferta.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:IMPULS_Desktop.PublicarOferta.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:IMPULS_Desktop.PublicarOferta.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
             </summary>
         </member>
         <member name="T:IMPULS_Desktop.Properties.Resources">

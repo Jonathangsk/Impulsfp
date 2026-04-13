@@ -42,7 +42,7 @@ namespace IMPULS.Tests
                         // Si la resposta és correcta, deserialitzem el JSON de l'API
 
                         var responseString = await response.Content.ReadAsStringAsync();
-                        var loginResponse = JsonSerializer.Deserialize<Form1.LoginResponse>(
+                        var loginResponse = JsonSerializer.Deserialize<PantallaPrincipal.LoginResponse>(
                             responseString,
                             new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
                         );
@@ -52,7 +52,7 @@ namespace IMPULS.Tests
                             // Guardem SessionId i retornem el tipus d'usuari en majúscules
                            
                             string tipus = loginResponse.UserType.Trim().ToUpper();
-                            Form1.SessionId = loginResponse.SessionId;
+                            PantallaPrincipal.SessionId = loginResponse.SessionId;
                             return (true, tipus);
                         }
                     }
