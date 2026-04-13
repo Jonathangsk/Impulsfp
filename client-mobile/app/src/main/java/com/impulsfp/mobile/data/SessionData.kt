@@ -26,7 +26,7 @@ object SessionData {
     fun logout() {
         currentUser = null
     }
-
+    fun clear() = logout()
     /**
      * Indica si hi ha un ususari autenticat actualment.
      *
