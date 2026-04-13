@@ -55,6 +55,7 @@ fun MenuScreen(
     onLogout: () -> Unit,
     onProfileClick: () -> Unit,
     onOfferClick: (String) -> Unit,
+    onApplicationsClick: () -> Unit,
     menuViewModel: MenuViewModel = viewModel(),
     offersViewModel: OffersViewModel = viewModel()
 ) {
@@ -83,9 +84,8 @@ fun MenuScreen(
          */
         AppTopBar(
             name = profile.name,
-            avatarId = profile.avatarId,
             onHomeClick = { },
-            onApplicationsClick = { },
+            onApplicationsClick = onApplicationsClick,
             onProfileClick = onProfileClick,
             onLogoutClick = {
                 menuViewModel.logout {

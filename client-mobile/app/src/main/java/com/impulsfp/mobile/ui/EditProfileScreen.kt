@@ -1,8 +1,7 @@
 package com.impulsfp.mobile.ui
 
-import androidx.compose.foundation.background
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -10,41 +9,42 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.impulsfp.mobile.data.SessionData
 
 @Composable
 fun EditProfileScreen(
     onHomeClick: () -> Unit,
     onSaveSuccess: () -> Unit,
     onProfileClick: () -> Unit,
+    onApplicationsClick: () -> Unit,
     onLogout: () -> Unit,
     menuViewModel: MenuViewModel = viewModel(),
     profileViewModel: ProfileViewModel = viewModel()
@@ -79,16 +79,25 @@ fun EditProfileScreen(
     var portfolio by remember(currentProfile.portfolio) {
         mutableStateOf(currentProfile.portfolio)
     }
-    var avatarId by remember(currentProfile.avatarId) { mutableIntStateOf(currentProfile.avatarId) }
+
+    var showDeleteDialog by remember { mutableStateOf(false) }
+    var deletePassword by remember { mutableStateOf("") }
+    var deleteError by remember { mutableStateOf<String?>(null) }
+
+    var showChangePasswordDialog by remember { mutableStateOf(false) }
+    var currentPassword by remember { mutableStateOf("") }
+    var newPassword by remember { mutableStateOf("") }
+    var confirmNewPassword by remember { mutableStateOf("") }
+    var changePasswordError by remember { mutableStateOf<String?>(null) }
+    var changePasswordInfo by remember { mutableStateOf<String?>(null) }
 
     Column(
         modifier = Modifier.fillMaxSize()
     ) {
         AppTopBar(
             name = name,
-            avatarId = avatarId,
             onHomeClick = onHomeClick,
-            onApplicationsClick = { },
+            onApplicationsClick = onApplicationsClick,
             onProfileClick = onProfileClick,
             onLogoutClick = {
                 menuViewModel.logout {
@@ -116,42 +125,6 @@ fun EditProfileScreen(
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.error
             )
-
-            Spacer(modifier = Modifier.height(24.dp))
-
-            Column(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Box(
-                    modifier = Modifier
-                        .size(110.dp)
-                        .clip(CircleShape)
-                        .background(getEditAvatarColor(avatarId)),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(
-                        text = name.take(1).ifEmpty { "?" }.uppercase(),
-                        style = MaterialTheme.typography.headlineLarge,
-                        color = Color.White
-                    )
-                }
-
-                Spacer(modifier = Modifier.height(12.dp))
-
-                Button(
-                    onClick = {
-                        avatarId = when (avatarId) {
-                            1 -> 2
-                            2 -> 3
-                            3 -> 4
-                            else -> 1
-                        }
-                    }
-                ) {
-                    Text("Canviar avatar")
-                }
-            }
 
             Spacer(modifier = Modifier.height(24.dp))
 
@@ -197,7 +170,6 @@ fun EditProfileScreen(
                     value = phoneNumber,
                     onValueChange = { phoneNumber = it },
                     label = "Telèfon",
-                    required = false,
                     keyboardType = KeyboardType.Phone
                 )
 
@@ -309,8 +281,7 @@ fun EditProfileScreen(
                             preferredRolesText = preferredRolesText,
                             preferredLocation = preferredLocation,
                             availability = availability,
-                            portfolio = portfolio,
-                            avatarId = avatarId
+                            portfolio = portfolio
                         )
 
                         if (saved) {
@@ -323,9 +294,284 @@ fun EditProfileScreen(
                 }
             }
 
+            Spacer(modifier = Modifier.height(16.dp))
+
+            OutlinedButton(
+                onClick = {
+                    currentPassword = ""
+                    newPassword = ""
+                    confirmNewPassword = ""
+                    changePasswordError = null
+                    changePasswordInfo = null
+                    showChangePasswordDialog = true
+                },
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text("Canviar contrasenya")
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Button(
+                onClick = {
+                    deletePassword = ""
+                    deleteError = null
+                    showDeleteDialog = true
+                },
+                modifier = Modifier.fillMaxWidth(),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color(0xFFD32F2F),
+                    contentColor = Color.White
+                )
+            ) {
+                Text("Eliminar compte")
+            }
+
             Spacer(modifier = Modifier.height(20.dp))
         }
     }
+
+    if (showChangePasswordDialog) {
+        AlertDialog(
+            onDismissRequest = {
+                showChangePasswordDialog = false
+            },
+            title = {
+                Text("Canviar contrasenya")
+            },
+            text = {
+                Column {
+                    OutlinedTextField(
+                        value = currentPassword,
+                        onValueChange = {
+                            currentPassword = it
+                            changePasswordError = null
+                            changePasswordInfo = null
+                        },
+                        label = { Text("Contrasenya actual") },
+                        visualTransformation = PasswordVisualTransformation(),
+                        singleLine = true,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+
+                    Spacer(modifier = Modifier.height(12.dp))
+
+                    OutlinedTextField(
+                        value = newPassword,
+                        onValueChange = {
+                            newPassword = it
+                            changePasswordError = null
+                            changePasswordInfo = null
+                        },
+                        label = { Text("Nova contrasenya") },
+                        visualTransformation = PasswordVisualTransformation(),
+                        singleLine = true,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+
+                    Spacer(modifier = Modifier.height(12.dp))
+
+                    OutlinedTextField(
+                        value = confirmNewPassword,
+                        onValueChange = {
+                            confirmNewPassword = it
+                            changePasswordError = null
+                            changePasswordInfo = null
+                        },
+                        label = { Text("Confirma la nova contrasenya") },
+                        visualTransformation = PasswordVisualTransformation(),
+                        singleLine = true,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+
+                    Spacer(modifier = Modifier.height(12.dp))
+
+                    Text(
+                        text = "La nova contrasenya ha de contenir com a mínim 6 caràcters, 1 majúscula, 1 minúscula i 1 número.",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+
+                    changePasswordError?.let { error ->
+                        Spacer(modifier = Modifier.height(8.dp))
+                        Text(
+                            text = error,
+                            color = MaterialTheme.colorScheme.error,
+                            style = MaterialTheme.typography.bodyMedium
+                        )
+                    }
+
+                    changePasswordInfo?.let { info ->
+                        Spacer(modifier = Modifier.height(8.dp))
+                        Text(
+                            text = info,
+                            color = MaterialTheme.colorScheme.primary,
+                            style = MaterialTheme.typography.bodyMedium
+                        )
+                    }
+                }
+            },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        val passwordError = validatePasswordChange(
+                            currentPassword = currentPassword,
+                            newPassword = newPassword,
+                            confirmNewPassword = confirmNewPassword
+                        )
+
+                        if (passwordError != null) {
+                            changePasswordError = passwordError
+                            return@TextButton
+                        }
+
+                        changePasswordInfo =
+                            "Funcionalitat preparada a la UI. Pendent de connectar amb backend."
+                    }
+                ) {
+                    Text("Confirmar")
+                }
+            },
+            dismissButton = {
+                TextButton(
+                    onClick = {
+                        showChangePasswordDialog = false
+                    }
+                ) {
+                    Text("Cancel·lar")
+                }
+            }
+        )
+    }
+
+    if (showDeleteDialog) {
+        AlertDialog(
+            onDismissRequest = {
+                showDeleteDialog = false
+            },
+            title = {
+                Text("Eliminar compte")
+            },
+            text = {
+                Column {
+                    Text("Introdueix la teva contrasenya per confirmar l'eliminació del compte.")
+
+                    Spacer(modifier = Modifier.height(12.dp))
+
+                    OutlinedTextField(
+                        value = deletePassword,
+                        onValueChange = {
+                            deletePassword = it
+                            deleteError = null
+                        },
+                        label = { Text("Contrasenya") },
+                        visualTransformation = PasswordVisualTransformation(),
+                        singleLine = true,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+
+                    deleteError?.let { error ->
+                        Spacer(modifier = Modifier.height(8.dp))
+                        Text(
+                            text = error,
+                            color = MaterialTheme.colorScheme.error,
+                            style = MaterialTheme.typography.bodyMedium
+                        )
+                    }
+                }
+            },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        val sessionId = SessionData.getSessionId()
+
+                        if (sessionId == null) {
+                            deleteError = "No hi ha cap sessió activa"
+                            return@TextButton
+                        }
+
+                        if (deletePassword.isBlank()) {
+                            deleteError = "Has d'introduir la contrasenya"
+                            return@TextButton
+                        }
+
+                        profileViewModel.deleteAccount(
+                            sessionId = sessionId,
+                            password = deletePassword,
+                            onSuccess = {
+                                showDeleteDialog = false
+                                onLogout()
+                            },
+                            onError = { error ->
+                                deleteError = error
+                            }
+                        )
+                    }
+                ) {
+                    Text(
+                        text = "Confirmar",
+                        color = MaterialTheme.colorScheme.error
+                    )
+                }
+            },
+            dismissButton = {
+                TextButton(
+                    onClick = {
+                        showDeleteDialog = false
+                    }
+                ) {
+                    Text("Cancel·lar")
+                }
+            }
+        )
+    }
+}
+
+private fun validatePasswordChange(
+    currentPassword: String,
+    newPassword: String,
+    confirmNewPassword: String
+): String? {
+    if (currentPassword.isBlank()) {
+        return "Has d'introduir la contrasenya actual."
+    }
+
+    if (newPassword.isBlank()) {
+        return "Has d'introduir la nova contrasenya."
+    }
+
+    val requirements = mutableListOf<String>()
+
+    if (newPassword.length < 6) {
+        requirements.add("• mínim 6 caràcters")
+    }
+    if (!newPassword.any { it.isUpperCase() }) {
+        requirements.add("• 1 majúscula")
+    }
+    if (!newPassword.any { it.isLowerCase() }) {
+        requirements.add("• 1 minúscula")
+    }
+    if (!newPassword.any { it.isDigit() }) {
+        requirements.add("• 1 número")
+    }
+
+    if (requirements.isNotEmpty()) {
+        return "La nova contrasenya ha de contenir:\n${requirements.joinToString("\n")}"
+    }
+
+    if (confirmNewPassword.isBlank()) {
+        return "Has de confirmar la nova contrasenya."
+    }
+
+    if (newPassword != confirmNewPassword) {
+        return "Les contrasenyes no coincideixen."
+    }
+
+    if (currentPassword == newPassword) {
+        return "La nova contrasenya ha de ser diferent de l'actual."
+    }
+
+    return null
 }
 
 @Composable
@@ -410,13 +656,4 @@ private fun RequiredLabel(
             }
         }
     )
-}
-
-private fun getEditAvatarColor(avatarId: Int): Color {
-    return when (avatarId) {
-        1 -> Color(0xFF4CAF50)
-        2 -> Color(0xFF2196F3)
-        3 -> Color(0xFFFF9800)
-        else -> Color(0xFF9C27B0)
-    }
 }

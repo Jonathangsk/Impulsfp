@@ -16,6 +16,8 @@ import androidx.navigation.NavType
 import androidx.navigation.navArgument
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.impulsfp.mobile.ui.OffersViewModel
+import com.impulsfp.mobile.ui.ApplicationsScreen
+import com.impulsfp.mobile.ui.ProfileViewModel
 
 /**
  * Defineix les rutes de navegació de l'aplicació.
@@ -30,6 +32,7 @@ sealed class AppScreen(val route: String) {
     object Menu : AppScreen("menu")
     object Profile : AppScreen("profile")
     object EditProfile : AppScreen("edit_profile")
+    object Applications : AppScreen("applications")
     object OfferDetail : AppScreen("offer_detail/{offerId}") {
         fun createRoute(offerId: String) = "offer_detail/$offerId"
     }
@@ -38,11 +41,11 @@ sealed class AppScreen(val route: String) {
 /**
  * Gestiona la navegació principal de l'aplicació.
  *
- * @param loginScreen Pantalla de login.
- * @param menuScreen Pantalla de menú.
- * @param profileScreen Pantalla de perfil.
- * @param editProfileScreen Pantalla d'edició del perfil.
- * @param registerScreen Pantalla de registre d'usuari.
+ * @param LoginScreen Pantalla de login.
+ * @param MenuScreen Pantalla de menú.
+ * @param ProfileScreen Pantalla de perfil.
+ * @param EditProfileScreen Pantalla d'edició del perfil.
+ * @param RegisterScreen Pantalla de registre d'usuari.
  *
  * @author abenitez
  */
@@ -90,6 +93,9 @@ fun AppNavigation() {
                 onProfileClick = {
                     navController.navigate(AppScreen.Profile.route)
                 },
+                onApplicationsClick = {
+                    navController.navigate(AppScreen.Applications.route)
+                },
                 onOfferClick = { offerId ->
                     navController.navigate(AppScreen.OfferDetail.createRoute(offerId))
                 }
@@ -107,17 +113,19 @@ fun AppNavigation() {
             val offersUiState by offersViewModel.uiState.collectAsState()
             val offer = offersUiState.offers.find { it.id == offerId }
 
-            val profile = com.impulsfp.mobile.data.ProfileRepository.getProfile()
-
+            val profileViewModel: ProfileViewModel = viewModel()
+            val profile = profileViewModel.profile
             if (offer != null) {
                 OfferDetailScreen(
                     offer = offer,
                     userName = profile.name,
-                    avatarId = profile.avatarId,
                     onHomeClick = {
                         navController.navigate(AppScreen.Menu.route) {
                             popUpTo(AppScreen.Menu.route) { inclusive = false }
                         }
+                    },
+                    onApplicationsClick = {
+                        navController.navigate(AppScreen.Applications.route)
                     },
                     onProfileClick = {
                         navController.navigate(AppScreen.Profile.route)
@@ -145,6 +153,9 @@ fun AppNavigation() {
                 onEditProfile = {
                     navController.navigate(AppScreen.EditProfile.route)
                 },
+                onApplicationsClick = {
+                    navController.navigate(AppScreen.Applications.route)
+                },
                 onLogout = {
                     navController.navigate(AppScreen.Login.route) {
                         popUpTo(0)
@@ -165,6 +176,26 @@ fun AppNavigation() {
                 },
                 onProfileClick = {
                     navController.popBackStack()
+                },
+                onApplicationsClick = {
+                    navController.navigate(AppScreen.Applications.route)
+                },
+                onLogout = {
+                    navController.navigate(AppScreen.Login.route) {
+                        popUpTo(0)
+                    }
+                }
+            )
+        }
+        composable(AppScreen.Applications.route) {
+            ApplicationsScreen(
+                onHomeClick = {
+                    navController.navigate(AppScreen.Menu.route) {
+                        popUpTo(AppScreen.Menu.route) { inclusive = false }
+                    }
+                },
+                onProfileClick = {
+                    navController.navigate(AppScreen.Profile.route)
                 },
                 onLogout = {
                     navController.navigate(AppScreen.Login.route) {

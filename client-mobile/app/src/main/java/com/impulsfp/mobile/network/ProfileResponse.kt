@@ -15,5 +15,4 @@ data class ProfileResponse(
     val preferredLocation: String?,
     val availability: String?,
     val portfolio: String?,
-    val avatarId: Int?
 )

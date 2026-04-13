@@ -58,8 +58,7 @@ class ProfileViewModel : ViewModel() {
         preferredRolesText: String,
         preferredLocation: String,
         availability: String,
-        portfolio: String,
-        avatarId: Int
+        portfolio: String
     ): Boolean {
         val isValid = validateProfile(
             name = name,
@@ -84,8 +83,7 @@ class ProfileViewModel : ViewModel() {
             preferredRoles = preferredRolesText.toListFromCommaText(),
             preferredLocation = preferredLocation.trim(),
             availability = availability.trim(),
-            portfolio = portfolio.trim(),
-            avatarId = avatarId
+            portfolio = portfolio.trim()
         )
 
         ProfileRepository.updateProfile(updatedProfile)

@@ -28,7 +28,6 @@ import com.impulsfp.mobile.ui.theme.TextPrimary
 @Composable
 fun AppTopBar(
     name: String?,
-    avatarId: Int,
     onHomeClick: () -> Unit,
     onApplicationsClick: () -> Unit,
     onProfileClick: () -> Unit,

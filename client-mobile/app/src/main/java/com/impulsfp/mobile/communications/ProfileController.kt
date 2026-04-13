@@ -34,8 +34,7 @@ open class ProfileController {
                         preferredRoles = body.preferredRoles ?: emptyList(),
                         preferredLocation = body.preferredLocation ?: "",
                         availability = body.availability ?: "",
-                        portfolio = body.portfolio ?: "",
-                        avatarId = body.avatarId ?: 1
+                        portfolio = body.portfolio ?: ""
                     )
 
                     Result.success(profile)

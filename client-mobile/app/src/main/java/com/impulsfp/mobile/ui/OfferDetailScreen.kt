@@ -31,13 +31,13 @@ import com.impulsfp.mobile.data.Offer
 fun OfferDetailScreen(
     offer: Offer,
     userName: String,
-    avatarId: Int,
     onHomeClick: () -> Unit,
+    onApplicationsClick: () -> Unit,
     onProfileClick: () -> Unit,
     onLogoutClick: () -> Unit,
     onApplyClick: () -> Unit,
     onBackClick: () -> Unit
-) {
+    ) {
     val context = LocalContext.current
 
     Column(
@@ -45,9 +45,8 @@ fun OfferDetailScreen(
     ) {
         AppTopBar(
             name = userName,
-            avatarId = avatarId,
             onHomeClick = onHomeClick,
-            onApplicationsClick = { },
+            onApplicationsClick = onApplicationsClick,
             onProfileClick = onProfileClick,
             onLogoutClick = onLogoutClick
         )

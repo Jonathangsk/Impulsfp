@@ -23,5 +23,4 @@ data class UserProfile(
     val preferredLocation: String,
     val availability: String,
     val portfolio: String,
-    val avatarId: Int = 0
 )

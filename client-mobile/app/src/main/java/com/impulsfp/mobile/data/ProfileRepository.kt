@@ -23,7 +23,6 @@ object ProfileRepository {
         preferredLocation = "Barcelona",
         availability = "Matins",
         portfolio = "https://github.com/albeniri",
-        avatarId = 1
     )
 
     fun getProfile(): UserProfile {

@@ -17,28 +17,20 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.impulsfp.mobile.data.SessionData
@@ -47,6 +39,7 @@ import com.impulsfp.mobile.data.SessionData
 fun ProfileScreen(
     onHomeClick: () -> Unit,
     onEditProfile: () -> Unit,
+    onApplicationsClick: () -> Unit,
     onLogout: () -> Unit,
     menuViewModel: MenuViewModel = viewModel(),
     profileViewModel: ProfileViewModel = viewModel()
@@ -54,10 +47,6 @@ fun ProfileScreen(
     val profile = profileViewModel.profile
     val context = LocalContext.current
     val fullName = "${profile.name} ${profile.surname}".trim()
-
-    var showDeleteDialog by remember { mutableStateOf(false) }
-    var deletePassword by remember { mutableStateOf("") }
-    var deleteError by remember { mutableStateOf<String?>(null) }
 
     LaunchedEffect(Unit) {
         val sessionId = SessionData.getSessionId()
@@ -71,9 +60,8 @@ fun ProfileScreen(
     ) {
         AppTopBar(
             name = profile.name,
-            avatarId = profile.avatarId,
             onHomeClick = onHomeClick,
-            onApplicationsClick = { },
+            onApplicationsClick = onApplicationsClick,
             onProfileClick = { },
             onLogoutClick = {
                 menuViewModel.logout {
@@ -101,21 +89,6 @@ fun ProfileScreen(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Box(
-                    modifier = Modifier
-                        .size(110.dp)
-                        .clip(CircleShape)
-                        .background(getAvatarColor(profile.avatarId)),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(
-                        text = profile.name.take(1).uppercase(),
-                        style = MaterialTheme.typography.headlineLarge,
-                        color = Color.White
-                    )
-                }
-
-                Spacer(modifier = Modifier.height(12.dp))
 
                 Text(
                     text = fullName.ifBlank { "Usuari" },
@@ -204,100 +177,8 @@ fun ProfileScreen(
                 Text("Editar perfil")
             }
 
-            Spacer(modifier = Modifier.height(12.dp))
-
-            OutlinedButton(
-                onClick = {
-                    deletePassword = ""
-                    deleteError = null
-                    showDeleteDialog = true
-                },
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Text("Eliminar compte")
-            }
-
             Spacer(modifier = Modifier.height(20.dp))
         }
-    }
-
-    if (showDeleteDialog) {
-        AlertDialog(
-            onDismissRequest = {
-                showDeleteDialog = false
-            },
-            title = {
-                Text("Eliminar compte")
-            },
-            text = {
-                Column {
-                    Text("Introdueix la teva contrasenya per confirmar l'eliminació del compte.")
-
-                    Spacer(modifier = Modifier.height(12.dp))
-
-                    OutlinedTextField(
-                        value = deletePassword,
-                        onValueChange = {
-                            deletePassword = it
-                            deleteError = null
-                        },
-                        label = { Text("Contrasenya") },
-                        visualTransformation = PasswordVisualTransformation(),
-                        singleLine = true,
-                        modifier = Modifier.fillMaxWidth()
-                    )
-
-                    deleteError?.let { error ->
-                        Spacer(modifier = Modifier.height(8.dp))
-                        Text(
-                            text = error,
-                            color = MaterialTheme.colorScheme.error,
-                            style = MaterialTheme.typography.bodyMedium
-                        )
-                    }
-                }
-            },
-            confirmButton = {
-                TextButton(
-                    onClick = {
-                        val sessionId = SessionData.getSessionId()
-
-                        if (sessionId == null) {
-                            deleteError = "No hi ha cap sessió activa"
-                            return@TextButton
-                        }
-
-                        if (deletePassword.isBlank()) {
-                            deleteError = "Has d'introduir la contrasenya"
-                            return@TextButton
-                        }
-
-                        profileViewModel.deleteAccount(
-                            sessionId = sessionId,
-                            password = deletePassword,
-                            onSuccess = {
-                                showDeleteDialog = false
-                                onLogout()
-                            },
-                            onError = { error ->
-                                deleteError = error
-                            }
-                        )
-                    }
-                ) {
-                    Text("Confirmar")
-                }
-            },
-            dismissButton = {
-                TextButton(
-                    onClick = {
-                        showDeleteDialog = false
-                    }
-                ) {
-                    Text("Cancel·lar")
-                }
-            }
-        )
     }
 }
 
@@ -382,14 +263,5 @@ private fun ProfileChipSection(
                 }
             }
         }
-    }
-}
-
-private fun getAvatarColor(avatarId: Int): Color {
-    return when (avatarId) {
-        1 -> Color(0xFF4CAF50)
-        2 -> Color(0xFF2196F3)
-        3 -> Color(0xFFFF9800)
-        else -> Color(0xFF9C27B0)
     }
 }
