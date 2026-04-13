@@ -1,6 +1,7 @@
 package com.impulsfp.mobile.ui
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -46,6 +47,7 @@ import com.impulsfp.mobile.R
 @Composable
 fun LoginScreen(
     onLoginSuccess: () -> Unit,
+    onRegisterClick: () -> Unit,
     loginViewModel: LoginViewModel = viewModel()
 ) {
     val uiState by loginViewModel.uiState.collectAsState()
@@ -123,6 +125,16 @@ fun LoginScreen(
                     Text("Iniciar Sessió")
                 }
             }
+
+            Text(
+                text = "No tens compte? Registra’t",
+                color = MaterialTheme.colorScheme.primary,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable { onRegisterClick() }
+                    .padding(top = 8.dp),
+                textAlign = TextAlign.Center
+            )
         }
     }
 
