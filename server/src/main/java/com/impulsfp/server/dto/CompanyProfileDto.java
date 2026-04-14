@@ -1,22 +1,15 @@
-package com.impulsfp.server.model;
-
-import jakarta.persistence.*;
+package com.impulsfp.server.dto;
 
 import java.util.List;
 
 /**
- * Entitat que representa una empresa dins del sistema; conté informació bàsica de l'empresa i està associada a un usuari.
+ * DTO per representar les dades del perfil d'empresa enviades al client
  *
  * @author Jonathan Giraldo Giraldo
  */
-@Entity
-@Table(name = "companies")
-public class Company {
+public class CompanyProfileDto {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+    private String username;
     private String name;
     private String email;
     private String address;
@@ -28,29 +21,12 @@ public class Company {
     private String niche;
     private Integer activeOffers;
 
-    //relació one-to-many amb CompanyTechnology, on una empresa pot tenir moltes tecnologies, però cada tecnologia está associada a una sola empresa
-    @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<CompanyTechnology> technologies;
+    private List<String> technologies;
 
-    @OneToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    // getters & setters
 
-    // GETTERS & SETTERS
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public List<CompanyTechnology> getTechnologies() {
-        return technologies;
-    }
-
-    public void setTechnologies(List<CompanyTechnology> technologies) {
-        this.technologies = technologies;
-    }
-
-    public Long getId() { return id; }
+    public String getUsername() { return username; }
+    public void setUsername(String username) { this.username = username; }
 
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
@@ -76,6 +52,6 @@ public class Company {
     public Integer getActiveOffers() { return activeOffers; }
     public void setActiveOffers(Integer activeOffers) { this.activeOffers = activeOffers; }
 
-    public User getUser() { return user; }
-    public void setUser(User user) { this.user = user; }
+    public List<String> getTechnologies() { return technologies; }
+    public void setTechnologies(List<String> technologies) { this.technologies = technologies; }
 }
