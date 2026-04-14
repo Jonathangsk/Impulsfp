@@ -3,6 +3,7 @@ package com.impulsfp.mobile.communications
 import com.impulsfp.mobile.data.User
 import com.impulsfp.mobile.network.ApiClient
 import com.impulsfp.mobile.network.LoginRequest
+import com.impulsfp.mobile.network.RegisterRequest
 import java.io.IOException
 import java.net.ConnectException
 import java.net.SocketTimeoutException
@@ -108,6 +109,45 @@ open class AuthController {
         }
     }
 
+    open suspend fun registerStudent(
+        request: RegisterRequest
+    ): Result<User> {
+        return try {
+            val response = apiService.registerStudent(request)
+
+            if (response.isSuccessful) {
+                val body = response.body()
+
+                if (body != null) {
+                    val user = User(
+                        username = request.username,
+                        role = mapUserType(body.userType),
+                        sessionId = body.sessionId
+                    )
+                    Result.success(user)
+                } else {
+                    Result.failure(Exception("Resposta buida del servidor"))
+                }
+            } else {
+                when (response.code()) {
+                    400 -> Result.failure(Exception("L'usuari o correu electrònic ja existeix"))
+                    500, 502, 503 -> Result.failure(Exception("El servidor no està disponible temporalment"))
+                    else -> Result.failure(Exception("Error del servidor: ${response.code()}"))
+                }
+            }
+        } catch (e: UnknownHostException) {
+            Result.failure(Exception("No s'ha pogut localitzar el servidor"))
+        } catch (e: ConnectException) {
+            Result.failure(Exception("No s'ha pogut connectar amb el servidor"))
+        } catch (e: SocketTimeoutException) {
+            Result.failure(Exception("Temps d'espera esgotat en connectar amb el servidor"))
+        } catch (e: IOException) {
+            Result.failure(Exception("Error de xarxa en connectar amb el servidor"))
+        } catch (e: Exception) {
+            Result.failure(Exception("S'ha produït un error inesperat"))
+        }
+    }
+
     /**
      * Converteix el tipus d'usuari retornat pel backend al rol intern
      * utilitzat per la interfície de l'app.
@@ -131,4 +171,6 @@ open class AuthController {
             else -> "DESCONEGUT"
         }
     }
+
+
 }

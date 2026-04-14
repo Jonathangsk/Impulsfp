@@ -42,4 +42,9 @@ interface AuthApiService {
     suspend fun logout(
         @Query("sessionId") sessionId: String
     ): Response<LogoutResponse>
+
+    @POST("auth/register/student")
+    suspend fun registerStudent(
+        @Body request: RegisterRequest
+    ): Response<RegisterResponse>
 }
