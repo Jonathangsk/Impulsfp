@@ -2,17 +2,16 @@ package com.impulsfp.server.service;
 
 import com.impulsfp.server.exception.ApiException;
 import com.impulsfp.server.exception.ErrorCode;
-import com.impulsfp.server.model.Company;
-import com.impulsfp.server.model.Student;
-import com.impulsfp.server.model.User;
-import com.impulsfp.server.repository.CompanyRepository;
-import com.impulsfp.server.repository.StudentRepository;
-import com.impulsfp.server.repository.UserRepository;
+import com.impulsfp.server.model.*;
+import com.impulsfp.server.repository.*;
 import com.impulsfp.server.session.SessionManager;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import com.impulsfp.server.mapper.ProfileMapper;
+
+import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -28,15 +27,22 @@ public class UserService {
     private final ProfileMapper profileMapper;
     private final StudentRepository studentRepository;
     private final CompanyRepository companyRepository;
+    private final StudentSkillRepository studentSkillRepository;
+    private final CompanyTechnologyRepository companyTechnologyRepository;
+
 
     public UserService(UserRepository userRepository,
                        StudentRepository studentRepository,
                        CompanyRepository companyRepository,
+                       StudentSkillRepository studentSkillRepository,
+                       CompanyTechnologyRepository companyTechnologyRepository,
                        ProfileMapper profileMapper) {
 
         this.userRepository = userRepository;
         this.studentRepository = studentRepository;
         this.companyRepository = companyRepository;
+        this.studentSkillRepository = studentSkillRepository;
+        this.companyTechnologyRepository = companyTechnologyRepository;
         this.profileMapper = profileMapper;
     }
 
@@ -70,8 +76,8 @@ public class UserService {
 
     /**
      * Obté el perfil de l'usuari associat a la sessió actual. Verifica que la sessió és vàlida abans de procedir amb l'obtenció del perfil.
-     * @param sessionId
-     * @return
+     * @param sessionId identificador de sessió que s'ha d'utilitzar per identificar l'usuari del qual es vol obtenir el perfil, proporcionado como parámetro de la petición
+     * @return un objecte que representa les dades del perfil de l'usuari
      */
     public Object getMyProfile(String sessionId){
 
@@ -102,6 +108,149 @@ public class UserService {
     }
 
 
+    /**
+     * Actualitza el perfil de l'usuari associat a la sessió actual.
+     * @param sessionId identificador de sessió que s'ha d'utilitzar per identificar l'usuari del qual es vol actualitzar el perfil, proporcionat com a paràmetre de la petició
+     * @param body objecte JSON que conté les dades del perfil que es vol actualitzar, proporcionat al cos de la petició; el format del JSON dependrà de les dades que es vulguin actualitzar, però pot incloure camps com "name", "email", "phone", etc.
+     */
+    @Transactional
+    public void updateProfile(String sessionId, Map<String, Object> body){
+
+        if(!SessionManager.isValid(sessionId)){
+            throw new ApiException(ErrorCode.INVALID_SESSION, "Sessió no vàlida");
+        }
+
+        String username = SessionManager.getUsername(sessionId);
+
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new ApiException(ErrorCode.USER_NOT_FOUND, "Usuari no trobat"));
+
+        if(user.getRole().equals("STUDENT")){
+            updateStudent(user, body);
+            return;
+        }
+
+        if(user.getRole().equals("COMPANY")){
+            updateCompany(user, body);
+            return;
+        }
+
+        throw new ApiException(ErrorCode.USER_NOT_FOUND, "Tipus d'usuari no vàlid");
+    }
+
+
+    /**
+     * Actualitza el perfil de l'estudiant associat a l'usuari
+     * @param user objecte User que representa l'usuari del qual es vol actualitzar el perfil d'estudiant
+     * @param body objecte JSON que conté les dades del perfil d'estudiant que es vol actualitzar, proporcionat al cos de la petició; el format del JSON dependrà de les dades que es vulguin actualitzar, però pot incloure camps com "city", "bio", "preferredLocation", "availability", "portfolio", "experienceLevel", "languages", "preferredRoles" i "skills"
+     */
+    private void updateStudent(User user, Map<String, Object> body){
+
+        Student student = studentRepository.findByUser(user)
+                .orElseThrow(() -> new ApiException(ErrorCode.USER_NOT_FOUND, "Estudiant no trobat"));
+
+        //si el JSON conté un camp "city", actualitza el camp city de l'estudiant; si no, deixa el valor actual; el mateix s'aplica a la resta
+        if(body.containsKey("city"))
+            student.setCity((String) body.get("city"));
+
+        if(body.containsKey("bio"))
+            student.setBio((String) body.get("bio"));
+
+        if(body.containsKey("preferredLocation"))
+            student.setPreferredLocation((String) body.get("preferredLocation"));
+
+        if(body.containsKey("availability"))
+            student.setAvailability((String) body.get("availability"));
+
+        if(body.containsKey("portfolio"))
+            student.setPortfolio((String) body.get("portfolio"));
+
+        if(body.containsKey("experienceLevel"))
+            student.setExperienceLevel((String) body.get("experienceLevel"));
+
+
+        //llistes de llenguatges i rols preferits, que es guarden com a strings separats per comes a la base de dades;
+        // si el JSON conté un camp "languages" o "preferredRoles", actualitza els camps corresponents de l'estudiant; si no, deixa els valors actuals
+        if(body.containsKey("languages")){
+            List<?> raw = (List<?>) body.get("languages"); //raw és una llista d'objectes, ja que el JSON pot contenir qualsevol tipus de dades; per això, es fa un cast a List<?> per evitar errors de tipus
+            List<String> langs = raw.stream().map(Object::toString).toList(); //es converteix cada element de la llista a string, ja que el camp languages de l'estudiant és un string separat per comes; després, es fa una llista de strings amb els llenguatges preferits
+
+            student.setLanguages(String.join(",", langs));
+        }
+
+        if(body.containsKey("preferredRoles")){
+            List<?> raw = (List<?>) body.get("skills");
+            List<String> roles = raw.stream().map(Object::toString).toList();
+
+            student.setPreferredRoles(String.join(",", roles));
+        }
+
+        //skills
+        if(body.containsKey("skills")){
+            List<?> raw = (List<?>) body.get("skills");
+            List<String> skills = raw.stream().map(Object::toString).toList();
+
+            //esborrar els skills antics si n'hi ha
+            if(student.getSkills() != null){
+                studentSkillRepository.deleteAll(student.getSkills());
+            }
+
+            //guardar els skills nous
+            for(String skill : skills){
+                StudentSkill s = new StudentSkill();
+                s.setStudent(student);
+                s.setSkill(skill);
+                studentSkillRepository.save(s);
+            }
+        }
+
+        studentRepository.save(student);
+    }
+
+
+
+    /**
+     * Actualitza el perfil de l'empresa associada a l'usuari. Verifica que l'usuari existeix i que és una empresa abans de procedir amb l'actualització del perfil.
+     * @param user objecte User que representa l'usuari del qual es vol actualitzar el perfil d'empresa
+     * @param body objecte JSON que conté les dades del perfil d'empresa que es vol actualitzar, proporcionat al cos de la petició; el format del JSON dependrà de les dades que es vulguin actualitzar, però pot incloure camps com "name", "address", "phone", "website", "niche" i "technologies"
+     */
+    private void updateCompany(User user, Map<String, Object> body){
+
+        Company company = companyRepository.findByUser(user)
+                .orElseThrow(() -> new ApiException(ErrorCode.USER_NOT_FOUND, "Empresa no trobada"));
+
+        if(body.containsKey("name"))
+            company.setName((String) body.get("name"));
+
+        if(body.containsKey("address"))
+            company.setAddress((String) body.get("address"));
+
+        if(body.containsKey("phone"))
+            company.setPhone((String) body.get("phone"));
+
+        if(body.containsKey("website"))
+            company.setWebsite((String) body.get("website"));
+
+        if(body.containsKey("niche"))
+            company.setNiche((String) body.get("niche"));
+
+        //technologies
+        if(body.containsKey("technologies")){
+            List<?> raw = (List<?>) body.get("technologies"); //raw és una llista d'objectes, ja que el JSON pot contenir qualsevol tipus de dades; per això, es fa un cast a List<?> per evitar errors de tipus
+            List<String> techs = raw.stream().map(Object::toString).toList(); //es converteix cada element de la llista a string, ja que el camp technologies de l'empresa és un string separat per comes; després, es fa una llista de strings amb les tecnologies
+
+            companyTechnologyRepository.deleteAll(company.getTechnologies());
+
+            for(String tech : techs){
+                CompanyTechnology t = new CompanyTechnology();
+                t.setCompany(company);
+                t.setTechnology(tech);
+                companyTechnologyRepository.save(t);
+            }
+        }
+
+        companyRepository.save(company);
+    }
 
 
 

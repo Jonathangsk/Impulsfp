@@ -23,13 +23,6 @@ public class UserController {
     }
 
     /**
-     * Endpoint per eliminar el compte d'un usuari; rep un identificador de sessió com a paràmetre i elimina el compte associat a aquesta sessió.
-     * *
-     * @param sessionId
-     * @return ResponseEntity amb un missatge de confirmació si el compte s'ha eliminat correctament, o un error 401 si el sessionId no és vàlid
-     */
-
-    /**
      * Endpoint per eliminar el compte d'un usuari; rep un identificador de sessió com a paràmetre i una contrasenya al cos de la petició, i elimina el compte associat a aquesta sessió si la contrasenya és correcta.
      * @param sessionId identificador de sessió que s'ha d'utilitzar per identificar l'usuari que vol eliminar el seu compte, proporcionat com a paràmetre de la petició
      * @param body objecte JSON que conté la contrasenya de l'usuari, proporcionat al cos de la petició; s'espera que el JSON tingui un camp "password" amb la contrasenya de l'usuari
@@ -55,4 +48,19 @@ public class UserController {
         return ResponseEntity.ok(userService.getMyProfile(sessionId));
     }
 
+
+    /**
+     * Endpoint per actualitzar el perfil de l'usuari associat a la sessió actual
+     * @param sessionId identificador de sessió que s'ha d'utilitzar per identificar l'usuari del qual es vol actualitzar el perfil, proporcionat com a paràmetre de la petició
+     * @param body objecte JSON que conté les dades del perfil que es vol actualitzar, proporcionat al cos de la petició; el format del JSON dependrà de les dades que es vulguin actualitzar, però pot incloure camps com "name", "email", "phone", etc.
+     * @return ResponseEntity amb un missatge de confirmació si el perfil s'ha actualitzat correctament, o un error 401 si el sessionId no és vàlid
+     */
+    @PutMapping("/me")
+    public ResponseEntity<?> updateProfile(
+            @RequestParam String sessionId,
+            @RequestBody Map<String, Object> body){
+
+        userService.updateProfile(sessionId, body);
+        return ResponseEntity.ok(Map.of("message", "Perfil actualitzat correctament"));
+    }
 }
