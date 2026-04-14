@@ -237,6 +237,9 @@ public class UserService {
         if(body.containsKey("activeOffers"))
             throw new ApiException(ErrorCode.INVALID_REQUEST, "No es pot modificar el nombre d'ofertes actives d'una empresa");
 
+        if(body.containsKey("username")) //no es pot modificar el nom d'usuari d'una empresa, ja que està associat a l'usuari i no a l'empresa; si el JSON conté un camp "username", retorna un error
+            throw new ApiException(ErrorCode.INVALID_REQUEST, "No es pot modificar el nom d'usuari d'una empresa");
+
         //technologies
         if(body.containsKey("technologies")){
             List<?> raw = (List<?>) body.get("technologies"); //raw és una llista d'objectes, ja que el JSON pot contenir qualsevol tipus de dades; per això, es fa un cast a List<?> per evitar errors de tipus
