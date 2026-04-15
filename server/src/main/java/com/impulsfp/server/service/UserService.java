@@ -168,6 +168,30 @@ public class UserService {
         if(body.containsKey("experienceLevel"))
             student.setExperienceLevel((String) body.get("experienceLevel"));
 
+        if(body.containsKey("username")) //no es pot modificar el nom d'usuari d'un estudiant, ja que està associat a l'usuari i no a l'estudiant; si el JSON conté un camp "username", retorna un error
+            throw new ApiException(ErrorCode.INVALID_REQUEST, "No es pot modificar el nom d'usuari d'un estudiant");
+
+        if(body.containsKey("surname") && body.get("surname") != null)
+            student.setSurname((String) body.get("surname"));
+
+        if(body.containsKey("name") && body.get("name") != null)
+            student.setName((String) body.get("name"));
+
+        if(body.containsKey("email") && body.get("email") != null)
+            student.setEmail((String) body.get("email"));
+
+        if(body.containsKey("cycle") && body.get("cycle") != null)
+            student.setCycle((String) body.get("cycle"));
+
+        if(body.containsKey("phoneNumber"))
+            student.setPhoneNumber((String) body.get("phoneNumber"));
+
+
+
+
+
+
+
 
         //llistes de llenguatges i rols preferits, que es guarden com a strings separats per comes a la base de dades;
         // si el JSON conté un camp "languages" o "preferredRoles", actualitza els camps corresponents de l'estudiant; si no, deixa els valors actuals
@@ -190,12 +214,8 @@ public class UserService {
             List<?> raw = (List<?>) body.get("skills");
             List<String> skills = raw.stream().map(Object::toString).toList();
 
-            //esborrar els skills antics si n'hi ha
-            if(student.getSkills() != null){
-                studentSkillRepository.deleteAll(student.getSkills());
-            }
+            studentSkillRepository.deleteByStudent(student);
 
-            //guardar els skills nous
             for(String skill : skills){
                 StudentSkill s = new StudentSkill();
                 s.setStudent(student);
