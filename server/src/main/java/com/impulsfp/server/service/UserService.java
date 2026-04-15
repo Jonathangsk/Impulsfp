@@ -177,8 +177,10 @@ public class UserService {
         if(body.containsKey("name") && body.get("name") != null)
             student.setName((String) body.get("name"));
 
-        if(body.containsKey("email") && body.get("email") != null)
-            student.setEmail((String) body.get("email"));
+        if(body.containsKey("email"))
+            throw new ApiException(ErrorCode.INVALID_REQUEST, "No es pot modificar el correu electrònic d'un estudiant");
+
+
 
         if(body.containsKey("cycle") && body.get("cycle") != null)
             student.setCycle((String) body.get("cycle"));
@@ -239,14 +241,20 @@ public class UserService {
         Company company = companyRepository.findByUser(user)
                 .orElseThrow(() -> new ApiException(ErrorCode.USER_NOT_FOUND, "Empresa no trobada"));
 
-        if(body.containsKey("name"))
+        if(body.containsKey("name") && body.get("name") != null)
             company.setName((String) body.get("name"));
 
-        if(body.containsKey("address"))
+        if(body.containsKey("address") && body.get("address") != null)
             company.setAddress((String) body.get("address"));
 
-        if(body.containsKey("phone"))
+        if(body.containsKey("phone") && body.get("phone") != null)
             company.setPhone((String) body.get("phone"));
+
+        if(body.containsKey("email") && body.get("email") != null)
+            company.setEmail((String) body.get("email"));
+
+        if(body.containsKey("vatNumber") && body.get("vatNumber") != null)
+            company.setVatNumber((String) body.get("vatNumber"));
 
         if(body.containsKey("website"))
             company.setWebsite((String) body.get("website"));
@@ -265,7 +273,7 @@ public class UserService {
             List<?> raw = (List<?>) body.get("technologies"); //raw és una llista d'objectes, ja que el JSON pot contenir qualsevol tipus de dades; per això, es fa un cast a List<?> per evitar errors de tipus
             List<String> techs = raw.stream().map(Object::toString).toList(); //es converteix cada element de la llista a string, ja que el camp technologies de l'empresa és un string separat per comes; després, es fa una llista de strings amb les tecnologies
 
-            companyTechnologyRepository.deleteAll(company.getTechnologies());
+            companyTechnologyRepository.deleteByCompany(company);
 
             for(String tech : techs){
                 CompanyTechnology t = new CompanyTechnology();
