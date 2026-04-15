@@ -1,6 +1,5 @@
 package com.impulsfp.mobile.ui
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -11,7 +10,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
@@ -46,11 +44,12 @@ fun EditProfileScreen(
     onProfileClick: () -> Unit,
     onApplicationsClick: () -> Unit,
     onLogout: () -> Unit,
-    menuViewModel: MenuViewModel = viewModel(),
-    profileViewModel: ProfileViewModel = viewModel()
+    profileViewModel: ProfileViewModel,
+    menuViewModel: MenuViewModel = viewModel()
 ) {
     val currentProfile = profileViewModel.profile
 
+    var username by remember(currentProfile.username) { mutableStateOf(currentProfile.username) }
     var name by remember(currentProfile.name) { mutableStateOf(currentProfile.name) }
     var surname by remember(currentProfile.surname) { mutableStateOf(currentProfile.surname) }
     var email by remember(currentProfile.email) { mutableStateOf(currentProfile.email) }
@@ -94,6 +93,7 @@ fun EditProfileScreen(
     Column(
         modifier = Modifier.fillMaxSize()
     ) {
+
         AppTopBar(
             name = name,
             onHomeClick = onHomeClick,
@@ -126,14 +126,37 @@ fun EditProfileScreen(
                 color = MaterialTheme.colorScheme.error
             )
 
-            Spacer(modifier = Modifier.height(24.dp))
+            Spacer(modifier = Modifier.height(12.dp))
+
+            profileViewModel.saveError?.let { error ->
+                Text(
+                    text = error,
+                    color = MaterialTheme.colorScheme.error,
+                    style = MaterialTheme.typography.bodyMedium
+                )
+
+                Spacer(modifier = Modifier.height(12.dp))
+            }
+
+            Spacer(modifier = Modifier.height(12.dp))
 
             EditSectionCard(title = "Informació personal") {
+                AppTextField(
+                    value = username,
+                    onValueChange = { },
+                    label = "Nom d'usuari",
+                    required = true,
+                    isError = false,
+                    errorText = null,
+                    enabled = false
+                )
+
                 AppTextField(
                     value = name,
                     onValueChange = {
                         name = it
                         profileViewModel.clearNameError()
+                        profileViewModel.clearSaveState()
                     },
                     label = "Nom",
                     required = true,
@@ -146,6 +169,7 @@ fun EditProfileScreen(
                     onValueChange = {
                         surname = it
                         profileViewModel.clearSurnameError()
+                        profileViewModel.clearSaveState()
                     },
                     label = "Cognoms",
                     required = true,
@@ -155,33 +179,40 @@ fun EditProfileScreen(
 
                 AppTextField(
                     value = email,
-                    onValueChange = {
-                        email = it
-                        profileViewModel.clearEmailError()
-                    },
+                    onValueChange = { },
                     label = "Email",
                     required = true,
-                    isError = profileViewModel.emailError != null,
-                    errorText = profileViewModel.emailError,
-                    keyboardType = KeyboardType.Email
+                    isError = false,
+                    errorText = null,
+                    keyboardType = KeyboardType.Email,
+                    enabled = false
                 )
 
                 AppTextField(
                     value = phoneNumber,
-                    onValueChange = { phoneNumber = it },
+                    onValueChange = {
+                        phoneNumber = it
+                        profileViewModel.clearSaveState()
+                    },
                     label = "Telèfon",
                     keyboardType = KeyboardType.Phone
                 )
 
                 AppTextField(
                     value = city,
-                    onValueChange = { city = it },
+                    onValueChange = {
+                        city = it
+                        profileViewModel.clearSaveState()
+                    },
                     label = "Ciutat"
                 )
 
                 AppTextField(
                     value = bio,
-                    onValueChange = { bio = it },
+                    onValueChange = {
+                        bio = it
+                        profileViewModel.clearSaveState()
+                    },
                     label = "Biografia",
                     singleLine = false
                 )
@@ -195,6 +226,7 @@ fun EditProfileScreen(
                     onValueChange = {
                         cycle = it
                         profileViewModel.clearCycleError()
+                        profileViewModel.clearSaveState()
                     },
                     label = "Cicle Formatiu",
                     required = true,
@@ -204,27 +236,39 @@ fun EditProfileScreen(
 
                 AppTextField(
                     value = experienceLevel,
-                    onValueChange = { experienceLevel = it },
+                    onValueChange = {
+                        experienceLevel = it
+                        profileViewModel.clearSaveState()
+                    },
                     label = "Nivell d'experiència"
                 )
 
                 AppTextField(
                     value = skillsText,
-                    onValueChange = { skillsText = it },
+                    onValueChange = {
+                        skillsText = it
+                        profileViewModel.clearSaveState()
+                    },
                     label = "Skills (separades per comes)",
                     singleLine = false
                 )
 
                 AppTextField(
                     value = languagesText,
-                    onValueChange = { languagesText = it },
+                    onValueChange = {
+                        languagesText = it
+                        profileViewModel.clearSaveState()
+                    },
                     label = "Idiomes (separats per comes)",
                     singleLine = false
                 )
 
                 AppTextField(
                     value = portfolio,
-                    onValueChange = { portfolio = it },
+                    onValueChange = {
+                        portfolio = it
+                        profileViewModel.clearSaveState()
+                    },
                     label = "Portfolio"
                 )
             }
@@ -234,20 +278,29 @@ fun EditProfileScreen(
             EditSectionCard(title = "Preferències") {
                 AppTextField(
                     value = preferredRolesText,
-                    onValueChange = { preferredRolesText = it },
+                    onValueChange = {
+                        preferredRolesText = it
+                        profileViewModel.clearSaveState()
+                    },
                     label = "Rols preferits (separats per comes)",
                     singleLine = false
                 )
 
                 AppTextField(
                     value = preferredLocation,
-                    onValueChange = { preferredLocation = it },
+                    onValueChange = {
+                        preferredLocation = it
+                        profileViewModel.clearSaveState()
+                    },
                     label = "Ubicació preferida"
                 )
 
                 AppTextField(
                     value = availability,
-                    onValueChange = { availability = it },
+                    onValueChange = {
+                        availability = it
+                        profileViewModel.clearSaveState()
+                    },
                     label = "Disponibilitat"
                 )
             }
@@ -260,14 +313,15 @@ fun EditProfileScreen(
             ) {
                 OutlinedButton(
                     onClick = onProfileClick,
-                    modifier = Modifier.weight(1f)
+                    modifier = Modifier.weight(1f),
+                    enabled = !profileViewModel.isLoading
                 ) {
                     Text("Cancel·lar")
                 }
 
                 Button(
                     onClick = {
-                        val saved = profileViewModel.saveProfile(
+                        profileViewModel.saveProfile(
                             name = name,
                             surname = surname,
                             email = email,
@@ -281,16 +335,19 @@ fun EditProfileScreen(
                             preferredRolesText = preferredRolesText,
                             preferredLocation = preferredLocation,
                             availability = availability,
-                            portfolio = portfolio
+                            portfolio = portfolio,
+                            onSuccess = {
+                                onSaveSuccess()
+                            }
                         )
-
-                        if (saved) {
-                            onSaveSuccess()
-                        }
                     },
-                    modifier = Modifier.weight(1f)
+                    modifier = Modifier.weight(1f),
+                    enabled = !profileViewModel.isLoading
                 ) {
-                    Text("Guardar")
+                    Text(
+                        if (profileViewModel.isLoading) "Guardant..."
+                        else "Guardar"
+                    )
                 }
             }
 
@@ -305,7 +362,8 @@ fun EditProfileScreen(
                     changePasswordInfo = null
                     showChangePasswordDialog = true
                 },
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
+                enabled = !profileViewModel.isLoading
             ) {
                 Text("Canviar contrasenya")
             }
@@ -319,6 +377,7 @@ fun EditProfileScreen(
                     showDeleteDialog = true
                 },
                 modifier = Modifier.fillMaxWidth(),
+                enabled = !profileViewModel.isLoading,
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color(0xFFD32F2F),
                     contentColor = Color.White
@@ -608,7 +667,8 @@ private fun AppTextField(
     singleLine: Boolean = true,
     isError: Boolean = false,
     errorText: String? = null,
-    keyboardType: KeyboardType = KeyboardType.Text
+    keyboardType: KeyboardType = KeyboardType.Text,
+    enabled: Boolean = true
 ) {
     OutlinedTextField(
         value = value,
@@ -622,7 +682,8 @@ private fun AppTextField(
         modifier = Modifier.fillMaxWidth(),
         singleLine = singleLine,
         isError = isError,
-        keyboardOptions = KeyboardOptions(
+        enabled = enabled,
+        keyboardOptions = androidx.compose.foundation.text.KeyboardOptions(
             keyboardType = keyboardType
         ),
         supportingText = {

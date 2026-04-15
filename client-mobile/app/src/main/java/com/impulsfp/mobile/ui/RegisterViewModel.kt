@@ -1,6 +1,5 @@
 package com.impulsfp.mobile.ui
 
-import android.util.Patterns
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.impulsfp.mobile.communications.AuthController
@@ -12,12 +11,14 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class RegisterViewModel : ViewModel() {
+class RegisterViewModel(
+    private val authController: AuthController = AuthController()
+) : ViewModel() {
+
 
     private val _uiState = MutableStateFlow(RegisterUiState())
     val uiState: StateFlow<RegisterUiState> = _uiState.asStateFlow()
 
-    private val authController = AuthController()
 
     fun onUsernameChange(value: String) {
         _uiState.value = _uiState.value.copy(
@@ -240,7 +241,10 @@ class RegisterViewModel : ViewModel() {
     }
 
     private fun isValidEmail(email: String): Boolean {
-        return Patterns.EMAIL_ADDRESS.matcher(email.trim()).matches()
+        return android.util.Patterns.EMAIL_ADDRESS
+            ?.matcher(email.trim())
+            ?.matches()
+            ?: Regex("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$").matches(email.trim())
     }
 
     fun resetRegisterSuccess() {

@@ -3,6 +3,7 @@ package com.impulsfp.mobile.communications
 import com.impulsfp.mobile.data.UserProfile
 import com.impulsfp.mobile.network.ApiClient
 import com.impulsfp.mobile.network.DeleteAccountRequest
+import com.impulsfp.mobile.network.UpdateProfileRequest
 import java.io.IOException
 import java.net.ConnectException
 import java.net.SocketTimeoutException
@@ -21,6 +22,7 @@ open class ProfileController {
 
                 if (body != null) {
                     val profile = UserProfile(
+                        username = body.username,
                         name = body.name,
                         surname = body.surname,
                         email = body.email,
@@ -36,7 +38,6 @@ open class ProfileController {
                         availability = body.availability ?: "",
                         portfolio = body.portfolio ?: ""
                     )
-
                     Result.success(profile)
                 } else {
                     Result.failure(Exception("Resposta buida del servidor"))
@@ -61,6 +62,52 @@ open class ProfileController {
             Result.failure(Exception("S'ha produït un error inesperat"))
         }
     }
+
+    open suspend fun updateProfile(
+        sessionId: String,
+        request: UpdateProfileRequest
+    ): Result<String> {
+        return try {
+            println("UPDATE PROFILE sessionId=$sessionId")
+            println("UPDATE PROFILE request=$request")
+
+            val response = apiService.updateProfile(sessionId, request)
+
+            println("UPDATE PROFILE code=${response.code()}")
+            println("UPDATE PROFILE body=${response.body()}")
+            println("UPDATE PROFILE errorBody=${response.errorBody()?.string()}")
+
+            if (response.isSuccessful) {
+                val body = response.body()
+
+                if (body != null) {
+                    Result.success(body.message)
+                } else {
+                    Result.failure(Exception("Resposta buida del servidor"))
+                }
+            } else {
+                when (response.code()) {
+                    400 -> Result.failure(Exception("Aquest correu electrònic ja està en ús"))
+                    401, 403 -> Result.failure(Exception("Sessió no vàlida"))
+                    404 -> Result.failure(Exception("Usuari no trobat"))
+                    500, 502, 503 -> Result.failure(Exception("El servidor no està disponible temporalment"))
+                    else -> Result.failure(Exception("Error del servidor: ${response.code()}"))
+                }
+            }
+        } catch (e: UnknownHostException) {
+            Result.failure(Exception("No s'ha pogut localitzar el servidor"))
+        } catch (e: ConnectException) {
+            Result.failure(Exception("No s'ha pogut connectar amb el servidor"))
+        } catch (e: SocketTimeoutException) {
+            Result.failure(Exception("Temps d'espera esgotat en connectar amb el servidor"))
+        } catch (e: IOException) {
+            Result.failure(Exception("Error de xarxa en connectar amb el servidor"))
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Result.failure(Exception("S'ha produït un error inesperat"))
+        }
+    }
+
     open suspend fun deleteAccount(
         sessionId: String,
         password: String

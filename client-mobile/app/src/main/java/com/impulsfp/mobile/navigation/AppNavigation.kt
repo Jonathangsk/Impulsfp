@@ -52,6 +52,7 @@ sealed class AppScreen(val route: String) {
 @Composable
 fun AppNavigation() {
     val navController = rememberNavController()
+    val profileViewModel: ProfileViewModel = viewModel()
 
     NavHost(
         navController = navController,
@@ -160,7 +161,8 @@ fun AppNavigation() {
                     navController.navigate(AppScreen.Login.route) {
                         popUpTo(0)
                     }
-                }
+                },
+                profileViewModel = profileViewModel
             )
         }
 
@@ -184,9 +186,11 @@ fun AppNavigation() {
                     navController.navigate(AppScreen.Login.route) {
                         popUpTo(0)
                     }
-                }
+                },
+                profileViewModel = profileViewModel
             )
         }
+
         composable(AppScreen.Applications.route) {
             ApplicationsScreen(
                 onHomeClick = {

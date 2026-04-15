@@ -6,24 +6,51 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.impulsfp.mobile.data.ProfileRepository
 import com.impulsfp.mobile.communications.ProfileController
 import com.impulsfp.mobile.data.SessionData
+import com.impulsfp.mobile.data.UserProfile
+import com.impulsfp.mobile.network.UpdateProfileRequest
 import kotlinx.coroutines.launch
-
 
 class ProfileViewModel : ViewModel() {
 
-    var profile by mutableStateOf(ProfileRepository.getProfile())
+    var profile by mutableStateOf(
+        UserProfile(
+            username = "",
+            name = "",
+            surname = "",
+            email = "",
+            phoneNumber = "",
+            city = "",
+            bio = "",
+            cycle = "",
+            skills = emptyList(),
+            experienceLevel = "",
+            languages = emptyList(),
+            preferredRoles = emptyList(),
+            preferredLocation = "",
+            availability = "",
+            portfolio = ""
+        )
+    )
+        private set
+
+    var isLoading by mutableStateOf(false)
+        private set
+
+    var serverError by mutableStateOf<String?>(null)
+        private set
+
+    var saveError by mutableStateOf<String?>(null)
+        private set
+
+    var saveSuccess by mutableStateOf(false)
         private set
 
     var nameError by mutableStateOf<String?>(null)
         private set
 
     var surnameError by mutableStateOf<String?>(null)
-        private set
-
-    var emailError by mutableStateOf<String?>(null)
         private set
 
     var cycleError by mutableStateOf<String?>(null)
@@ -33,16 +60,20 @@ class ProfileViewModel : ViewModel() {
 
     fun refreshProfile(sessionId: String) {
         viewModelScope.launch {
+            isLoading = true
+            serverError = null
+
             val result = profileController.getProfile(sessionId)
 
             result.onSuccess {
                 profile = it
+                isLoading = false
             }.onFailure {
-                // de moment pots ignorar error o posar log
+                serverError = it.message ?: "No s'ha pogut carregar el perfil"
+                isLoading = false
             }
         }
     }
-
 
     fun saveProfile(
         name: String,
@@ -58,16 +89,22 @@ class ProfileViewModel : ViewModel() {
         preferredRolesText: String,
         preferredLocation: String,
         availability: String,
-        portfolio: String
-    ): Boolean {
+        portfolio: String,
+        onSuccess: () -> Unit
+    ) {
         val isValid = validateProfile(
             name = name,
             surname = surname,
-            email = email,
             cycle = cycle
         )
 
-        if (!isValid) return false
+        if (!isValid) return
+
+        val sessionId = SessionData.getSessionId()
+        if (sessionId == null) {
+            saveError = "No hi ha cap sessió activa"
+            return
+        }
 
         val updatedProfile = profile.copy(
             name = name.trim(),
@@ -86,35 +123,57 @@ class ProfileViewModel : ViewModel() {
             portfolio = portfolio.trim()
         )
 
-        ProfileRepository.updateProfile(updatedProfile)
-        profile = updatedProfile
-        clearAllErrors()
+        val request = UpdateProfileRequest(
+            name = updatedProfile.name,
+            surname = updatedProfile.surname,
+            phoneNumber = updatedProfile.phoneNumber,
+            city = updatedProfile.city,
+            bio = updatedProfile.bio,
+            cycle = updatedProfile.cycle,
+            experienceLevel = updatedProfile.experienceLevel,
+            skills = updatedProfile.skills,
+            languages = updatedProfile.languages,
+            preferredRoles = updatedProfile.preferredRoles,
+            preferredLocation = updatedProfile.preferredLocation,
+            availability = updatedProfile.availability,
+            portfolio = updatedProfile.portfolio
+        )
 
-        return true
+        viewModelScope.launch {
+            isLoading = true
+            saveError = null
+            saveSuccess = false
+
+            profileController.updateProfile(sessionId, request)
+                .onSuccess {
+                    profile = updatedProfile
+                    clearAllErrors()
+                    saveError = null
+                    saveSuccess = true
+                    isLoading = false
+                    onSuccess()
+                }
+                .onFailure {
+                    saveError = it.message ?: "No s'ha pogut actualitzar el perfil"
+                    saveSuccess = false
+                    isLoading = false
+                }
+        }
     }
 
     private fun validateProfile(
         name: String,
         surname: String,
-        email: String,
         cycle: String
     ): Boolean {
         nameError = if (name.isBlank()) "El nom és obligatori." else null
 
         surnameError = if (surname.isBlank()) "Els cognoms són obligatoris." else null
 
-        emailError = when {
-            email.isBlank() -> "El correu electrònic és obligatori."
-            !Patterns.EMAIL_ADDRESS.matcher(email.trim()).matches() ->
-                "El correu electrònic no és vàlid."
-            else -> null
-        }
-
         cycleError = if (cycle.isBlank()) "El cicle formatiu és obligatori." else null
 
         return nameError == null &&
                 surnameError == null &&
-                emailError == null &&
                 cycleError == null
     }
 
@@ -126,18 +185,18 @@ class ProfileViewModel : ViewModel() {
         surnameError = null
     }
 
-    fun clearEmailError() {
-        emailError = null
-    }
-
     fun clearCycleError() {
         cycleError = null
+    }
+
+    fun clearSaveState() {
+        saveError = null
+        saveSuccess = false
     }
 
     private fun clearAllErrors() {
         nameError = null
         surnameError = null
-        emailError = null
         cycleError = null
     }
 
