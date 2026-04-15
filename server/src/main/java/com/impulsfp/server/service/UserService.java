@@ -179,7 +179,7 @@ public class UserService {
         }
 
         if(body.containsKey("preferredRoles")){
-            List<?> raw = (List<?>) body.get("skills");
+            List<?> raw = (List<?>) body.get("preferredRoles");
             List<String> roles = raw.stream().map(Object::toString).toList();
 
             student.setPreferredRoles(String.join(",", roles));

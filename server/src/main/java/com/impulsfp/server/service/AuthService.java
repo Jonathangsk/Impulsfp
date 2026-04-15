@@ -36,11 +36,11 @@ public class AuthService {
 
     /**
      * Constructor de la classe AuthService; s'injecten els repositoris necessaris per accedir a les dades dels usuaris, estudiants, empreses, habilitats i tecnologies
-     * @param userRepository
-     * @param studentRepository
-     * @param companyRepository
-     * @param studentSkillRepository
-     * @param companyTechnologyRepository
+     * @param userRepository repositori per accedir a les dades de l'usuari (base de dades)
+     * @param studentRepository repositori per accedir a les dades dels estudiants (base de dades)
+     * @param companyRepository repositori per accedir a les dades de les empreses (base de dades)
+     * @param studentSkillRepository repositori per accedir a les dades de les habilitats dels estudiants (base de dades)
+     * @param companyTechnologyRepository repositori per accedir a les dades de les tecnologies de les empreses (base de dades)
      */
     public AuthService(UserRepository userRepository,
                        StudentRepository studentRepository,
@@ -61,7 +61,7 @@ public class AuthService {
      * Si les credencials no són correctes, retorna null.
      * @param username nom d'usuari
      * @param password contrasenya
-     * @return
+     * @return LoginResponseDto amb les dades de sessió (sessionId i userType) si les credencials són correctes, o null si no ho són
      */
     public LoginResponseDto login(String username, String password) {
 
@@ -84,8 +84,8 @@ public class AuthService {
      * Mètode amb la lògica per registrar un nou estudiant; verifica que el nom d'usuari no existeix, crea un nou usuari i un nou estudiant associat,
      * i retorna un objecte DTO de resposta amb les dades de sessió (sessionId i userType) si el registre és correcte.
      * Si el nom d'usuari ja existeix, retorna null.
-     * @param dto
-     * @return
+     * @param dto objecte DTO que representa les dades de la petició de registre d'estudiant, amb camps per a nom d'usuari, contrasenya, nom complet i habilitats
+     * @return LoginResponseDto amb les dades de sessió (sessionId i userType) si el registre és correcte, o null si el nom d'usuari ja existeix
      */
     @Transactional
     public LoginResponseDto registerStudent(RegisterStudentRequestDto dto) {
@@ -109,6 +109,12 @@ public class AuthService {
         student.setEmail(dto.getEmail());
         student.setPhoneNumber(dto.getPhoneNumber());
         student.setCycle(dto.getCycle());
+        student.setCity(dto.getCity());
+        student.setBio(dto.getBio());
+        student.setExperienceLevel(dto.getExperienceLevel());
+        student.setPreferredLocation(dto.getPreferredLocation());
+        student.setAvailability(dto.getAvailability());
+        student.setPortfolio(dto.getPortfolio());
 
 
         //si el DTO conté llistes de llenguatges i rols preferits, les converteix a cadenes separades per comes i les guarda a l'estudiant
@@ -143,7 +149,7 @@ public class AuthService {
      * Mètode amb la lògica per registrar una nova empresa; verifica que el nom d'usuari no existeix,
      * crea un nou usuari i una nova empresa associada,
      * @param dto objecte DTO que representa les dades de la petició de registre d'empresa
-     * @return
+     * @return LoginResponseDto amb les dades de sessió (sessionId i userType) si el registre és correcte, o null si el nom d'usuari ja existeix
      */
     @Transactional
     public LoginResponseDto registerCompany(RegisterCompanyRequestDto dto) {
@@ -165,6 +171,8 @@ public class AuthService {
         company.setAddress(dto.getAddress());
         company.setVatNumber(dto.getVatNumber());
         company.setPhone(dto.getPhone());
+        company.setWebsite(dto.getWebsite());
+        company.setNiche(dto.getNiche());
         companyRepository.save(company);
 
         //si el DTO conté una llista de tecnologies, crea un nou objecte CompanyTechnology per cada tecnologia i
@@ -188,7 +196,7 @@ public class AuthService {
     /**
      * Mètode per validar les dades proporcionades al DTO de registre d'estudiant; verifica que el nom d'usuari no existeix a la base de dades, que el nom d'usuari és vàlid segons un regex, i que la contrasenya és vàlida segons un regex.
      * Si alguna de les validacions falla, llança una excepció ApiException amb un codi d'error i un missatge descriptiu.
-     * @param dto
+     * @param dto objecte DTO que representa les dades de la petició de registre d'estudiant, amb camps per a nom d'usuari, contrasenya, nom complet i habilitats
      */
     private void validarDadesStudiant(RegisterStudentRequestDto dto) {
 
@@ -218,13 +226,12 @@ public class AuthService {
 
     /**
      * Mètode per validar les dades proporcionades al DTO de registre d'empresa; verifica que el nom d'usuari no existeix a la base de dades,
-     * que el nom d'usuari és vàlid segons un regex, i que la contrasenya és vàlida segons un regex.
-     *
+     * que el nom d'usuari és vàlid segons un regex, i que la contrasenya és vàlida segons un regex.*
 
      * Nota: aquí només validem username/password/existència per mantenir consistència amb estudiant.
      * Pots afegir més validacions (NIF/CIF, email, etc.) si ho necessites.
      *
-     * @param dto
+     * @param dto objecte DTO que representa les dades de la petició de registre d'empresa, amb camps per a nom d'usuari, contrasenya, nom de l'empresa i tecnologies
      */
     private void validarDadesEmpresa(RegisterCompanyRequestDto dto) {
 
