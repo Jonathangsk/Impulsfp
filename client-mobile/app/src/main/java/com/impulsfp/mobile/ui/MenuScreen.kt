@@ -23,7 +23,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.impulsfp.mobile.data.ProfileRepository
 import com.impulsfp.mobile.data.SessionData
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
@@ -60,7 +59,7 @@ fun MenuScreen(
     offersViewModel: OffersViewModel = viewModel()
 ) {
     val user = SessionData.currentUser
-    val profile = ProfileRepository.getProfile()
+    val displayName = user?.username ?: "Usuari"
 
     val offersUiState by offersViewModel.uiState.collectAsState()
 
@@ -83,7 +82,7 @@ fun MenuScreen(
          * addicional perquè l'usuari ja es troba a la home.
          */
         AppTopBar(
-            name = profile.name,
+            name = displayName,
             onHomeClick = { },
             onApplicationsClick = onApplicationsClick,
             onProfileClick = onProfileClick,
@@ -121,7 +120,7 @@ fun MenuScreen(
                 Spacer(modifier = Modifier.height(8.dp))
 
                 Text(
-                    text = "Benvingut/da, ${profile.name}",
+                    text = "Benvingut/da, $displayName",
                     style = MaterialTheme.typography.bodyLarge
                 )
 

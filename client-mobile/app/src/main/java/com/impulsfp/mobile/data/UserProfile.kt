@@ -9,6 +9,7 @@ package com.impulsfp.mobile.data
  */
 
 data class UserProfile(
+    val username: String,
     val name: String,
     val surname: String,
     val email: String,

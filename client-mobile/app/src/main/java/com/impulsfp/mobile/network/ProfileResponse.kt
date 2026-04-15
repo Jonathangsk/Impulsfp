@@ -1,6 +1,5 @@
-package com.impulsfp.mobile.network
-
 data class ProfileResponse(
+    val username: String,
     val name: String,
     val surname: String,
     val email: String,

@@ -41,8 +41,8 @@ fun ProfileScreen(
     onEditProfile: () -> Unit,
     onApplicationsClick: () -> Unit,
     onLogout: () -> Unit,
-    menuViewModel: MenuViewModel = viewModel(),
-    profileViewModel: ProfileViewModel = viewModel()
+    profileViewModel: ProfileViewModel,
+    menuViewModel: MenuViewModel = viewModel()
 ) {
     val profile = profileViewModel.profile
     val context = LocalContext.current
@@ -109,6 +109,7 @@ fun ProfileScreen(
             ProfileSectionCard(
                 title = "Informació personal"
             ) {
+                ProfileRow("Nom d'usuari", profile.username)
                 ProfileRow("Nom", profile.name)
                 ProfileRow("Cognoms", profile.surname)
                 ProfileRow("Email", profile.email)
@@ -221,7 +222,7 @@ private fun ProfileRow(label: String, value: String) {
         Spacer(modifier = Modifier.height(4.dp))
 
         Text(
-            text = value.ifBlank { "No especificat" },
+            text = value.ifBlank { "" },
             style = MaterialTheme.typography.bodyLarge
         )
     }

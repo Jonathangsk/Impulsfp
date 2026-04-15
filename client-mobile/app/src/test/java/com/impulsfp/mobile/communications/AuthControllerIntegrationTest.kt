@@ -29,19 +29,19 @@ class AuthControllerIntegrationTest {
 
     @Before
     fun setUp() {
-        ApiClient.setBaseUrl("http://localhost:8080/")
+        ApiClient.setBaseUrl( "http://0bb0dfb7-9b4c-40bc-a0be.5b8c35470a40.bastion.elmeuescriptori.cat/")
         authController = AuthController()
     }
 
     @Test
     fun login_returns_user_when_credentials_are_correct() = runBlocking {
-        val result = authController.login("Jonathan", "1234")
+        val result = authController.login("benitez", "Prueba123")
 
         assertTrue("El login hauria de ser correcte", result.isSuccess)
 
         val user = result.getOrNull()
         assertNotNull("S'hauria de retornar un usuari", user)
-        assertEquals("Jonathan", user?.username)
+        assertEquals("benitez", user?.username)
         assertNotNull("S'hauria de retornar un sessionId", user?.sessionId)
         assertFalse(
             "El sessionId no hauria d'estar buit",
@@ -51,7 +51,7 @@ class AuthControllerIntegrationTest {
 
     @Test
     fun login_returns_failure_when_credentials_are_incorrect() = runBlocking {
-        val result = authController.login("Jonathan", "incorrecta")
+        val result = authController.login("benitez", "incorrecta")
 
         assertTrue("El login hauria de fallar", result.isFailure)
 
@@ -61,7 +61,7 @@ class AuthControllerIntegrationTest {
 
     @Test
     fun logout_returns_success_after_valid_login() = runBlocking {
-        val loginResult = authController.login("Jonathan", "1234")
+        val loginResult = authController.login("benitez", "Prueba123")
 
         assertTrue("El login previ hauria de ser correcte", loginResult.isSuccess)
 
