@@ -85,3 +85,6 @@ C:\Users\jgran\Desktop\Impulsfp\client-desktop\IMPULS Desktop\obj\Debug\IMPULS D
 C:\Users\jgran\Desktop\Impulsfp\client-desktop\IMPULS Desktop\obj\Debug\IMPULS Desktop.exe
 C:\Users\jgran\Desktop\Impulsfp\client-desktop\IMPULS Desktop\obj\Debug\IMPULS Desktop.pdb
 C:\Users\jgran\Desktop\Impulsfp\client-desktop\IMPULS Desktop\obj\Debug\IMPULS_Desktop.PerfilDeEmpresa.resources
+C:\Users\jgran\Desktop\Impulsfp\client-desktop\IMPULS Desktop\obj\Debug\IMPULS_Desktop.EliminarEmpresa.resources
+C:\Users\jgran\Desktop\Impulsfp\client-desktop\IMPULS Desktop\obj\Debug\IMPULS_Desktop.Alumnes.resources
+C:\Users\jgran\Desktop\Impulsfp\client-desktop\IMPULS Desktop\obj\Debug\IMPULS_Desktop.Empreses.resources

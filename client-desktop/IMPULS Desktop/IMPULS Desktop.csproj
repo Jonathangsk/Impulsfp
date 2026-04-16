@@ -93,6 +93,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Alumne.cs" />
+    <Compile Include="Alumnes.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Alumnes.Designer.cs">
+      <DependentUpon>Alumnes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ApiClient.cs" />
     <Compile Include="Candidats.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -105,7 +113,20 @@
     <Compile Include="CanviContrasenya.Designer.cs">
       <DependentUpon>CanviContrasenya.cs</DependentUpon>
     </Compile>
+    <Compile Include="EliminarEmpresa.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EliminarEmpresa.Designer.cs">
+      <DependentUpon>EliminarEmpresa.cs</DependentUpon>
+    </Compile>
     <Compile Include="Empresa.cs" />
+    <Compile Include="Empreses.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Empreses.Designer.cs">
+      <DependentUpon>Empreses.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IApiClient.cs" />
     <Compile Include="PerfilDeEmpresa.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -151,11 +172,20 @@
     <Compile Include="PublicarOferta.Designer.cs">
       <DependentUpon>PublicarOferta.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Alumnes.resx">
+      <DependentUpon>Alumnes.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Candidats.resx">
       <DependentUpon>Candidats.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CanviContrasenya.resx">
       <DependentUpon>CanviContrasenya.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EliminarEmpresa.resx">
+      <DependentUpon>EliminarEmpresa.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Empreses.resx">
+      <DependentUpon>Empreses.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PerfilDeEmpresa.resx">
       <DependentUpon>PerfilDeEmpresa.cs</DependentUpon>

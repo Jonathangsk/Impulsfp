@@ -5,6 +5,7 @@ using System.Text;
 using System.Text.Json;
 using System.Windows.Forms;
 
+
 namespace IMPULS_Desktop
 {
     public partial class Candidats : Form
@@ -12,7 +13,6 @@ namespace IMPULS_Desktop
         private readonly HttpClient client = new HttpClient();
         private List<Candidat> candidats = new List<Candidat>();
 
-//        private string apiUrl = "https://tu-servidor/api/candidats";
         private int ofertaId = 1;
         private string apiUrl => $"https://tu-servidor/api/candidats/oferta/{ofertaId}";
 
@@ -149,7 +149,7 @@ namespace IMPULS_Desktop
 
         private void btnTancar_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Application.Exit();
         }
 
         private void btnTornar_Click(object sender, EventArgs e)

@@ -10,8 +10,15 @@ namespace IMPULS_Desktop
 {
     public partial class PublicarOferta : Form
     {
+        private PantallaEmpresa _pantallaEmpresa;
         private readonly string apiBase = "http://localhost:8080/offers";
+        public PublicarOferta(PantallaEmpresa pantallaEmpresa)
+        {
+            InitializeComponent();
+            _pantallaEmpresa = pantallaEmpresa;
 
+            this.FormClosing += PublicarOferta_FormClosing;
+        }
         public PublicarOferta()
         {
             InitializeComponent();
@@ -22,10 +29,10 @@ namespace IMPULS_Desktop
             comboEstatdelaoferta.Items.AddRange(new string[] { "Activa", "Expired" });
 
 
-
-
-
-
+        }
+        private void PublicarOferta_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            _pantallaEmpresa.Show();
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -150,13 +157,71 @@ namespace IMPULS_Desktop
         {
             try
             {
-                //Validació mínima
+                // Validacions
+
                 if (string.IsNullOrWhiteSpace(textTitol.Text))
                 {
-                    MessageBox.Show("El títul es obligatori");
+                    MessageBox.Show("El títol és obligatori");
                     return;
                 }
 
+                if (string.IsNullOrWhiteSpace(textDescripcio.Text))
+                {
+                    MessageBox.Show("La descripció és obligatòria");
+                    return;
+                }
+
+                if (string.IsNullOrWhiteSpace(textEmpresa.Text))
+                {
+                    MessageBox.Show("L'empresa és obligatòria");
+                    return;
+                }
+
+                if (string.IsNullOrWhiteSpace(textHabilitats.Text))
+                {
+                    MessageBox.Show("Les habilitats són obligatòries");
+                    return;
+                }
+
+                if (string.IsNullOrWhiteSpace(textUbicacio.Text))
+                {
+                    MessageBox.Show("La ubicació és obligatòria");
+                    return;
+                }
+
+                if (comboModalitat.SelectedIndex == -1)
+                {
+                    MessageBox.Show("Selecciona una modalitat");
+                    return;
+                }
+
+                if (comboTipusdecontracte.SelectedIndex == -1)
+                {
+                    MessageBox.Show("Selecciona un tipus de contracte");
+                    return;
+                }
+
+                if (comboCicle.SelectedIndex == -1)
+                {
+                    MessageBox.Show("Selecciona un cicle");
+                    return;
+                }
+
+                if (comboEstatdelaoferta.SelectedIndex == -1)
+                {
+                    MessageBox.Show("Selecciona l'estat de la oferta");
+                    return;
+                }
+
+                // salari es opcional
+
+                decimal salarioFinal = 0;
+                if (!string.IsNullOrWhiteSpace(textSalari.Text))
+                {
+                    decimal.TryParse(textSalari.Text, out salarioFinal);
+                }
+
+                //Creem l'objecte
                 Oferta oferta = new Oferta
                 {
                     Id = string.IsNullOrWhiteSpace(textIdentificador.Text) ? 0 : int.Parse(textIdentificador.Text),
@@ -167,26 +232,27 @@ namespace IMPULS_Desktop
                     Company = new Empresa
                     {
                         Name = textEmpresa.Text
-                    }, // 👈 AQUÍ VA COMA
+                    },
 
                     RequiredSkills = textHabilitats.Text,
                     Location = textUbicacio.Text,
 
-                    Modality = comboModalitat.SelectedItem?.ToString(),
-                    ContractType = comboTipusdecontracte.SelectedItem?.ToString(),
+                    Modality = comboModalitat.SelectedItem.ToString(),
+                    ContractType = comboTipusdecontracte.SelectedItem.ToString(),
 
-                    Salary = decimal.TryParse(textSalari.Text, out decimal sal) ? sal : 0,
+                    Salary = salarioFinal,
 
                     CreationDate = DateTime.Now,
 
                     Applicants = new List<string>(),
 
-                    Cicle = comboCicle.SelectedItem?.ToString(),
-                    Estat = comboEstatdelaoferta.SelectedItem?.ToString(),
+                    Cicle = comboCicle.SelectedItem.ToString(),
+                    Estat = comboEstatdelaoferta.SelectedItem.ToString(),
 
                     Observacions = textObservacions.Text
                 };
-                //Enviem a la API
+
+                // Enviem a la api
                 using (HttpClient client = new HttpClient())
                 {
                     var json = JsonSerializer.Serialize(oferta);
@@ -202,8 +268,7 @@ namespace IMPULS_Desktop
                     else
                     {
                         var error = await response.Content.ReadAsStringAsync();
-                        MessageBox.Show("Error en publicar la oferta");
-                        MessageBox.Show("Error API: " + error);
+                        MessageBox.Show("Error en publicar la oferta: " + error);
                     }
                 }
             }
@@ -238,6 +303,7 @@ namespace IMPULS_Desktop
 
         private void btnTornar_Click(object sender, EventArgs e)
         {
+            _pantallaEmpresa.Show();
             this.Close();
         }
     }
