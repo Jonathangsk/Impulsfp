@@ -1,15 +1,8 @@
-package com.impulsfp.mobile.data
+package com.impulsfp.mobile.network
 
-/**
- * Model del perfil visible de l'usuari.
- *
- * Aquest model és separat de User perquè User representa
- * la sessió autenticada, mentre que aquesta classe UserProfile
- * representa les dades del perfil que es mostren i editen a la UI
- */
-
-data class UserProfile(
+data class RegisterRequest(
     val username: String,
+    val password: String,
     val name: String,
     val surname: String,
     val email: String,
@@ -17,11 +10,11 @@ data class UserProfile(
     val city: String,
     val bio: String,
     val cycle: String,
-    val skills: List<String>,
     val experienceLevel: String,
+    val skills: List<String>,
     val languages: List<String>,
     val preferredRoles: List<String>,
     val preferredLocation: String,
     val availability: String,
-    val portfolio: String,
+    val portfolio: String
 )

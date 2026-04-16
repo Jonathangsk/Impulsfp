@@ -1,22 +1,15 @@
-package com.impulsfp.server.model;
-
-import jakarta.persistence.*;
+package com.impulsfp.server.dto;
 
 import java.util.List;
 
 /**
- * Entitat que representa un estudiant a la base de dades; conté informació personal, acadèmica i professional de l'estudiant, així com una relació amb l'entitat User per gestionar l'autenticació i autorització.
+ * DTO per representar les dades del perfil d'estudiant enviades al client
  *
  * @author Jonathan Giraldo Giraldo
  */
-@Entity
-@Table(name = "students")
-public class Student {
+public class StudentProfileDto {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+    private String username;
     private String name;
     private String surname;
     private String email;
@@ -31,35 +24,14 @@ public class Student {
     private String availability;
     private String portfolio;
 
-    private String languages;
-    private String preferredRoles;
+    private List<String> skills;
+    private List<String> languages;
+    private List<String> preferredRoles;
 
-    // relació one-to-many amb StudentSkill, on un estudiant pot tenir moltes habilitats, però cada habilitat està associada a un sol estudiant
-    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<StudentSkill> skills;
+    // getters & setters
 
-    //relació one-to-one amb User, on un estudiant està associat a un sol usuari, i cada usuari pot ser associat a un sol estudiant
-    @OneToOne
-    @JoinColumn(name = "user_id")
-    private User user;
-
-
-
-    // GETTERS & SETTERS
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public List<StudentSkill> getSkills() {
-        return skills;
-    }
-
-    public void setSkills(List<StudentSkill> skills) {
-        this.skills = skills;
-    }
-
-    public Long getId() { return id; }
+    public String getUsername() { return username; }
+    public void setUsername(String username) { this.username = username; }
 
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
@@ -94,12 +66,12 @@ public class Student {
     public String getPortfolio() { return portfolio; }
     public void setPortfolio(String portfolio) { this.portfolio = portfolio; }
 
-    public String getLanguages() { return languages; }
-    public void setLanguages(String languages) { this.languages = languages; }
+    public List<String> getSkills() { return skills; }
+    public void setSkills(List<String> skills) { this.skills = skills; }
 
-    public String getPreferredRoles() { return preferredRoles; }
-    public void setPreferredRoles(String preferredRoles) { this.preferredRoles = preferredRoles; }
+    public List<String> getLanguages() { return languages; }
+    public void setLanguages(List<String> languages) { this.languages = languages; }
 
-    public User getUser() { return user; }
-    public void setUser(User user) { this.user = user; }
+    public List<String> getPreferredRoles() { return preferredRoles; }
+    public void setPreferredRoles(List<String> preferredRoles) { this.preferredRoles = preferredRoles; }
 }

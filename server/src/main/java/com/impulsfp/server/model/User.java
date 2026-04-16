@@ -12,6 +12,17 @@ import jakarta.persistence.*;
 @Table(name = "users")
 public class User {
 
+    /*
+    * relació onetoone amb Student i Company, on un usuari pot ser o un estudiant o una empresa, però no ambdós al mateix temps
+    * on cascade = CascadeType.ALL per assegurar que quan es borra un usuari, també es borra l'estudiant o empresa associat
+    */
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Student student;
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Company company;
+
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) //l'identificador de l'usuari es genera automàticament per la base de dades
     private Long id;

@@ -8,18 +8,27 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.impulsfp.mobile.data.ProfileRepository
 import com.impulsfp.mobile.data.SessionData
-
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Surface
 /**
  * Pantalla principal de l'aplicació després de l'autenticació.
  *
@@ -44,16 +53,20 @@ import com.impulsfp.mobile.data.SessionData
 fun MenuScreen(
     onLogout: () -> Unit,
     onProfileClick: () -> Unit,
-    menuViewModel: MenuViewModel = viewModel()
+    onOfferClick: (String) -> Unit,
+    onApplicationsClick: () -> Unit,
+    menuViewModel: MenuViewModel = viewModel(),
+    offersViewModel: OffersViewModel = viewModel()
 ) {
     val user = SessionData.currentUser
-    val profile = ProfileRepository.getProfile()
+    val displayName = user?.username ?: "Usuari"
+
+    val offersUiState by offersViewModel.uiState.collectAsState()
 
     val menuTitle = when (user?.role) {
-        "ADMIN" -> "Menú administrador"
-        "EMPRESA" -> "Menú empresa"
-        "ALUMNE" -> "Menú alumne"
-        else -> "Menú principal"
+        "ADMIN" -> "Ofertes disponibles"
+        "ALUMNE" -> "Ofertes de pràctiques"
+        else -> "Ofertes"
     }
 
     Column(
@@ -69,9 +82,9 @@ fun MenuScreen(
          * addicional perquè l'usuari ja es troba a la home.
          */
         AppTopBar(
-            name = profile.name,
-            avatarId = profile.avatarId,
+            name = displayName,
             onHomeClick = { },
+            onApplicationsClick = onApplicationsClick,
             onProfileClick = onProfileClick,
             onLogoutClick = {
                 menuViewModel.logout {
@@ -107,43 +120,154 @@ fun MenuScreen(
                 Spacer(modifier = Modifier.height(8.dp))
 
                 Text(
-                    text = "Nom: ${profile.name} ${profile.surname}",
+                    text = "Benvingut/da, $displayName",
                     style = MaterialTheme.typography.bodyLarge
                 )
 
-                Text(
-                    text = "Email: ${profile.email}",
-                    style = MaterialTheme.typography.bodyLarge
-                )
+                Spacer(modifier = Modifier.height(16.dp))
 
-                Text(
-                    text = "Rol: ${user?.role ?: "-"}",
-                    style = MaterialTheme.typography.bodyLarge
-                )
-
-                Spacer(modifier = Modifier.height(20.dp))
-
-                Card(
+                //Cerca
+                OutlinedTextField(
+                    value = offersUiState.searchQuery,
+                    onValueChange = { offersViewModel.onSearchQueryChange(it) },
+                    label = { Text("Cerca ofertes") },
                     modifier = Modifier
                         .fillMaxWidth()
-                        .testTag("mainContentCard")
-                ) {
-                    Column(
-                        modifier = Modifier.padding(16.dp)
-                    ) {
+                        .testTag("offersSearchField"),
+                    singleLine = true
+                )
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                // 📊 ESTATS
+                when {
+                    offersUiState.isLoading -> {
+                        Box(
+                            modifier = Modifier.fillMaxWidth(),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            CircularProgressIndicator()
+                        }
+                    }
+
+                    offersUiState.errorMessage != null -> {
                         Text(
-                            text = "Contingut provisional",
-                            style = MaterialTheme.typography.titleMedium
+                            text = offersUiState.errorMessage ?: "Error en carregar les ofertes",
+                            color = MaterialTheme.colorScheme.error
                         )
+                    }
 
-                        Spacer(modifier = Modifier.height(12.dp))
-
+                    offersUiState.filteredOffers.isEmpty() -> {
                         Text(
-                            text = "Pantalla en construcció [...]",
-                            style = MaterialTheme.typography.bodyMedium
+                            text = "No s'han trobat ofertes.",
+                            style = MaterialTheme.typography.bodyLarge
                         )
+                    }
 
-                        Spacer(modifier = Modifier.height(8.dp))
+                    else -> {
+                        LazyColumn(
+                            modifier = Modifier.fillMaxSize(),
+                            verticalArrangement = Arrangement.spacedBy(12.dp)
+                        ) {
+                            items(offersUiState.filteredOffers) { offer ->
+                                Card(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .clickable { onOfferClick(offer.id) }
+                                        .testTag("offerCard_${offer.id}"),
+                                    shape = RoundedCornerShape(24.dp),
+                                    elevation = CardDefaults.cardElevation(defaultElevation = 6.dp)
+                                ) {
+                                    Column(
+                                        modifier = Modifier.padding(18.dp)
+                                    ) {
+                                        Row(
+                                            modifier = Modifier.fillMaxWidth(),
+                                            horizontalArrangement = Arrangement.SpaceBetween,
+                                            verticalAlignment = Alignment.Top
+                                        ) {
+                                            Column(
+                                                modifier = Modifier.weight(1f)
+                                            ) {
+                                                Text(
+                                                    text = offer.title,
+                                                    style = MaterialTheme.typography.titleLarge
+                                                )
+
+                                                Spacer(modifier = Modifier.height(6.dp))
+
+                                                Text(
+                                                    text = offer.company,
+                                                    style = MaterialTheme.typography.titleMedium,
+                                                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                                                )
+                                            }
+
+                                            Surface(
+                                                shape = RoundedCornerShape(50),
+                                                color = MaterialTheme.colorScheme.primary.copy(alpha = 0.12f)
+                                            ) {
+                                                Text(
+                                                    text = offer.modality,
+                                                    color = MaterialTheme.colorScheme.primary,
+                                                    style = MaterialTheme.typography.labelMedium,
+                                                    modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp)
+                                                )
+                                            }
+                                        }
+
+                                        Spacer(modifier = Modifier.height(14.dp))
+
+                                        Text(
+                                            text = "📍 ${offer.location}",
+                                            style = MaterialTheme.typography.bodyMedium
+                                        )
+
+                                        Spacer(modifier = Modifier.height(4.dp))
+
+                                        Text(
+                                            text = "📄 ${offer.contractType}",
+                                            style = MaterialTheme.typography.bodyMedium
+                                        )
+
+                                        if (!offer.salary.isNullOrBlank()) {
+                                            Spacer(modifier = Modifier.height(4.dp))
+                                            Text(
+                                                text = "💰 ${offer.salary}",
+                                                style = MaterialTheme.typography.bodyMedium
+                                            )
+                                        }
+
+                                        Spacer(modifier = Modifier.height(14.dp))
+
+                                        Text(
+                                            text = "Tecnologies",
+                                            style = MaterialTheme.typography.labelLarge,
+                                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                                        )
+
+                                        Spacer(modifier = Modifier.height(8.dp))
+
+                                        Row(
+                                            horizontalArrangement = Arrangement.spacedBy(8.dp)
+                                        ) {
+                                            offer.requiredSkills.take(3).forEach { skill ->
+                                                Surface(
+                                                    shape = RoundedCornerShape(50),
+                                                    color = MaterialTheme.colorScheme.secondaryContainer
+                                                ) {
+                                                    Text(
+                                                        text = skill,
+                                                        style = MaterialTheme.typography.labelMedium,
+                                                        modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp)
+                                                    )
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }

@@ -1,5 +1,6 @@
 package com.impulsfp.server.repository;
 
+import com.impulsfp.server.model.Student;
 import com.impulsfp.server.model.StudentSkill;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -11,4 +12,5 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface StudentSkillRepository extends JpaRepository<StudentSkill, Long> {
+    void deleteByStudent(Student student);
 }
