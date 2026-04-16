@@ -1,17 +1,20 @@
 {
   "version": 2,
-  "dgSpecHash": "GkIVqtH3c4o=",
+  "dgSpecHash": "EUiryT0aGhU=",
   "success": true,
   "projectFilePath": "C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS.Tests\\IMPULS.Tests.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\jgran\\.nuget\\packages\\castle.core\\5.1.1\\castle.core.5.1.1.nupkg.sha512",
     "C:\\Users\\jgran\\.nuget\\packages\\microsoft.codecoverage\\17.7.2\\microsoft.codecoverage.17.7.2.nupkg.sha512",
     "C:\\Users\\jgran\\.nuget\\packages\\microsoft.net.test.sdk\\17.7.2\\microsoft.net.test.sdk.17.7.2.nupkg.sha512",
     "C:\\Users\\jgran\\.nuget\\packages\\microsoft.testplatform.objectmodel\\17.7.2\\microsoft.testplatform.objectmodel.17.7.2.nupkg.sha512",
     "C:\\Users\\jgran\\.nuget\\packages\\microsoft.testplatform.testhost\\17.7.2\\microsoft.testplatform.testhost.17.7.2.nupkg.sha512",
+    "C:\\Users\\jgran\\.nuget\\packages\\moq\\4.20.72\\moq.4.20.72.nupkg.sha512",
     "C:\\Users\\jgran\\.nuget\\packages\\mstest.testadapter\\3.0.2\\mstest.testadapter.3.0.2.nupkg.sha512",
     "C:\\Users\\jgran\\.nuget\\packages\\mstest.testframework\\3.0.2\\mstest.testframework.3.0.2.nupkg.sha512",
     "C:\\Users\\jgran\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512",
     "C:\\Users\\jgran\\.nuget\\packages\\nuget.frameworks\\6.5.0\\nuget.frameworks.6.5.0.nupkg.sha512",
+    "C:\\Users\\jgran\\.nuget\\packages\\system.diagnostics.eventlog\\6.0.0\\system.diagnostics.eventlog.6.0.0.nupkg.sha512",
     "C:\\Users\\jgran\\.nuget\\packages\\system.reflection.metadata\\1.6.0\\system.reflection.metadata.1.6.0.nupkg.sha512"
   ],
   "logs": []

@@ -15,11 +15,8 @@ namespace IMPULS_Desktop
     public partial class PantallaPrincipal : Form
     {
         public static string SessionId; // ID de sessió de l'usuari
-      //  public static string apiBase = "http://10.2.163.125:8080/auth";
         public static string apiBase = "http://0bb0dfb7-9b4c-40bc-a0be.5b8c35470a40.bastion.elmeuescriptori.cat:80/auth";
-         //       private readonly string apiBase = "http://localhost:8080/auth"; // URL de l'API d'autenticació
-
-
+       // public static string apiBase = "http://0bb0dfb7-9b4c-40bc-a0be.5b8c35470a40.bastion.elmeuescriptori.cat:80";
         public PantallaPrincipal()
         {
             InitializeComponent();
@@ -106,8 +103,8 @@ namespace IMPULS_Desktop
                 string tipus = result.UserType;
                 MessageBox.Show($"Login correcte!\nTipus: '{tipus}'");
 
-                Form formulariUsuari = null; 
-                //Form formulariUsuari;
+                Form formulariUsuari = null;
+                  //Form formulariUsuari;
 
                 if (tipus == "ADMIN")
                     formulariUsuari = new Administrador();
@@ -180,6 +177,11 @@ namespace IMPULS_Desktop
             form.Show();
 
             this.Hide();
+        }
+
+        private void textBoxContraseña_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

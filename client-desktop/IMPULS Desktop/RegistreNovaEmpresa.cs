@@ -1,16 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Xml.Linq;
-using System.Text.RegularExpressions;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using System.Net.Http;
 using System.Text.Json;
 
@@ -29,75 +24,82 @@ namespace IMPULS_Desktop
 
 
 
-    private async Task RegistrarEmpresaAPI()
-    {
-        try
+        private async Task<bool> RegistrarEmpresaAPI(Empresa empresa, List<string> technologiesList)
         {
-            using (var client = new HttpClient())
+            try
             {
-                client.Timeout = TimeSpan.FromSeconds(5);
-
-                var url = $"{PantallaPrincipal.apiBase}/register/company";
-
-                var requestObj = new
+                using (var client = new HttpClient())
                 {
-                    username = textUsuari.Text,
-                    password = textContrasenya.Text,
-                    name = textNom.Text,
-                    email = textEmail.Text,
-                    address = textAdreça.Text,
-                    vatNumber = textCif.Text,
-                    website = textWeb.Text,
-                    phone = textTelefon.Text,
-                    niche = textSector.Text,
-                    technologies = textTecnologies.Text
-                        .Split(',')
-                        .Select(t => t.Trim())
-                        .Where(t => !string.IsNullOrEmpty(t))
-                        .ToList()
-                };
+                    client.Timeout = TimeSpan.FromSeconds(5);
 
-                var json = JsonSerializer.Serialize(requestObj);
-                var content = new StringContent(json, Encoding.UTF8, "application/json");
+                    var url = $"{PantallaPrincipal.apiBase}/register/company";
 
-                var response = await client.PostAsync(url, content);
+                    var requestObj = new
+                    {
+                      
+                        username = empresa.Username,
+                        password = empresa.Password,
+                        name = empresa.Name,
+                        email = empresa.Email,
+                        address = empresa.Address,
+                        vatNumber = empresa.VatNumber,
+                        website = empresa.Website,
+                        phone = empresa.Phone,
+                        niche = empresa.Niche,
+                        technologies = technologiesList
+                    };
 
-                if (response.IsSuccessStatusCode)
-                {
-                    var responseString = await response.Content.ReadAsStringAsync();
+                    var json = JsonSerializer.Serialize(requestObj);
+                    var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-                    var result = JsonSerializer.Deserialize<PantallaPrincipal.LoginResponse>(
-                        responseString,
-                        new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
-                    );
+                    var response = await client.PostAsync(url, content);
 
-                    MessageBox.Show("Empresa registrada i login correcte!");
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var responseString = await response.Content.ReadAsStringAsync();
 
-                    // opcional: guardar sesión
-                    PantallaPrincipal.SessionId = result.SessionId;
-                }
-                else
-                {
-                    var error = await response.Content.ReadAsStringAsync();
-                    MessageBox.Show("Error del servidor: " + error);
+                        var result = JsonSerializer.Deserialize<PantallaPrincipal.LoginResponse>(
+                            responseString,
+                            new JsonSerializerOptions
+                            {
+                                PropertyNameCaseInsensitive = true
+                            }
+                        );
+
+                        MessageBox.Show("Empresa registrada i login correcte!");
+
+                        // Guardar sessió
+                        PantallaPrincipal.SessionId = result.SessionId;
+
+                        return true; 
+                    }
+                    else
+                    {
+                        var error = await response.Content.ReadAsStringAsync();
+                        MessageBox.Show("Error del servidor: " + error);
+
+                        return false; // Error del servidor
+                    }
                 }
             }
+            catch (HttpRequestException)
+            {
+                MessageBox.Show("No es pot connectar amb el servidor (Isard apagat)");
+                return false;
+            }
+            catch (TaskCanceledException)
+            {
+                MessageBox.Show("Temps d'espera esgotat");
+                return false;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message);
+                return false;
+            }
         }
-        catch (HttpRequestException)
-        {
-            MessageBox.Show("No es pot connectar amb el servidor (Isard apagat)");
-        }
-        catch (TaskCanceledException)
-        {
-            MessageBox.Show("Temps d'espera esgotat");
-        }
-        catch (Exception ex)
-        {
-            MessageBox.Show("Error: " + ex.Message);
-        }
-    }
 
-    private void perfil_Click(object sender, EventArgs e)
+        private void perfil_Click(object sender, EventArgs e)
         {
 
         }
@@ -107,12 +109,78 @@ namespace IMPULS_Desktop
 
         }
 
-        private async void btnDesar_Click(object sender, EventArgs e) 
+    
+            public async void btnDesar_Click(object sender, EventArgs e)
         {
-            string username = textUsuari.Text;
-            string password = textContrasenya.Text;
+            string username = textUsuari.Text.Trim();
+            string password = textContrasenya.Text.Trim();
+            string nom = textNom.Text.Trim();
+            string email = textEmail.Text.Trim();
+            string adreca = textAdreça.Text.Trim();
+            string cif = textCif.Text.Trim();
+            string website = textWeb.Text.Trim();
+            string telefon = textTelefon.Text.Trim();
+            string sector = textSector.Text.Trim();
+            string technologies = textTecnologies.Text.Trim();
 
-            // VALIDACIONES
+            // Validem els camps buits
+            if (string.IsNullOrEmpty(username))
+            {
+                MessageBox.Show("El camp 'Usuari' és obligatori");
+                return;
+            }
+
+            if (string.IsNullOrEmpty(password))
+            {
+                MessageBox.Show("El camp 'Contrasenya' és obligatori");
+                return;
+            }
+
+            if (string.IsNullOrEmpty(nom))
+            {
+                MessageBox.Show("El camp 'Nom' és obligatori");
+                return;
+            }
+
+            if (string.IsNullOrEmpty(email))
+            {
+                MessageBox.Show("El camp 'Email' és obligatori");
+                return;
+            }
+
+            if (string.IsNullOrEmpty(adreca))
+            {
+                MessageBox.Show("El camp 'Adreça' és obligatori");
+                return;
+            }
+
+            if (string.IsNullOrEmpty(cif))
+            {
+                MessageBox.Show("El camp 'CIF' és obligatori");
+                return;
+            }
+
+            if (string.IsNullOrEmpty(telefon))
+            {
+                MessageBox.Show("El camp 'Telèfon' és obligatori");
+                return;
+            }
+            if (string.IsNullOrEmpty(website))
+            {
+                MessageBox.Show("El camp 'Website' és obligatori");
+                return;
+            }
+            if (string.IsNullOrEmpty(sector))
+            {
+                MessageBox.Show("El camp 'Sector' és obligatori");
+                return;
+            }
+            if (string.IsNullOrEmpty(technologies))
+            {
+                MessageBox.Show("El camp 'Tecnologies' és obligatori");
+                return;
+            }
+
             if (!ValidarUsername(username))
             {
                 MessageBox.Show("El nom d'usuari ha de tenir entre 4 i 20 caràcters i només lletres i números.");
@@ -124,40 +192,50 @@ namespace IMPULS_Desktop
                 MessageBox.Show("La contrasenya ha de tenir mínim 6 caràcters, amb almenys una majúscula, una minúscula i un número.");
                 return;
             }
-            Empresa empresa = new Empresa();
 
-            empresa.Username = textUsuari.Text;        
-            empresa.Password = textContrasenya.Text;
-            empresa.Name = textNom.Text;
-            empresa.Email = textEmail.Text;
-            empresa.Address = textAdreça.Text;
-            empresa.VatNumber = textCif.Text;
-            empresa.Website = textWeb.Text;
-            empresa.Phone = textTelefon.Text;
-            empresa.Niche = textSector.Text;
-            var technologiesList = textTecnologies.Text
-                                                .Split(',')
-                                                .Select(t => t.Trim())
-                                                .Where(t => !string.IsNullOrEmpty(t))
-                                                .ToList();
-
-
-         //   empresa.ProfilePhoto = rutaImagen;
-            MessageBox.Show("Empresa guardada correctament");
-            await RegistrarEmpresaAPI();
-        }
-
-        private void OfertesActives_SelectedIndexChanged(object sender, EventArgs e)
-        { }
-            private void CargarOfertas(Empresa empresa)
-        {
-            OfertesActives.Items.Clear();
-
-            foreach (Oferta o in empresa.ActiveOffers)
+            
+            Empresa empresa = new Empresa
             {
-                OfertesActives.Items.Add(o.Title);
+                Username = textUsuari.Text,
+                Password = textContrasenya.Text,
+                Name = textNom.Text,
+                Email = textEmail.Text,
+                Address = textAdreça.Text,
+                VatNumber = textCif.Text,
+                Website = textWeb.Text,
+                Phone = textTelefon.Text,
+                Niche = textSector.Text
+            };
+
+            var technologiesList = textTecnologies.Text
+                .Split(',')
+                .Select(t => t.Trim())
+                .Where(t => !string.IsNullOrEmpty(t))
+                .ToList();
+
+            bool ok = await RegistrarEmpresaAPI(empresa, technologiesList);
+
+
+            // Nomes neteja si tot es correcte
+            if (ok)
+            {
+                textUsuari.Clear();
+                textContrasenya.Clear();
+                textNom.Clear();
+                textEmail.Clear();
+                textAdreça.Clear();
+                textCif.Clear();
+                textWeb.Clear();
+                textTelefon.Clear();
+                textSector.Clear();
+                textTecnologies.Clear();
+
+                formularioAnterior.Show();
+                this.Close();
             }
+            
         }
+
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
@@ -168,7 +246,7 @@ namespace IMPULS_Desktop
      *          4 a 20 caracters nomes lletres i números
      */
 
-private bool ValidarUsername(string username)
+public bool ValidarUsername(string username)
     {
         return Regex.IsMatch(username, @"^[a-zA-Z0-9]{4,20}$");
     }
@@ -178,7 +256,7 @@ private bool ValidarUsername(string username)
      *        1 mayúscula
      *        1 minúscula
      *        1 número*/
-    private bool ValidarPassword(string password)
+    public bool ValidarPassword(string password)
         {
             return Regex.IsMatch(password, @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,}$");
         }
@@ -212,6 +290,11 @@ private bool ValidarUsername(string username)
         }
 
         private void label7_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label2_Click(object sender, EventArgs e)
         {
 
         }

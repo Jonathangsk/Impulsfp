@@ -9,9 +9,14 @@ namespace IMPULS_Desktop
 {
     public partial class OfertesDeTreball : Form
     {
-        public OfertesDeTreball()
+        private PantallaEmpresa _pantallaEmpresa;
+        public OfertesDeTreball(PantallaEmpresa pantallaEmpresa)
         {
             InitializeComponent();
+
+            _pantallaEmpresa = pantallaEmpresa;
+
+            this.FormClosing += OfertesDeTreball_FormClosing;
         }
 
         private async void OfertesDeTreball_Load(object sender, EventArgs e)
@@ -114,7 +119,12 @@ namespace IMPULS_Desktop
 
         private void btnTornar_Click(object sender, EventArgs e)
         {
+            _pantallaEmpresa.Show();
             this.Close();
+        }
+        private void OfertesDeTreball_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            _pantallaEmpresa.Show();
         }
     }
     }
