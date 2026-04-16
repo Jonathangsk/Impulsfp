@@ -1,6 +1,7 @@
 package com.impulsfp.server.controller;
 
 import com.impulsfp.server.dto.CreateOfferDto;
+import com.impulsfp.server.mapper.OfferMapper;
 import com.impulsfp.server.model.Offer;
 import com.impulsfp.server.service.OfferService;
 import org.springframework.http.ResponseEntity;
@@ -14,9 +15,11 @@ import java.util.Map;
 public class OfferController {
 
     private final OfferService offerService;
+    private final OfferMapper offerMapper;
 
-    public OfferController(OfferService offerService) {
+    public OfferController(OfferService offerService, OfferMapper offerMapper) {
         this.offerService = offerService;
+        this.offerMapper = offerMapper;
     }
 
     @PostMapping
@@ -43,8 +46,29 @@ public class OfferController {
         return ResponseEntity.ok(Map.of("message", "Aplicació enviada"));
     }
 
+    @GetMapping("/my")
+    public ResponseEntity<?> getMyOffers(@RequestParam String sessionId){
+
+        return ResponseEntity.ok(
+                offerService.getMyOffers(sessionId)
+                        .stream()
+                        .map(offerMapper::toDto)
+                        .toList()
+        );
+    }
+
     @GetMapping
-    public ResponseEntity<List<Offer>> getAll(){
+    public ResponseEntity<?> getAll(){
         return ResponseEntity.ok(offerService.getAllOffers());
+    }
+
+    @GetMapping("/search/location")
+    public ResponseEntity<?> byLocation(@RequestParam String location){
+        return ResponseEntity.ok(offerService.getOffersByLocation(location));
+    }
+
+    @GetMapping("/search/modality")
+    public ResponseEntity<?> byModality(@RequestParam String modality){
+        return ResponseEntity.ok(offerService.getOffersByModality(modality));
     }
 }

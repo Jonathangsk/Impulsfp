@@ -1,13 +1,16 @@
 package com.impulsfp.server.service;
 
 import com.impulsfp.server.dto.CreateOfferDto;
+import com.impulsfp.server.dto.OfferResponseDto;
 import com.impulsfp.server.enums.*;
 import com.impulsfp.server.exception.*;
+import com.impulsfp.server.mapper.OfferMapper;
 import com.impulsfp.server.model.*;
 import com.impulsfp.server.repository.*;
 import com.impulsfp.server.session.SessionManager;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -19,16 +22,19 @@ public class OfferService {
     private final UserRepository userRepository;
     private final CompanyRepository companyRepository;
     private final StudentRepository studentRepository;
+    private final OfferMapper offerMapper;
 
     public OfferService(OfferRepository offerRepository,
                         UserRepository userRepository,
                         CompanyRepository companyRepository,
-                        StudentRepository studentRepository) {
+                        StudentRepository studentRepository,
+                        OfferMapper offerMapper) {
 
         this.offerRepository = offerRepository;
         this.userRepository = userRepository;
         this.companyRepository = companyRepository;
         this.studentRepository = studentRepository;
+        this.offerMapper = offerMapper;
     }
 
     @Transactional
@@ -71,6 +77,11 @@ public class OfferService {
         offer.setRequiredSkills(skills);
 
         offerRepository.save(offer);
+
+        company.setActiveOffers(
+                company.getActiveOffers() == null ? 1 : company.getActiveOffers() + 1
+        );
+
     }
 
     @Transactional
@@ -95,12 +106,62 @@ public class OfferService {
         Offer offer = offerRepository.findById(offerId)
                 .orElseThrow(() -> new ApiException(ErrorCode.INVALID_REQUEST, "Oferta no trobada"));
 
-        offer.getApplicants().add(student);
 
+        if(offer.getApplicants().contains(student)){
+            throw new ApiException(ErrorCode.INVALID_REQUEST, "Ja estàs inscrit a aquesta oferta");
+        }
+
+        offer.getApplicants().add(student);
         offerRepository.save(offer);
     }
 
-    public List<Offer> getAllOffers(){
-        return offerRepository.findAll();
+    public List<Offer> getMyOffers(String sessionId){
+
+        if(!SessionManager.isValid(sessionId)){
+            throw new ApiException(ErrorCode.INVALID_SESSION, "Sessió no vàlida");
+        }
+
+        String username = SessionManager.getUsername(sessionId);
+
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new ApiException(ErrorCode.USER_NOT_FOUND, "Usuari no trobat"));
+
+        if(!user.getRole().equals("COMPANY")){
+            throw new ApiException(ErrorCode.INVALID_REQUEST, "Només empreses poden veure les seves ofertes");
+        }
+
+        Company company = companyRepository.findByUser(user)
+                .orElseThrow(() -> new ApiException(ErrorCode.USER_NOT_FOUND, "Empresa no trobada"));
+
+        return offerRepository.findByCompany(company);
     }
+
+    public List<OfferResponseDto> getAllOffers(){
+
+        return offerRepository.findByState(OfferState.OPEN)
+                .stream()
+                .map(offerMapper::toDto)
+                .toList();
+    }
+
+    public List<OfferResponseDto> getOffersByLocation(String location){
+
+        return offerRepository
+                .findByLocationContainingIgnoreCaseAndState(location, OfferState.OPEN)
+                .stream()
+                .map(offerMapper::toDto)
+                .toList();
+    }
+
+    public List<OfferResponseDto> getOffersByModality(String modality){
+
+        return offerRepository
+                .findByModalityAndState(Modality.valueOf(modality), OfferState.OPEN)
+                .stream()
+                .map(offerMapper::toDto)
+                .toList();
+    }
+
+
+
 }
