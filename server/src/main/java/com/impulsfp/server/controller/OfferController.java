@@ -57,6 +57,18 @@ public class OfferController {
         );
     }
 
+    @GetMapping("/{id}/applicants")
+    public ResponseEntity<?> getApplicants(
+            @RequestParam String sessionId,
+            @PathVariable Long id){
+
+        return ResponseEntity.ok(
+                offerService.getApplicants(sessionId, id)
+        );
+    }
+
+
+
     @GetMapping
     public ResponseEntity<?> getAll(){
         return ResponseEntity.ok(offerService.getAllOffers());

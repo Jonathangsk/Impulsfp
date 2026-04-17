@@ -164,6 +164,35 @@ public class OfferService {
                 .toList();
     }
 
+    public List<Student> getApplicants(String sessionId, Long offerId){
+
+        if(!SessionManager.isValid(sessionId)){
+            throw new ApiException(ErrorCode.INVALID_SESSION, "Sessió no vàlida");
+        }
+
+        String username = SessionManager.getUsername(sessionId);
+
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new ApiException(ErrorCode.USER_NOT_FOUND, "Usuari no trobat"));
+
+        if(!user.getRole().equals("COMPANY")){
+            throw new ApiException(ErrorCode.INVALID_REQUEST, "Només empreses");
+        }
+
+        Company company = companyRepository.findByUser(user)
+                .orElseThrow(() -> new ApiException(ErrorCode.USER_NOT_FOUND, "Empresa no trobada"));
+
+        Offer offer = offerRepository.findById(offerId)
+                .orElseThrow(() -> new ApiException(ErrorCode.INVALID_REQUEST, "Oferta no trobada"));
+
+        // 🔥 MUY IMPORTANTE (seguridad)
+        if(!offer.getCompany().getId().equals(company.getId())){
+            throw new ApiException(ErrorCode.INVALID_REQUEST, "No pots veure aquesta oferta");
+        }
+
+        return offer.getApplicants();
+    }
+
 
 
 }
