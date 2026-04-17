@@ -17,8 +17,12 @@ public class OfferResponseDto {
 
     private String companyName;
     private List<String> skills;
+    private int applicantsCount;
 
     // getters & setters
+
+
+
 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
@@ -52,4 +56,11 @@ public class OfferResponseDto {
 
     public List<String> getSkills() { return skills; }
     public void setSkills(List<String> skills) { this.skills = skills; }
+
+    public int getApplicantsCount() {
+        return applicantsCount;
+    }
+    public void setApplicantsCount(int applicantsCount) {
+        this.applicantsCount = applicantsCount;
+    }
 }

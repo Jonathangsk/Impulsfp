@@ -30,6 +30,10 @@ public class OfferMapper {
                         .toList()
         );
 
+        dto.setApplicantsCount(
+                offer.getApplicants() != null ? offer.getApplicants().size() : 0
+        );
+
         return dto;
     }
 }

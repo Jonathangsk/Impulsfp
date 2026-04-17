@@ -56,6 +56,8 @@ public class OfferService {
         Company company = companyRepository.findByUser(user)
                 .orElseThrow(() -> new ApiException(ErrorCode.USER_NOT_FOUND, "Empresa no trobada"));
 
+        //TODO: Validar que el número d'ofertes actives de l'empresa no superi el màxim permès
+        //TODO: Valida que els camps obligatoris del DTO estiguin correctament omplerts (per exemple, que el salari sigui un número positiu, que la modalitat i el tipus de contracte siguin valors vàlids, etc.)
         Offer offer = new Offer();
         offer.setTitle(dto.getTitle());
         offer.setDescription(dto.getDescription());
