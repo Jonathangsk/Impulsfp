@@ -11,8 +11,18 @@ public class UpdateOfferDto {
     private String modality;
     private String contractType;
     private Double salary;
+    private String state;
 
     // getters & setters
+
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
 
     public String getTitle() {
         return title;

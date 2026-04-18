@@ -165,6 +165,10 @@ public class OfferService {
                 .toList();
     }
 
+
+
+
+
     public List<Student> getApplicants(String sessionId, Long offerId){
 
         if(!SessionManager.isValid(sessionId)){
@@ -192,6 +196,10 @@ public class OfferService {
 
         return offer.getApplicants();
     }
+
+
+
+
 
 
     @Transactional
@@ -226,6 +234,10 @@ public class OfferService {
         company.setActiveOffers(Math.max(0, current - 1));
     }
 
+
+
+
+
     @Transactional
     public void updateOffer(String sessionId, Long offerId, UpdateOfferDto dto){
 
@@ -257,6 +269,7 @@ public class OfferService {
         if(dto.getDescription() != null) offer.setDescription(dto.getDescription());
         if(dto.getLocation() != null) offer.setLocation(dto.getLocation());
         if(dto.getSalary() != null) offer.setSalary(dto.getSalary());
+        if(dto.getState() != null) offer.setState(OfferState.valueOf(dto.getState()));
 
         if(dto.getModality() != null){
             offer.setModality(Modality.valueOf(dto.getModality()));
