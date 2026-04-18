@@ -20,6 +20,9 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -35,10 +38,28 @@ fun OfferDetailScreen(
     onApplicationsClick: () -> Unit,
     onProfileClick: () -> Unit,
     onLogoutClick: () -> Unit,
-    onApplyClick: () -> Unit,
-    onBackClick: () -> Unit
-    ) {
+    onBackClick: () -> Unit,
+    offersViewModel: OffersViewModel
+) {
     val context = LocalContext.current
+
+    val applyLoading by offersViewModel.applyLoading.collectAsState()
+    val applySuccessMessage by offersViewModel.applySuccessMessage.collectAsState()
+    val applyErrorMessage by offersViewModel.applyErrorMessage.collectAsState()
+
+    applySuccessMessage?.let { message ->
+        LaunchedEffect(message) {
+            Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+            offersViewModel.clearApplyMessages()
+        }
+    }
+
+    applyErrorMessage?.let { message ->
+        LaunchedEffect(message) {
+            Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+            offersViewModel.clearApplyMessages()
+        }
+    }
 
     Column(
         modifier = Modifier.fillMaxSize()
@@ -58,7 +79,6 @@ fun OfferDetailScreen(
                 .padding(horizontal = 16.dp, vertical = 16.dp),
             verticalArrangement = Arrangement.Top
         ) {
-
             Card(
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(24.dp),
@@ -170,32 +190,30 @@ fun OfferDetailScreen(
                             }
                         }
                     }
-
-                    Spacer(modifier = Modifier.height(18.dp))
-
-                    Text(
-                        text = "Candidats actuals: ${offer.applicantsCount}",
-                        style = MaterialTheme.typography.bodyLarge
-                    )
                 }
             }
+            Spacer(modifier = Modifier.height(18.dp))
+
+            Text(
+                text = "Candidats actuals: ${offer.applicantsCount}",
+                style = MaterialTheme.typography.bodyLarge
+            )
 
             Spacer(modifier = Modifier.height(24.dp))
 
             Button(
                 onClick = {
-                    onApplyClick()
-                    Toast.makeText(
-                        context,
-                        "Inscripció simulada correctament",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    offersViewModel.applyToOffer(offer.id)
                 },
+                enabled = !applyLoading,
                 modifier = Modifier
                     .fillMaxWidth()
                     .testTag("applyOfferButton")
             ) {
-                Text("Inscriure's")
+                Text(
+                    if (applyLoading) "Aplicant a l'oferta..."
+                    else "Inscriure's"
+                )
             }
 
             Spacer(modifier = Modifier.height(12.dp))

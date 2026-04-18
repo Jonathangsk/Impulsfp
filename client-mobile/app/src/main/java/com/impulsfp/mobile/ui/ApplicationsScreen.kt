@@ -11,9 +11,10 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
@@ -33,7 +34,7 @@ fun ApplicationsScreen(
     menuViewModel: MenuViewModel = viewModel(),
     applicationsViewModel: ApplicationsViewModel = viewModel()
 ) {
-    val applications by applicationsViewModel.applications.collectAsState()
+    val uiState by applicationsViewModel.uiState.collectAsState()
 
     Column(
         modifier = Modifier.fillMaxSize()
@@ -59,27 +60,43 @@ fun ApplicationsScreen(
                 text = "Les meves candidatures",
                 style = MaterialTheme.typography.headlineSmall
             )
+
             Spacer(modifier = Modifier.height(4.dp))
 
             Text(
-                text = "${applications.size} candidatures",
+                text = "${uiState.applications.size} candidatures",
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
 
             Spacer(modifier = Modifier.height(12.dp))
 
-            if (applications.isEmpty()) {
-                Text(
-                    text = "Encara no has enviat cap candidatura.",
-                    style = MaterialTheme.typography.bodyLarge
-                )
-            } else {
-                LazyColumn(
-                    verticalArrangement = Arrangement.spacedBy(14.dp)
-                ) {
-                    items(applications) { application ->
-                        ApplicationCard(application = application)
+            when {
+                uiState.isLoading -> {
+                    CircularProgressIndicator()
+                }
+
+                uiState.errorMessage != null -> {
+                    Text(
+                        text = uiState.errorMessage ?: "Error en carregar les candidatures",
+                        color = MaterialTheme.colorScheme.error
+                    )
+                }
+
+                uiState.applications.isEmpty() -> {
+                    Text(
+                        text = "Encara no has enviat cap candidatura.",
+                        style = MaterialTheme.typography.bodyLarge
+                    )
+                }
+
+                else -> {
+                    LazyColumn(
+                        verticalArrangement = Arrangement.spacedBy(14.dp)
+                    ) {
+                        items(uiState.applications) { application ->
+                            ApplicationCard(application = application)
+                        }
                     }
                 }
             }
