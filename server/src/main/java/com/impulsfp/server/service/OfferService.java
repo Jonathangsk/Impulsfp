@@ -2,10 +2,12 @@ package com.impulsfp.server.service;
 
 import com.impulsfp.server.dto.CreateOfferDto;
 import com.impulsfp.server.dto.OfferResponseDto;
+import com.impulsfp.server.dto.StudentProfileDto;
 import com.impulsfp.server.dto.UpdateOfferDto;
 import com.impulsfp.server.enums.*;
 import com.impulsfp.server.exception.*;
 import com.impulsfp.server.mapper.OfferMapper;
+import com.impulsfp.server.mapper.ProfileMapper;
 import com.impulsfp.server.model.*;
 import com.impulsfp.server.repository.*;
 import com.impulsfp.server.session.SessionManager;
@@ -24,18 +26,20 @@ public class OfferService {
     private final CompanyRepository companyRepository;
     private final StudentRepository studentRepository;
     private final OfferMapper offerMapper;
+    private final ProfileMapper profileMapper;
 
     public OfferService(OfferRepository offerRepository,
                         UserRepository userRepository,
                         CompanyRepository companyRepository,
                         StudentRepository studentRepository,
-                        OfferMapper offerMapper) {
+                        OfferMapper offerMapper, ProfileMapper profileMapper) {
 
         this.offerRepository = offerRepository;
         this.userRepository = userRepository;
         this.companyRepository = companyRepository;
         this.studentRepository = studentRepository;
         this.offerMapper = offerMapper;
+        this.profileMapper = profileMapper;
     }
 
     @Transactional
@@ -169,7 +173,7 @@ public class OfferService {
 
 
 
-    public List<Student> getApplicants(String sessionId, Long offerId){
+    public List<StudentProfileDto> getApplicants(String sessionId, Long offerId){
 
         if(!SessionManager.isValid(sessionId)){
             throw new ApiException(ErrorCode.INVALID_SESSION, "Sessió no vàlida");
@@ -194,7 +198,9 @@ public class OfferService {
             throw new ApiException(ErrorCode.INVALID_REQUEST, "No pots veure aquesta oferta");
         }
 
-        return offer.getApplicants();
+        return offer.getApplicants().stream()
+                .map(profileMapper::toStudentDto)
+                .toList();
     }
 
 

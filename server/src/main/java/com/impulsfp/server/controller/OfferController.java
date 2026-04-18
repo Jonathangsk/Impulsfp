@@ -31,7 +31,7 @@ public class OfferController {
             @RequestBody CreateOfferDto dto){
 
         offerService.createOffer(sessionId, dto);
-        return ResponseEntity.ok(Map.of("message", "Oferta creada"));
+        return ResponseEntity.ok(Map.of("message", "Oferta creada correctament"));
     }
 
 
@@ -48,7 +48,7 @@ public class OfferController {
             @PathVariable Long id){
 
         offerService.applyToOffer(sessionId, id);
-        return ResponseEntity.ok(Map.of("message", "Aplicació enviada"));
+        return ResponseEntity.ok(Map.of("message", "Aplicació enviada correctament"));
     }
 
     @GetMapping("/my")
@@ -97,7 +97,7 @@ public class OfferController {
 
         offerService.deleteOffer(sessionId, id);
 
-        return ResponseEntity.ok(Map.of("message", "Oferta eliminada"));
+        return ResponseEntity.ok(Map.of("message", "Oferta eliminada correctament"));
     }
 
     @PutMapping("/{id}")
@@ -108,7 +108,7 @@ public class OfferController {
 
         offerService.updateOffer(sessionId, id, dto);
 
-        return ResponseEntity.ok(Map.of("message", "Oferta actualitzada"));
+        return ResponseEntity.ok(Map.of("message", "Oferta actualitzada correctament"));
     }
 
 
