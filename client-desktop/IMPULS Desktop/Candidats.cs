@@ -4,6 +4,7 @@ using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using System.Windows.Forms;
+using static System.Net.WebRequestMethods;
 
 
 namespace IMPULS_Desktop
@@ -14,7 +15,9 @@ namespace IMPULS_Desktop
         private List<Candidat> candidats = new List<Candidat>();
 
         private int ofertaId = 1;
-        private string apiUrl => $"https://tu-servidor/api/candidats/oferta/{ofertaId}";
+        private string apiUrl =>
+        
+    $"http://0bb0dfb7-9b4c-40bc-a0be.5b8c35470a40.bastion.elmeuescriptori.cat/offers/{ofertaId}/applicants?sessionId={PantallaPrincipal.SessionId}";
 
         public Candidats(int ofertaId)
         {
@@ -66,8 +69,7 @@ namespace IMPULS_Desktop
                 var json = JsonSerializer.Serialize(c);
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-                var response = await client.PutAsync($"{apiUrl}/{c.Id}", content);
-                response.EnsureSuccessStatusCode();
+
             }
             catch (HttpRequestException)
             {
@@ -93,12 +95,9 @@ namespace IMPULS_Desktop
             var c = (Candidat)dataGridView1.CurrentRow.DataBoundItem;
 
             try
-            {
-                // 1. Marquem candidat com seleccionat
-                await client.PutAsync(
-                    $"http://localhost:8080/candidats/{c.Id}/select",
-                    null
-                );
+            { 
+
+                
 
                 // 2. Marquem oferta com expired
                 await client.PutAsync(
@@ -127,7 +126,7 @@ namespace IMPULS_Desktop
             var c = (Candidat)dataGridView1.CurrentRow.DataBoundItem;
 
             var confirm = MessageBox.Show(
-                "Segur que vols eliminar a " + c.Nom + "?",
+                "Segur que vols eliminar a " + c.Name + "?",
                 "Confirmar",
                 MessageBoxButtons.YesNo);
 
@@ -136,8 +135,8 @@ namespace IMPULS_Desktop
 
             try
             {
-                var response = await client.DeleteAsync($"{apiUrl}/{c.Id}");
-                response.EnsureSuccessStatusCode();
+//                var response = await client.DeleteAsync($"{apiUrl}/{c.Id}");
+  //              response.EnsureSuccessStatusCode();
 
                 await CargarCandidats();
             }
@@ -163,7 +162,20 @@ namespace IMPULS_Desktop
 
     public class Candidat
     {
-        public int Id { get; set; }
-        public string Nom { get; set; }
+        public string Name { get; set; }
+        public string Surname { get; set; }
+        public string Email { get; set; }
+        public string PhoneNumber { get; set; }
+        public string City { get; set; }
+        public string Bio { get; set; }
+        public string Cycle { get; set; }
+        public string ExperienceLevel { get; set; }
+        public string Availability { get; set; }
+        public string PreferredLocation { get; set; }
+        public string Portfolio { get; set; }
+
+        public List<string> Languages { get; set; }
+        public List<string> Skills { get; set; }
+        public List<string> PreferredRoles { get; set; }
     }
 }

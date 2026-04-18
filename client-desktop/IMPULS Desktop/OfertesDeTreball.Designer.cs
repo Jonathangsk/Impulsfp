@@ -45,7 +45,7 @@
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersWidth = 51;
             this.dataGridView1.RowTemplate.Height = 24;
-            this.dataGridView1.Size = new System.Drawing.Size(1234, 434);
+            this.dataGridView1.Size = new System.Drawing.Size(1636, 434);
             this.dataGridView1.TabIndex = 0;
             // 
             // btnEditar
@@ -119,7 +119,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.ClientSize = new System.Drawing.Size(1262, 533);
+            this.ClientSize = new System.Drawing.Size(1651, 533);
             this.Controls.Add(this.btnTornar);
             this.Controls.Add(this.btnCandidats);
             this.Controls.Add(this.btnTancar);

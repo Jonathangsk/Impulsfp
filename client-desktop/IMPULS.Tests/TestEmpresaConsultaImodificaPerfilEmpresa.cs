@@ -9,13 +9,20 @@ using System.Threading.Tasks;
 
 namespace IMPULS.Tests
 {
+    /// <summary>
+    /// Classe de tests per validar la funcionalitat del perfil d'empresa.
+    /// Inclou consulta de dades i modificació de camps del perfil mitjançant API mockejada.
+    /// </summary>
     [TestClass]
     public class TestEmpresaConsultaImodificaPerfilEmpresa
     {
+        /// <summary>
+        /// Test per comprovar que es pot consultar el perfil d'una empresa correctament.
+        /// Es simula una resposta de l'API amb dades fictícies.
+        /// </summary>
         [TestMethod]
         public async Task ConsultarPerfilEmpresa_RetornaEmpresa()
         {
-            
             var mockApi = new Mock<IApiClient>();
 
             var fakeJson = JsonSerializer.Serialize(new
@@ -28,6 +35,7 @@ namespace IMPULS.Tests
                 technologies = new[] { "Java", "Angular" }
             });
 
+            // Simulem resposta OK de l'API amb JSON d'empresa
             mockApi
                 .Setup(x => x.GetAsync(It.IsAny<string>()))
                 .ReturnsAsync(new HttpResponseMessage(HttpStatusCode.OK)
@@ -35,7 +43,6 @@ namespace IMPULS.Tests
                     Content = new StringContent(fakeJson, Encoding.UTF8, "application/json")
                 });
 
-            
             var response = await mockApi.Object.GetAsync("http://fake/users/me");
 
             var json = await response.Content.ReadAsStringAsync();
@@ -47,13 +54,15 @@ namespace IMPULS.Tests
                     PropertyNameCaseInsensitive = true
                 });
 
-            
             Assert.IsNotNull(empresa);
             Assert.AreEqual("Empresa TEST", empresa.Name);
             Assert.AreEqual("123456789", empresa.Phone);
             Assert.AreEqual("Software", empresa.Niche);
         }
 
+        /// <summary>
+        /// Test per comprovar que es pot modificar el nom de l'empresa correctament.
+        /// </summary>
         [TestMethod]
         public async Task ModificarNom_Acceptar()
         {
@@ -71,6 +80,10 @@ namespace IMPULS.Tests
 
             Assert.IsTrue(response.IsSuccessStatusCode);
         }
+
+        /// <summary>
+        /// Test per comprovar que es pot modificar l'adreça de l'empresa correctament.
+        /// </summary>
         [TestMethod]
         public async Task ModificarDireccio_Acceptar()
         {
@@ -88,6 +101,10 @@ namespace IMPULS.Tests
 
             Assert.IsTrue(response.IsSuccessStatusCode);
         }
+
+        /// <summary>
+        /// Test per comprovar que es pot modificar el telèfon de l'empresa correctament.
+        /// </summary>
         [TestMethod]
         public async Task ModificarTelefon_Acceptar()
         {
@@ -105,6 +122,10 @@ namespace IMPULS.Tests
 
             Assert.IsTrue(response.IsSuccessStatusCode);
         }
+
+        /// <summary>
+        /// Test per comprovar que es pot modificar el website de l'empresa correctament.
+        /// </summary>
         [TestMethod]
         public async Task ModificarWebsite_Acceptar()
         {
@@ -122,6 +143,10 @@ namespace IMPULS.Tests
 
             Assert.IsTrue(response.IsSuccessStatusCode);
         }
+
+        /// <summary>
+        /// Test per comprovar que es pot modificar el sector (niche) de l'empresa correctament.
+        /// </summary>
         [TestMethod]
         public async Task ModificarNiche_Acceptar()
         {
@@ -139,6 +164,10 @@ namespace IMPULS.Tests
 
             Assert.IsTrue(response.IsSuccessStatusCode);
         }
+
+        /// <summary>
+        /// Test per comprovar que es pot modificar la llista de tecnologies de l'empresa correctament.
+        /// </summary>
         [TestMethod]
         public async Task ModificarTechnologies_AcceptarArray()
         {
