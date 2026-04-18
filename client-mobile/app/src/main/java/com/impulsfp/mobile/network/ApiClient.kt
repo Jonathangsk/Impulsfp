@@ -74,4 +74,10 @@ object ApiClient {
     val profileApiService: ProfileApiService
         get() = getRetrofit().create(ProfileApiService::class.java)
 
+    val offersApiService: OffersApiService
+        get() = getRetrofit().create(OffersApiService::class.java)
+
+    val applicationsApiService: ApplicationsApiService
+        get() = getRetrofit().create(ApplicationsApiService::class.java)
+
 }

@@ -12,7 +12,9 @@ import com.impulsfp.mobile.data.UserProfile
 import com.impulsfp.mobile.network.UpdateProfileRequest
 import kotlinx.coroutines.launch
 
-class ProfileViewModel : ViewModel() {
+class ProfileViewModel(
+    private val profileController: ProfileController = ProfileController()
+) : ViewModel() {
 
     var profile by mutableStateOf(
         UserProfile(
@@ -56,7 +58,6 @@ class ProfileViewModel : ViewModel() {
     var cycleError by mutableStateOf<String?>(null)
         private set
 
-    private val profileController = ProfileController()
 
     fun refreshProfile(sessionId: String) {
         viewModelScope.launch {

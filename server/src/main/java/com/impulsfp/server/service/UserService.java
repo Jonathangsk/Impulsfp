@@ -250,8 +250,8 @@ public class UserService {
         if(body.containsKey("phone") && body.get("phone") != null)
             company.setPhone((String) body.get("phone"));
 
-        if(body.containsKey("email") && body.get("email") != null)
-            company.setEmail((String) body.get("email"));
+        if(body.containsKey("email"))
+            throw new ApiException(ErrorCode.INVALID_REQUEST, "No es pot modificar el correu electrònic d'una empresa");
 
         if(body.containsKey("vatNumber") && body.get("vatNumber") != null)
             company.setVatNumber((String) body.get("vatNumber"));
