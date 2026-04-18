@@ -11,5 +11,6 @@ data class Offer(
     val contractType: String,
     val salary: String? = null,
     val createdAt: String,
+    val state: String,
     val applicantsCount: Int = 0
 )

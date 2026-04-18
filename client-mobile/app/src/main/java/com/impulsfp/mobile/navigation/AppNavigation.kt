@@ -8,7 +8,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.impulsfp.mobile.ui.EditProfileScreen
 import com.impulsfp.mobile.ui.LoginScreen
-import com.impulsfp.mobile.ui.MenuScreen
+import com.impulsfp.mobile.ui.OffersScreen
 import com.impulsfp.mobile.ui.ProfileScreen
 import com.impulsfp.mobile.ui.RegisterScreen
 import com.impulsfp.mobile.ui.OfferDetailScreen
@@ -29,7 +29,7 @@ import com.impulsfp.mobile.ui.ProfileViewModel
 sealed class AppScreen(val route: String) {
     object Login : AppScreen("login")
     object Register : AppScreen("register")
-    object Menu : AppScreen("menu")
+    object Offers : AppScreen("offers")
     object Profile : AppScreen("profile")
     object EditProfile : AppScreen("edit_profile")
     object Applications : AppScreen("applications")
@@ -61,7 +61,7 @@ fun AppNavigation() {
         composable(AppScreen.Login.route) {
             LoginScreen(
                 onLoginSuccess = {
-                    navController.navigate(AppScreen.Menu.route) {
+                    navController.navigate(AppScreen.Offers.route) {
                         popUpTo(AppScreen.Login.route) { inclusive = true }
                     }
                 },
@@ -84,8 +84,8 @@ fun AppNavigation() {
             )
         }
 
-        composable(AppScreen.Menu.route) {
-            MenuScreen(
+        composable(AppScreen.Offers.route) {
+            OffersScreen(
                 onLogout = {
                     navController.navigate(AppScreen.Login.route) {
                         popUpTo(0)
@@ -121,8 +121,8 @@ fun AppNavigation() {
                     offer = offer,
                     userName = profile.name,
                     onHomeClick = {
-                        navController.navigate(AppScreen.Menu.route) {
-                            popUpTo(AppScreen.Menu.route) { inclusive = false }
+                        navController.navigate(AppScreen.Offers.route) {
+                            popUpTo(AppScreen.Offers.route) { inclusive = false }
                         }
                     },
                     onApplicationsClick = {
@@ -136,19 +136,18 @@ fun AppNavigation() {
                             popUpTo(0)
                         }
                     },
-                    onApplyClick = {
-                    },
                     onBackClick = {
                         navController.popBackStack()
-                    }
+                    },
+                    offersViewModel = offersViewModel
                 )
             }
         }
         composable(AppScreen.Profile.route) {
             ProfileScreen(
                 onHomeClick = {
-                    navController.navigate(AppScreen.Menu.route) {
-                        popUpTo(AppScreen.Menu.route) { inclusive = false }
+                    navController.navigate(AppScreen.Offers.route) {
+                        popUpTo(AppScreen.Offers.route) { inclusive = false }
                     }
                 },
                 onEditProfile = {
@@ -169,8 +168,8 @@ fun AppNavigation() {
         composable(AppScreen.EditProfile.route) {
             EditProfileScreen(
                 onHomeClick = {
-                    navController.navigate(AppScreen.Menu.route) {
-                        popUpTo(AppScreen.Menu.route) { inclusive = false }
+                    navController.navigate(AppScreen.Offers.route) {
+                        popUpTo(AppScreen.Offers.route) { inclusive = false }
                     }
                 },
                 onSaveSuccess = {
@@ -194,8 +193,8 @@ fun AppNavigation() {
         composable(AppScreen.Applications.route) {
             ApplicationsScreen(
                 onHomeClick = {
-                    navController.navigate(AppScreen.Menu.route) {
-                        popUpTo(AppScreen.Menu.route) { inclusive = false }
+                    navController.navigate(AppScreen.Offers.route) {
+                        popUpTo(AppScreen.Offers.route) { inclusive = false }
                     }
                 },
                 onProfileClick = {
