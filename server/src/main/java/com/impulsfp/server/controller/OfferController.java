@@ -1,6 +1,7 @@
 package com.impulsfp.server.controller;
 
 import com.impulsfp.server.dto.CreateOfferDto;
+import com.impulsfp.server.dto.UpdateOfferDto;
 import com.impulsfp.server.mapper.OfferMapper;
 import com.impulsfp.server.model.Offer;
 import com.impulsfp.server.service.OfferService;
@@ -83,4 +84,28 @@ public class OfferController {
     public ResponseEntity<?> byModality(@RequestParam String modality){
         return ResponseEntity.ok(offerService.getOffersByModality(modality));
     }
+
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteOffer(
+            @RequestParam String sessionId,
+            @PathVariable Long id){
+
+        offerService.deleteOffer(sessionId, id);
+
+        return ResponseEntity.ok(Map.of("message", "Oferta eliminada"));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateOffer(
+            @RequestParam String sessionId,
+            @PathVariable Long id,
+            @RequestBody UpdateOfferDto dto){
+
+        offerService.updateOffer(sessionId, id, dto);
+
+        return ResponseEntity.ok(Map.of("message", "Oferta actualitzada"));
+    }
+
+
 }

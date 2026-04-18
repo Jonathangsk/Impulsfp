@@ -2,6 +2,7 @@ package com.impulsfp.server.service;
 
 import com.impulsfp.server.dto.CreateOfferDto;
 import com.impulsfp.server.dto.OfferResponseDto;
+import com.impulsfp.server.dto.UpdateOfferDto;
 import com.impulsfp.server.enums.*;
 import com.impulsfp.server.exception.*;
 import com.impulsfp.server.mapper.OfferMapper;
@@ -185,12 +186,101 @@ public class OfferService {
         Offer offer = offerRepository.findById(offerId)
                 .orElseThrow(() -> new ApiException(ErrorCode.INVALID_REQUEST, "Oferta no trobada"));
 
-        // 🔥 MUY IMPORTANTE (seguridad)
         if(!offer.getCompany().getId().equals(company.getId())){
             throw new ApiException(ErrorCode.INVALID_REQUEST, "No pots veure aquesta oferta");
         }
 
         return offer.getApplicants();
+    }
+
+
+    @Transactional
+    public void deleteOffer(String sessionId, Long offerId){
+
+        if(!SessionManager.isValid(sessionId)){
+            throw new ApiException(ErrorCode.INVALID_SESSION, "Sessió no vàlida");
+        }
+
+        String username = SessionManager.getUsername(sessionId);
+
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new ApiException(ErrorCode.USER_NOT_FOUND, "Usuari no trobat"));
+
+        if(!user.getRole().equals("COMPANY")){
+            throw new ApiException(ErrorCode.INVALID_REQUEST, "Només empreses");
+        }
+
+        Company company = companyRepository.findByUser(user)
+                .orElseThrow(() -> new ApiException(ErrorCode.USER_NOT_FOUND, "Empresa no trobada"));
+
+        Offer offer = offerRepository.findById(offerId)
+                .orElseThrow(() -> new ApiException(ErrorCode.INVALID_REQUEST, "Oferta no trobada"));
+
+        if(!offer.getCompany().getId().equals(company.getId())){
+            throw new ApiException(ErrorCode.INVALID_REQUEST, "No pots eliminar aquesta oferta");
+        }
+
+        offerRepository.delete(offer);
+
+        int current = company.getActiveOffers() == null ? 0 : company.getActiveOffers();
+        company.setActiveOffers(Math.max(0, current - 1));
+    }
+
+    @Transactional
+    public void updateOffer(String sessionId, Long offerId, UpdateOfferDto dto){
+
+        if(!SessionManager.isValid(sessionId)){
+            throw new ApiException(ErrorCode.INVALID_SESSION, "Sessió no vàlida");
+        }
+
+        String username = SessionManager.getUsername(sessionId);
+
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new ApiException(ErrorCode.USER_NOT_FOUND, "Usuari no trobat"));
+
+        if(!user.getRole().equals("COMPANY")){
+            throw new ApiException(ErrorCode.INVALID_REQUEST, "Només empreses");
+        }
+
+        Company company = companyRepository.findByUser(user)
+                .orElseThrow(() -> new ApiException(ErrorCode.USER_NOT_FOUND, "Empresa no trobada"));
+
+        Offer offer = offerRepository.findById(offerId)
+                .orElseThrow(() -> new ApiException(ErrorCode.INVALID_REQUEST, "Oferta no trobada"));
+
+        if(!offer.getCompany().getId().equals(company.getId())){
+            throw new ApiException(ErrorCode.INVALID_REQUEST, "No pots modificar aquesta oferta");
+        }
+
+        // 🔧 updates
+        if(dto.getTitle() != null) offer.setTitle(dto.getTitle());
+        if(dto.getDescription() != null) offer.setDescription(dto.getDescription());
+        if(dto.getLocation() != null) offer.setLocation(dto.getLocation());
+        if(dto.getSalary() != null) offer.setSalary(dto.getSalary());
+
+        if(dto.getModality() != null){
+            offer.setModality(Modality.valueOf(dto.getModality()));
+        }
+
+        if(dto.getContractType() != null){
+            offer.setContractType(ContractType.valueOf(dto.getContractType()));
+        }
+
+        // 🔁 skills (reset complet)
+        if(dto.getSkills() != null){
+            offer.getRequiredSkills().clear();
+
+            List<OfferSkill> newSkills = dto.getSkills().stream().map(s -> {
+                OfferSkill skill = new OfferSkill();
+                skill.setSkill(s);
+                skill.setOffer(offer);
+                return skill;
+            }).toList();
+
+            offer.getRequiredSkills().addAll(newSkills);
+        }
+
+        offerRepository.save(offer);
     }
 
 

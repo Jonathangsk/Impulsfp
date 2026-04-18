@@ -1,7 +1,11 @@
 package com.impulsfp.server.enums;
 
 public enum ContractType {
-    INTERNSHIP,
+    FCT,
+    FP_DUAL,
+    PRACTICAS_EXTRA,
+    CONTRATO_FORMACION,
+    SENIOR,
     JUNIOR,
-    SENIOR
+    INTERNSHIP
 }
