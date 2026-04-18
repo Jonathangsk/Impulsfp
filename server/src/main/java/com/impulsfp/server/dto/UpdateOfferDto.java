@@ -12,9 +12,18 @@ public class UpdateOfferDto {
     private String contractType;
     private Double salary;
     private String state;
+    private String cycle;
 
     // getters & setters
 
+
+    public String getCycle() {
+        return cycle;
+    }
+
+    public void setCycle(String cycle) {
+        this.cycle = cycle;
+    }
 
     public String getState() {
         return state;

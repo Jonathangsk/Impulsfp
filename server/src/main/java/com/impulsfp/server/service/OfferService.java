@@ -73,6 +73,7 @@ public class OfferService {
         offer.setCreationDate(LocalDateTime.now());
         offer.setState(OfferState.OPEN);
         offer.setCompany(company);
+        offer.setCycle(Cycle.valueOf(dto.getCycle()));
 
         List<OfferSkill> skills = dto.getSkills().stream().map(s -> {
             OfferSkill skill = new OfferSkill();
@@ -90,6 +91,9 @@ public class OfferService {
         );
 
     }
+
+
+
 
     @Transactional
     public void applyToOffer(String sessionId, Long offerId){
@@ -122,6 +126,11 @@ public class OfferService {
         offerRepository.save(offer);
     }
 
+
+
+
+
+
     public List<Offer> getMyOffers(String sessionId){
 
         if(!SessionManager.isValid(sessionId)){
@@ -143,6 +152,11 @@ public class OfferService {
         return offerRepository.findByCompany(company);
     }
 
+
+
+
+
+
     public List<OfferResponseDto> getAllOffers(){
 
         return offerRepository.findByState(OfferState.OPEN)
@@ -150,6 +164,11 @@ public class OfferService {
                 .map(offerMapper::toDto)
                 .toList();
     }
+
+
+
+
+
 
     public List<OfferResponseDto> getOffersByLocation(String location){
 
@@ -159,6 +178,10 @@ public class OfferService {
                 .map(offerMapper::toDto)
                 .toList();
     }
+
+
+
+
 
     public List<OfferResponseDto> getOffersByModality(String modality){
 
@@ -270,12 +293,13 @@ public class OfferService {
             throw new ApiException(ErrorCode.INVALID_REQUEST, "No pots modificar aquesta oferta");
         }
 
-        // 🔧 updates
+        // updates
         if(dto.getTitle() != null) offer.setTitle(dto.getTitle());
         if(dto.getDescription() != null) offer.setDescription(dto.getDescription());
         if(dto.getLocation() != null) offer.setLocation(dto.getLocation());
         if(dto.getSalary() != null) offer.setSalary(dto.getSalary());
         if(dto.getState() != null) offer.setState(OfferState.valueOf(dto.getState()));
+        if(dto.getCycle() != null) offer.setCycle(Cycle.valueOf(dto.getCycle()));
 
         if(dto.getModality() != null){
             offer.setModality(Modality.valueOf(dto.getModality()));
@@ -285,7 +309,7 @@ public class OfferService {
             offer.setContractType(ContractType.valueOf(dto.getContractType()));
         }
 
-        // 🔁 skills (reset complet)
+        // skills (reset complet)
         if(dto.getSkills() != null){
             offer.getRequiredSkills().clear();
 
@@ -303,5 +327,10 @@ public class OfferService {
     }
 
 
+    public OfferResponseDto getOfferById(Long id) {
+        Offer offer = offerRepository.findById(id)
+                .orElseThrow(() -> new ApiException(ErrorCode.INVALID_REQUEST, "Oferta no trobada"));
 
+        return offerMapper.toDto(offer);
+    }
 }

@@ -111,5 +111,10 @@ public class OfferController {
         return ResponseEntity.ok(Map.of("message", "Oferta actualitzada correctament"));
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getOfferById(@PathVariable Long id){
+        return ResponseEntity.ok(offerService.getOfferById(id));
+    }
+
 
 }

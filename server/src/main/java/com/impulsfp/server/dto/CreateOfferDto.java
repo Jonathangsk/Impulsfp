@@ -11,9 +11,13 @@ public class CreateOfferDto {
     private String modality;
     private String contractType;
     private Double salary;
+    private String cycle;
 
     // getters & setters
 
+    public String getCycle() {
+        return cycle;
+    }
     public String getTitle() { return title; }
     public String getDescription() { return description; }
     public List<String> getSkills() { return skills; }
@@ -29,4 +33,7 @@ public class CreateOfferDto {
     public void setModality(String modality) { this.modality = modality; }
     public void setContractType(String contractType) { this.contractType = contractType; }
     public void setSalary(Double salary) { this.salary = salary; }
+    public void setCycle(String cycle) {
+            this.cycle = cycle;
+        }
 }

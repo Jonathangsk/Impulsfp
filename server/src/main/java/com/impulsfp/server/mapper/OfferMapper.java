@@ -21,6 +21,7 @@ public class OfferMapper {
         dto.setSalary(offer.getSalary());
         dto.setCreationDate(offer.getCreationDate());
         dto.setState(offer.getState().name());
+        dto.setCycle(offer.getCycle().name());
 
         dto.setCompanyName(offer.getCompany().getName());
 

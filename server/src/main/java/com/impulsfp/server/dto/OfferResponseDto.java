@@ -14,7 +14,7 @@ public class OfferResponseDto {
     private Double salary;
     private LocalDateTime creationDate;
     private String state;
-
+    private String cycle;
     private String companyName;
     private List<String> skills;
     private int applicantsCount;
@@ -22,7 +22,13 @@ public class OfferResponseDto {
     // getters & setters
 
 
+    public String getCycle() {
+        return cycle;
+    }
 
+    public void setCycle(String cycle) {
+        this.cycle = cycle;
+    }
 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }

@@ -22,6 +22,9 @@ public class Offer {
     private String location;
 
     @Enumerated(EnumType.STRING)
+    private Cycle cycle;
+
+    @Enumerated(EnumType.STRING)
     private Modality modality;
 
     @Enumerated(EnumType.STRING)
@@ -52,6 +55,14 @@ public class Offer {
     // GETTERS & SETTERS
 
     public Long getId() { return id; }
+
+    public Cycle getCycle() {
+        return cycle;
+    }
+
+    public void setCycle(Cycle cycle) {
+        this.cycle = cycle;
+    }
 
     public String getTitle() { return title; }
     public void setTitle(String title) { this.title = title; }
