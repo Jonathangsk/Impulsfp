@@ -73,15 +73,14 @@ public class ApplicationService {
 
         applicationRepository.save(app);
 
-        //compatibilidad temporal
-        if(!offer.getApplicants().contains(student)){
-            offer.getApplicants().add(student);
-            offerRepository.save(offer);
-        }
     }
 
     //MIS APPLICATIONS
     public List<ApplicationDto> getMyApplications(String sessionId){
+
+        if(!SessionManager.isValid(sessionId)){
+            throw new ApiException(ErrorCode.INVALID_SESSION, "Sessió no vàlida");
+        }
 
         String username = SessionManager.getUsername(sessionId);
 
@@ -101,6 +100,11 @@ public class ApplicationService {
     @Transactional
     public void updateStatus(String sessionId, Long applicationId, String status){
 
+        if(!SessionManager.isValid(sessionId)){
+            throw new ApiException(ErrorCode.INVALID_SESSION, "Sessió no vàlida");
+        }
+
+
         String username = SessionManager.getUsername(sessionId);
 
         User user = userRepository.findByUsername(username)
@@ -119,8 +123,14 @@ public class ApplicationService {
         app.setStatus(ApplicationStatus.valueOf(status));
     }
 
-    // APPLICANTS (adaptado)
+    // APPLICANTS
     public List<ApplicationDto> getApplicants(String sessionId, Long offerId){
+
+
+        if(!SessionManager.isValid(sessionId)){
+            throw new ApiException(ErrorCode.INVALID_SESSION, "Sessió no vàlida");
+        }
+
 
         String username = SessionManager.getUsername(sessionId);
 

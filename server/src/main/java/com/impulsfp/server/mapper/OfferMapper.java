@@ -3,10 +3,17 @@ package com.impulsfp.server.mapper;
 import com.impulsfp.server.dto.OfferResponseDto;
 import com.impulsfp.server.model.Offer;
 
+import com.impulsfp.server.repository.ApplicationRepository;
 import org.springframework.stereotype.Component;
 
 @Component
 public class OfferMapper {
+
+    private final ApplicationRepository applicationRepository;
+
+    public OfferMapper(ApplicationRepository applicationRepository) {
+        this.applicationRepository = applicationRepository;
+    }
 
     public OfferResponseDto toDto(Offer offer){
 
@@ -35,7 +42,7 @@ public class OfferMapper {
         );
 
         dto.setApplicantsCount(
-                offer.getApplicants() != null ? offer.getApplicants().size() : 0
+                (int) applicationRepository.countByOffer(offer)
         );
 
         return dto;

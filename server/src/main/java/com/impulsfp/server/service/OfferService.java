@@ -133,11 +133,6 @@ public class OfferService {
 
         applicationRepository.save(app);
 
-        //  MANTENER compatibilidad (temporal)
-        if(!offer.getApplicants().contains(student)){
-            offer.getApplicants().add(student);
-            offerRepository.save(offer);
-        }
     }
 
 
@@ -235,8 +230,9 @@ public class OfferService {
             throw new ApiException(ErrorCode.INVALID_REQUEST, "No pots veure aquesta oferta");
         }
 
-        return offer.getApplicants().stream()
-                .map(profileMapper::toStudentDto)
+        return applicationRepository.findByOffer(offer)
+                .stream()
+                .map(app -> profileMapper.toStudentDto(app.getStudent()))
                 .toList();
     }
 

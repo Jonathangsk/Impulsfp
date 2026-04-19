@@ -44,13 +44,6 @@ public class Offer {
     @OneToMany(mappedBy = "offer", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OfferSkill> requiredSkills;
 
-    @ManyToMany
-    @JoinTable(
-            name = "offer_applicants",
-            joinColumns = @JoinColumn(name = "offer_id"),
-            inverseJoinColumns = @JoinColumn(name = "student_id")
-    )
-    private List<Student> applicants;
 
     // GETTERS & SETTERS
 
@@ -94,6 +87,5 @@ public class Offer {
     public List<OfferSkill> getRequiredSkills() { return requiredSkills; }
     public void setRequiredSkills(List<OfferSkill> requiredSkills) { this.requiredSkills = requiredSkills; }
 
-    public List<Student> getApplicants() { return applicants; }
-    public void setApplicants(List<Student> applicants) { this.applicants = applicants; }
+
 }

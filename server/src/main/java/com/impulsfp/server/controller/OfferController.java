@@ -36,20 +36,6 @@ public class OfferController {
 
 
 
-    /**
-     *
-     * @param sessionId
-     * @param id
-     * @return
-     */
-    @PostMapping("/{id}/apply")
-    public ResponseEntity<?> apply(
-            @RequestParam String sessionId,
-            @PathVariable Long id){
-
-        offerService.applyToOffer(sessionId, id);
-        return ResponseEntity.ok(Map.of("message", "Aplicació enviada correctament"));
-    }
 
     @GetMapping("/my")
     public ResponseEntity<?> getMyOffers(@RequestParam String sessionId){
