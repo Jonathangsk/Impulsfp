@@ -2,6 +2,7 @@ package com.impulsfp.server.dto;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class OfferResponseDto {
 
@@ -12,6 +13,7 @@ public class OfferResponseDto {
     private String modality;
     private String contractType;
     private Double salary;
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDateTime creationDate;
     private String state;
     private String cycle;

@@ -5,7 +5,4 @@ public enum ContractType {
     FP_DUAL,
     PRACTICAS_EXTRA,
     CONTRATO_FORMACION,
-    SENIOR,
-    JUNIOR,
-    INTERNSHIP
 }
