@@ -54,6 +54,7 @@ public class ApplicationMapper {
         dto.setPreferredRoles(base.getPreferredRoles());
         dto.setAvailability(base.getAvailability());
         dto.setExperienceLevel(base.getExperienceLevel());
+        dto.setUsername(base.getUsername());
 
         // 🔥 añadimos lo nuevo
         dto.setApplicationId(app.getId());
