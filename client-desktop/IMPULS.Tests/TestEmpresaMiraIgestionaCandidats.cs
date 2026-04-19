@@ -10,18 +10,28 @@ using IMPULS_Desktop;
 
 namespace IMPULS.Tests
 {
+    /// <summary>
+    /// Classe de tests per validar la gestió de candidats per part d'una empresa.
+    /// Inclou consulta de candidats i gestió del seu estat (acceptació o rebuig).
+    /// </summary>
     [TestClass]
     public class TestEmpresaMiraIgestionaCandidats
     {
         private Mock<IApiClient> _apiMock;
 
+        /// <summary>
+        /// Inicialitza el mock abans de cada test.
+        /// </summary>
         [TestInitialize]
         public void Setup()
         {
             _apiMock = new Mock<IApiClient>();
         }
 
-        
+        /// <summary>
+        /// Test per comprovar que una empresa pot consultar la llista de candidats correctament.
+        /// Es simula una resposta de l'API amb dos alumnes.
+        /// </summary>
         [TestMethod]
         public async Task Empresa_ConsultaCandidats()
         {
@@ -31,6 +41,7 @@ namespace IMPULS.Tests
                 new Alumne { Id = 2, Name = "Marc", Skills = "Angular" }
             });
 
+            // Simulem resposta OK de l'API amb llista de candidats
             _apiMock.Setup(x => x.GetAsync(It.IsAny<string>()))
                 .ReturnsAsync(new HttpResponseMessage(HttpStatusCode.OK)
                 {
@@ -52,7 +63,9 @@ namespace IMPULS.Tests
             Assert.AreEqual("Anna", candidats[0].Name);
         }
 
-        
+        /// <summary>
+        /// Test per comprovar que una empresa pot acceptar un candidat correctament.
+        /// </summary>
         [TestMethod]
         public async Task Empresa_AcceptaCandidat()
         {
@@ -72,7 +85,9 @@ namespace IMPULS.Tests
             Assert.IsTrue(response.IsSuccessStatusCode);
         }
 
-        
+        /// <summary>
+        /// Test per comprovar que una empresa pot rebutjar un candidat correctament.
+        /// </summary>
         [TestMethod]
         public async Task Empresa_RebutjaCandidats()
         {

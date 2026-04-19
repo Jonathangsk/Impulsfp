@@ -42,9 +42,10 @@ namespace IMPULS_Desktop
                 {
                     client.Timeout = TimeSpan.FromSeconds(10);
 
+//                    string url =
+  //                      $"http://0bb0dfb7-9b4c-40bc-a0be.5b8c35470a40.bastion.elmeuescriptori.cat:80/users/me?sessionId={PantallaPrincipal.SessionId}";
                     string url =
-                        $"http://0bb0dfb7-9b4c-40bc-a0be.5b8c35470a40.bastion.elmeuescriptori.cat:80/users/me?sessionId={PantallaPrincipal.SessionId}";
-
+    $"http://0bb0dfb7-9b4c-40bc-a0be.5b8c35470a40.bastion.elmeuescriptori.cat:80/offers/my?sessionId={PantallaPrincipal.SessionId}";
                     var json = await client.GetStringAsync(url);
 
              

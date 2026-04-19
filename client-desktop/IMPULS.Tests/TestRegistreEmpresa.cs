@@ -5,24 +5,30 @@ using System.Threading.Tasks;
 namespace IMPULS.Tests
 {
     /// <summary>
-    /// Classe de tests per validar la funcionalitat d'autenticació d'usuaris.
-    /// Conté tests per a usuaris de tipus ADMIN, COMPANY i usuaris incorrectes.
+    /// Classe de tests per validar la funcionalitat d'autenticació d'usuaris i validacions de formulari.
+    /// Inclou tests de login simulat, validació de username i validació de password.
     /// </summary>
-
     [TestClass]
-    public sealed class Test1
+    public sealed class TestRegistreEmpresa
     {
-        // Metode fake, nomes per test
+        /// <summary>
+        /// Mètode fake utilitzat per simular la validació d'usuaris sense accés a API real.
+        /// Retorna ADMIN, COMPANY o null segons les credencials.
+        /// </summary>
         private Task<(bool Success, string UserType)> ValidarUsuariFake(string usuari, string contrasenya)
         {
             if (usuari == "Jonathan" && contrasenya == "1234")
                 return Task.FromResult((true, "ADMIN"));
+
             if (usuari == "Josep" && contrasenya == "1234")
                 return Task.FromResult((true, "COMPANY"));
+
             return Task.FromResult((false, (string)null));
         }
 
-        
+        /// <summary>
+        /// Test per validar correctament un usuari de tipus ADMIN.
+        /// </summary>
         [TestMethod]
         public async Task TestValidarUsuari_Admin()
         {
@@ -31,6 +37,10 @@ namespace IMPULS.Tests
             Assert.IsTrue(resultat);
             Assert.AreEqual("ADMIN", tipus);
         }
+
+        /// <summary>
+        /// Test per comprovar que el username és rebutjat si és massa curt.
+        /// </summary>
         [TestMethod]
         public void Test_Username_Curt()
         {
@@ -40,6 +50,10 @@ namespace IMPULS.Tests
 
             Assert.IsFalse(resultat);
         }
+
+        /// <summary>
+        /// Test per comprovar que el username és rebutjat si conté caràcters invàlids.
+        /// </summary>
         [TestMethod]
         public void Test_Username_CaractersInvalids()
         {
@@ -49,6 +63,10 @@ namespace IMPULS.Tests
 
             Assert.IsFalse(resultat);
         }
+
+        /// <summary>
+        /// Test per comprovar que una contrasenya vàlida passa la validació.
+        /// </summary>
         [TestMethod]
         public void Test_Password_Valida()
         {
@@ -58,6 +76,10 @@ namespace IMPULS.Tests
 
             Assert.IsTrue(resultat);
         }
+
+        /// <summary>
+        /// Test per comprovar que una contrasenya massa curta és rebutjada.
+        /// </summary>
         [TestMethod]
         public void Test_Password_Curta()
         {
@@ -68,6 +90,9 @@ namespace IMPULS.Tests
             Assert.IsFalse(resultat);
         }
 
+        /// <summary>
+        /// Test per comprovar que una contrasenya sense majúscules és rebutjada.
+        /// </summary>
         [TestMethod]
         public void Test_Password_SenseMayuscula()
         {
@@ -77,6 +102,10 @@ namespace IMPULS.Tests
 
             Assert.IsFalse(resultat);
         }
+
+        /// <summary>
+        /// Test per comprovar que una contrasenya sense números és rebutjada.
+        /// </summary>
         [TestMethod]
         public void Test_Password_SenseNumero()
         {
@@ -87,6 +116,9 @@ namespace IMPULS.Tests
             Assert.IsFalse(resultat);
         }
 
+        /// <summary>
+        /// Test per comprovar que un username vàlid és acceptat.
+        /// </summary>
         [TestMethod]
         public void Test_Username_Valid()
         {
@@ -99,32 +131,26 @@ namespace IMPULS.Tests
 
         /// <summary>
         /// Test per validar un usuari de tipus COMPANY.
-        /// Usuari: Josep
-        /// Contrasenya: 1234
-        /// S'espera que resultat sigui true i tipus sigui "COMPANY".
         /// </summary>
-        [TestMethod] //Form4
+        [TestMethod]
         public async Task TestValidarUsuari_Empresa()
         {
-           
             var (resultat, tipus) = await ValidarUsuariFake("Josep", "1234");
-            Assert.IsTrue(resultat, "l'usuari empresa1 hauria de ser válid");
+
+            Assert.IsTrue(resultat, "l'usuari empresa hauria de ser vàlid");
             Assert.AreEqual("COMPANY", tipus, "l'usuari hauria de ser 'COMPANY'");
         }
 
         /// <summary>
         /// Test per validar un usuari incorrecte o no registrat.
-        /// Usuari: alumneX
-        /// Contrasenya: 0000
-        /// S'espera que resultat sigui false i tipus sigui null.
         /// </summary>
-        [TestMethod] //Form5
+        [TestMethod]
         public async Task TestValidarUsuari_Incorrecte()
         {
             var (resultat, tipus) = await ValidarUsuariFake("alumneX", "0000");
 
             Assert.IsFalse(resultat, "l'usuari incorrecte no hauria de validar");
-            Assert.IsNull(tipus, "El tipus hauria de ser null quen l'usuari es incorrecte");
+            Assert.IsNull(tipus, "El tipus hauria de ser null quan l'usuari és incorrecte");
         }
     }
 }

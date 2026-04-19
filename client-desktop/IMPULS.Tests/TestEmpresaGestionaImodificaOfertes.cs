@@ -10,18 +10,28 @@ using IMPULS_Desktop;
 
 namespace IMPULS.Tests
 {
+    /// <summary>
+    /// Classe de tests per validar la gestió d'ofertes per part d'una empresa.
+    /// Inclou consulta, modificació i eliminació d'ofertes utilitzant un mock d'API.
+    /// </summary>
     [TestClass]
     public class TestEmpresaGestionaImodificaOfertes
     {
         private Mock<IApiClient> _apiMock;
 
+        /// <summary>
+        /// Inicialitza el mock abans de cada test.
+        /// </summary>
         [TestInitialize]
         public void Setup()
         {
             _apiMock = new Mock<IApiClient>();
         }
 
-        
+        /// <summary>
+        /// Test per comprovar que una empresa pot consultar la llista d'ofertes correctament.
+        /// Es simula una resposta de l'API amb dues ofertes.
+        /// </summary>
         [TestMethod]
         public async Task Empresa_ConsultaOfertas()
         {
@@ -31,6 +41,7 @@ namespace IMPULS.Tests
                 new { Id = 2, Title = "Oferta Angular", Description = "Frontend dev" }
             });
 
+            // Simulem resposta OK de l'API amb llista d'ofertes
             _apiMock.Setup(x => x.GetAsync(It.IsAny<string>()))
                 .ReturnsAsync(new HttpResponseMessage(HttpStatusCode.OK)
                 {
@@ -47,7 +58,9 @@ namespace IMPULS.Tests
             Assert.AreEqual(2, ofertas.Count);
         }
 
-        
+        /// <summary>
+        /// Test per comprovar que una empresa pot modificar una oferta existent correctament.
+        /// </summary>
         [TestMethod]
         public async Task Empresa_ModificarOferta()
         {
@@ -68,7 +81,9 @@ namespace IMPULS.Tests
             Assert.IsTrue(response.IsSuccessStatusCode);
         }
 
-        
+        /// <summary>
+        /// Test per comprovar que una empresa pot eliminar una oferta correctament.
+        /// </summary>
         [TestMethod]
         public async Task Empresa_BorrarOferta()
         {
