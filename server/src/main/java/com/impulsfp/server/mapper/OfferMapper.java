@@ -21,10 +21,10 @@ public class OfferMapper {
         dto.setSalary(offer.getSalary());
         dto.setCreationDate(offer.getCreationDate());
         dto.setState(offer.getState().name());
-        dto.setCycle(offer.getCycle().name());
-        /*dto.setCycle(
+        //dto.setCycle(offer.getCycle().name());
+        dto.setCycle(
                 offer.getCycle() != null ? offer.getCycle().name() : null
-        );*/ //aquesta línia és per evitar el NullPointerException en cas que l'oferta no tingui cicle associat; però per ara, es obligatori als clients.
+        ); //aquesta línia és per evitar el NullPointerException en cas que l'oferta no tingui cicle associat; però per ara, es obligatori als clients.
 
         dto.setCompanyName(offer.getCompany().getName());
 

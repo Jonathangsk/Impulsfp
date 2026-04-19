@@ -27,12 +27,13 @@ public class OfferService {
     private final StudentRepository studentRepository;
     private final OfferMapper offerMapper;
     private final ProfileMapper profileMapper;
+    private final ApplicationRepository applicationRepository;
 
     public OfferService(OfferRepository offerRepository,
                         UserRepository userRepository,
                         CompanyRepository companyRepository,
                         StudentRepository studentRepository,
-                        OfferMapper offerMapper, ProfileMapper profileMapper) {
+                        OfferMapper offerMapper, ProfileMapper profileMapper, ApplicationRepository applicationRepository) {
 
         this.offerRepository = offerRepository;
         this.userRepository = userRepository;
@@ -40,6 +41,7 @@ public class OfferService {
         this.studentRepository = studentRepository;
         this.offerMapper = offerMapper;
         this.profileMapper = profileMapper;
+        this.applicationRepository = applicationRepository;
     }
 
     @Transactional
@@ -118,12 +120,24 @@ public class OfferService {
                 .orElseThrow(() -> new ApiException(ErrorCode.INVALID_REQUEST, "Oferta no trobada"));
 
 
-        if(offer.getApplicants().contains(student)){
+        if(applicationRepository.existsByStudentAndOffer(student, offer)){
             throw new ApiException(ErrorCode.INVALID_REQUEST, "Ja estàs inscrit a aquesta oferta");
         }
 
-        offer.getApplicants().add(student);
-        offerRepository.save(offer);
+        // crear applicacion
+        Application app = new Application();
+        app.setStudent(student);
+        app.setOffer(offer);
+        app.setStatus(ApplicationStatus.PENDING);
+        app.setAppliedAt(LocalDateTime.now());
+
+        applicationRepository.save(app);
+
+        //  MANTENER compatibilidad (temporal)
+        if(!offer.getApplicants().contains(student)){
+            offer.getApplicants().add(student);
+            offerRepository.save(offer);
+        }
     }
 
 
