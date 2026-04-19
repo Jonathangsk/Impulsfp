@@ -51,7 +51,7 @@ public class OfferController {
     @GetMapping("/{id}/applicants")
     public ResponseEntity<?> getApplicants(
             @RequestParam String sessionId,
-            @PathVariable Long id){
+            @PathVariable Long id){ //id de l'oferta de la qual es vol obtenir els applicants, proporcionat com a paràmetre de la ruta
 
         return ResponseEntity.ok(
                 offerService.getApplicants(sessionId, id)

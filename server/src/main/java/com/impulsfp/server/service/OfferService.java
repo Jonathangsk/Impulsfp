@@ -6,6 +6,7 @@ import com.impulsfp.server.dto.StudentProfileDto;
 import com.impulsfp.server.dto.UpdateOfferDto;
 import com.impulsfp.server.enums.*;
 import com.impulsfp.server.exception.*;
+import com.impulsfp.server.mapper.ApplicationMapper;
 import com.impulsfp.server.mapper.OfferMapper;
 import com.impulsfp.server.mapper.ProfileMapper;
 import com.impulsfp.server.model.*;
@@ -17,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class OfferService {
@@ -28,12 +30,13 @@ public class OfferService {
     private final OfferMapper offerMapper;
     private final ProfileMapper profileMapper;
     private final ApplicationRepository applicationRepository;
+    private final ApplicationMapper applicationMapper;
 
     public OfferService(OfferRepository offerRepository,
                         UserRepository userRepository,
                         CompanyRepository companyRepository,
                         StudentRepository studentRepository,
-                        OfferMapper offerMapper, ProfileMapper profileMapper, ApplicationRepository applicationRepository) {
+                        OfferMapper offerMapper, ProfileMapper profileMapper, ApplicationRepository applicationRepository, ApplicationMapper applicationMapper) {
 
         this.offerRepository = offerRepository;
         this.userRepository = userRepository;
@@ -42,6 +45,7 @@ public class OfferService {
         this.offerMapper = offerMapper;
         this.profileMapper = profileMapper;
         this.applicationRepository = applicationRepository;
+        this.applicationMapper = applicationMapper;
     }
 
     @Transactional
@@ -232,8 +236,8 @@ public class OfferService {
 
         return applicationRepository.findByOffer(offer)
                 .stream()
-                .map(app -> profileMapper.toStudentDto(app.getStudent()))
-                .toList();
+                .map(applicationMapper::toCompanyDto)
+                .collect(Collectors.toList());
     }
 
 
