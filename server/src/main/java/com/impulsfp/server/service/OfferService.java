@@ -20,6 +20,12 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Servei que gestiona les ofertes de feina, incloent la creació, actualització, eliminació i consulta d'ofertes, així com la gestió de les aplicacions dels estudiants a les ofertes.
+ *
+ * @author Jonathan Giraldo Giraldo
+ */
+
 @Service
 public class OfferService {
 
@@ -48,6 +54,12 @@ public class OfferService {
         this.applicationMapper = applicationMapper;
     }
 
+
+    /**
+     * Crea una nova oferta de feina associada a l'empresa de l'usuari autenticat. Valida que la sessió sigui vàlida, que l'usuari sigui una empresa i que els camps obligatoris del DTO estiguin correctament omplerts abans de guardar l'oferta a la base de dades.
+     * @param sessionId La ID de la sessió de l'usuari autenticat que està intentant crear l'oferta.
+     * @param dto Un objecte CreateOfferDto que conté les dades necessàries per crear una nova oferta
+     */
     @Transactional
     public void createOffer(String sessionId, CreateOfferDto dto){
 
@@ -99,8 +111,11 @@ public class OfferService {
     }
 
 
-
-
+    /**
+     * Permet a un estudiant aplicar a una oferta de feina específica. Valida que la sessió sigui vàlida, que l'usuari sigui un estudiant, que l'oferta existeixi i que l'estudiant no hagi aplicat prèviament a la mateixa oferta abans de crear una nova aplicació amb estat "PENDING" i guardar-la a la base de dades.
+     * @param sessionId La ID de la sessió de l'usuari autenticat que està intentant aplicar a l'oferta.
+     * @param offerId La ID de l'oferta a la qual l'estudiant vol aplicar.
+     */
     @Transactional
     public void applyToOffer(String sessionId, Long offerId){
 
@@ -140,10 +155,11 @@ public class OfferService {
     }
 
 
-
-
-
-
+    /**
+     * Retorna una llista de les ofertes creades per l'empresa associada a l'usuari autenticat. Valida que la sessió sigui vàlida i que l'usuari sigui una empresa abans de recuperar les ofertes associades a l'empresa i retornar-les com a llista d'entitats Offer.
+     * @param sessionId La ID de la sessió de l'usuari autenticat que està intentant recuperar les seves ofertes.
+     * @return Una llista d'entitats Offer que representa les ofertes creades per l'empresa associada a l'usuari autenticat.
+     */
     public List<Offer> getMyOffers(String sessionId){
 
         if(!SessionManager.isValid(sessionId)){
@@ -166,10 +182,10 @@ public class OfferService {
     }
 
 
-
-
-
-
+    /**
+     * Retorna una llista de totes les ofertes de feina obertes disponibles a la plataforma, convertides a DTOs de resposta. Recupera totes les ofertes amb estat "OPEN" de la base de dades, les converteix a DTOs utilitzant el mapper i les retorna com a llista.
+     * @return Una llista de DTOs de resposta que representen les ofertes de feina obertes disponibles a la plataforma.
+     */
     public List<OfferResponseDto> getAllOffers(){
 
         return offerRepository.findByState(OfferState.OPEN)
@@ -179,10 +195,11 @@ public class OfferService {
     }
 
 
-
-
-
-
+    /**
+     * Retorna una llista de les ofertes de feina obertes que coincideixen amb la ubicació especificada, convertides a DTOs de resposta.
+     * @param location La ubicació que es vol filtrar les ofertes de feina; el mètode busca ofertes que continguin aquesta ubicació (ignorant majúscules/minúscules) i que estiguin obertes.
+     * @return Una llista de DTOs de resposta que representen les ofertes de feina obertes que coincideixen amb la ubicación especificada.
+     */
     public List<OfferResponseDto> getOffersByLocation(String location){
 
         return offerRepository
@@ -193,9 +210,11 @@ public class OfferService {
     }
 
 
-
-
-
+    /**
+     * Retorna una llista de les ofertes de feina obertes que coincideixen amb la modalitat especificada, convertides a DTOs de resposta.
+     * @param modality La modalitat que es vol filtrar les ofertes de feina; el mètode busca ofertes que tinguin aquesta modalitat i que estiguin obertes.
+     * @return Una llista de DTOs de resposta que representen les ofertes de feina obertes que coincideixen amb la modalitat especificada.
+     */
     public List<OfferResponseDto> getOffersByModality(String modality){
 
         return offerRepository
@@ -206,9 +225,12 @@ public class OfferService {
     }
 
 
-
-
-
+    /**
+     * Retorna una llista dels perfils dels estudiants que han aplicat a una oferta de feina específica
+     * @param sessionId L'id de la sessió de l'usuari autenticat que està intentant recuperar els perfils dels estudiants que han aplicat a la seva oferta
+     * @param offerId l'id de l'oferta de feina de la qual es volen recuperar els perfils dels estudiants que han aplicat
+     * @return Una lista de DTOs de perfil de estudiante que representan los perfiles de los estudiantes que han aplicado a la oferta especificada.
+     */
     public List<StudentProfileDto> getApplicants(String sessionId, Long offerId){
 
         if(!SessionManager.isValid(sessionId)){
@@ -241,10 +263,11 @@ public class OfferService {
     }
 
 
-
-
-
-
+    /**
+     * Elimina una oferta de feina específica associada a l'empresa de l'usuari autenticat
+     * @param sessionId La ID de la sessió de l'usuari autenticat que està intentant eliminar l'oferta.
+     * @param offerId La ID de l'oferta que es vol eliminar; el mètode valida que aquesta oferta existeixi i que estigui associada a l'empresa de l'usuari abans de procedir a eliminar-la.
+     */
     @Transactional
     public void deleteOffer(String sessionId, Long offerId){
 
@@ -278,9 +301,12 @@ public class OfferService {
     }
 
 
-
-
-
+    /**
+     * Actualitza una oferta de feina específica associada a l'empresa de l'usuari autenticat
+     * @param sessionId La ID de la sessió de l'usuari autenticat que està intentant actualizar la oferta.
+     * @param offerId L'Id de l'oferta que es vol actualizar; el mètode valida que aquesta oferta existeixi i que estigui associada a l'empresa de l'usuari abans de procedir a aplicar les actualitzacions especificades
+     * @param dto Un objecte UpdateOfferDto que conté les dades que es volen actualizar de l'oferta
+     */
     @Transactional
     public void updateOffer(String sessionId, Long offerId, UpdateOfferDto dto){
 
@@ -341,6 +367,11 @@ public class OfferService {
     }
 
 
+    /**
+     * Retorna els detalls d'una oferta de feina específica, convertits a un DTO de resposta. Valida que l'oferta existeixi abans de convertir-la a un DTO utilitzant el mapper i retornar-lo.
+     * @param id La ID de l'oferta de feina de la qual es volen recuperar los detalles; el mètode valida que esta oferta exista antes de proceder a convertirla a un DTO y retornarla.
+     * @return Un DTO que representa els detalls de l'oferta de feina especificada
+     */
     public OfferResponseDto getOfferById(Long id) {
         Offer offer = offerRepository.findById(id)
                 .orElseThrow(() -> new ApiException(ErrorCode.INVALID_REQUEST, "Oferta no trobada"));

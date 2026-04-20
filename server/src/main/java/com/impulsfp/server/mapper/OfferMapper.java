@@ -6,6 +6,12 @@ import com.impulsfp.server.model.Offer;
 import com.impulsfp.server.repository.ApplicationRepository;
 import org.springframework.stereotype.Component;
 
+
+/**
+ * Mapper per convertir les entitats de tipus Offer a DTOs de tipus OfferResponseDto; Utilitza el repositori d'aplicacions per comptar el nombre de sol·licituds associades a cada oferta.
+ *
+ * @author Jonathan Giraldo Giraldo
+ */
 @Component
 public class OfferMapper {
 

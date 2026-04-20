@@ -6,6 +6,12 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
+
+/**
+ * Entitat que representa una oferta de feina publicada per una empresa. Conté informació com el títol, descripció, ubicació, cicle formatiu, modalitat, tipus de contracte, salari, data de creació i estat de l'oferta. També manté relacions amb l'entitat Company i les habilitats requerides per l'oferta.
+ *
+ * @author Jonathan Giraldo Giraldo
+ */
 @Entity
 @Table(name = "offers")
 public class Offer {

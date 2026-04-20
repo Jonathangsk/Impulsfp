@@ -3,6 +3,12 @@ package com.impulsfp.server.dto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import java.time.LocalDateTime;
 
+
+/**
+ * DTO per representar les dades d'una sol·licitud d'aplicació a una oferta de pràctiques, incloent informació sobre l'oferta, l'empresa i l'estat de la sol·licitud.
+ *
+ * @author Jonathan Giraldo Giraldo
+ */
 public class ApplicationDto {
 
     private Long id;

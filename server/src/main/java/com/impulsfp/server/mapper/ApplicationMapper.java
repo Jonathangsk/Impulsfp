@@ -7,6 +7,12 @@ import com.impulsfp.server.model.Application;
 import com.impulsfp.server.model.Student;
 import org.springframework.stereotype.Component;
 
+/**
+ * Mapper per convertir entre les entitats d'aplicació i els DTOs associats; proporciona mètodes per transformar les dades de les aplicacions en formats adequats per a la presentació i la comunicació amb altres capes de l'aplicació.
+ *
+ * @author Jonathan Giraldo Giraldo
+ *
+ */
 @Component
 public class ApplicationMapper {
 

@@ -2,6 +2,11 @@ package com.impulsfp.server.dto;
 
 import java.util.List;
 
+/**
+ * DTO per actualitzar una oferta de feina; Conté els camps que es poden modificar d'una oferta.
+ *
+ * @author Jonathan Giraldo Giraldo
+ */
 public class UpdateOfferDto {
 
     private String title;

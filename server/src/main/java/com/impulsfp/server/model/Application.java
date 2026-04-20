@@ -5,6 +5,11 @@ import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 
+/**
+ * Entitat que representa una aplicació d'un estudiant a una oferta; Conté referències a l'estudiant, l'oferta, l'estat de l'aplicació i la data d'aplicació.
+ *
+ * @author Jonathan Giraldo Giraldo
+ */
 @Entity
 @Table(name = "applications")
 public class Application {

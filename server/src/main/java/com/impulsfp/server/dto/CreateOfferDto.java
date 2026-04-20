@@ -2,6 +2,12 @@ package com.impulsfp.server.dto;
 
 import java.util.List;
 
+
+/**
+ * DTO per a la creació d'una oferta de pràctiques, que conté els camps necessaris per a la creació d'una nova oferta.
+ *
+ * @author Jonathan Giraldo Giraldo
+ */
 public class CreateOfferDto {
 
     private String title;

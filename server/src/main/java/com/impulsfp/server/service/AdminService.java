@@ -21,6 +21,12 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+
+/**
+ * Servei que proporciona funcionalitats d'administració, com obtenir llistats d'estudiants i empreses, i eliminar estudiants, empreses i ofertes.
+ *
+ * @author Jonathan Giraldo Giraldo
+ */
 @Service
 public class AdminService {
 
@@ -44,7 +50,11 @@ public class AdminService {
         this.offerMapper = offerMapper;
     }
 
-
+    /**
+     * Obté una llista de tots els estudiants registrats a la plataforma. Requereix que l'usuari sigui administrador.
+     * @param sessionId El ID de sessió de l'usuari que sol·licita la informació
+     * @return Una llista de StudentProfileDto que representa els estudiants registrats a la plataforma
+     */
     public List<StudentProfileDto> getAllStudents(String sessionId){
 
         SessionManager.requireAdmin(sessionId, userRepository);
@@ -56,6 +66,11 @@ public class AdminService {
     }
 
 
+    /**
+     * Obté una llista de totes les empreses registrades a la plataforma. Requereix que l'usuari sigui administrador.
+     * @param sessionId El ID de sessió de l'usuari que sol·licita la informació
+     * @return Una llista de CompanyProfileDto que representa les empreses registrades a la plataforma
+     */
     public List<CompanyProfileDto> getAllCompanies(String sessionId){
 
         SessionManager.requireAdmin(sessionId, userRepository);
@@ -67,6 +82,11 @@ public class AdminService {
     }
 
 
+    /**
+     * Elimina un estudiant de la plataforma, juntament amb l'usuari associat a aquest estudiant. Requereix que l'usuari sigui administrador.
+     * @param sessionId El ID de sessió de l'usuari que sol·licita l'eliminació
+     * @param id El ID de l'estudiant que es vol eliminar
+     */
     public void deleteStudent(String sessionId, Long id){
 
         SessionManager.requireAdmin(sessionId, userRepository);
@@ -78,6 +98,11 @@ public class AdminService {
         userRepository.delete(user);    }
 
 
+    /**
+     * Elimina una empresa de la plataforma, juntament amb l'usuari associat a aquesta empresa. Requereix que l'usuari sigui administrador.
+     * @param sessionId El ID de sessió de l'usuari que sol·licita l'eliminació
+     * @param id El ID de l'empresa que es vol eliminar
+     */
     public void deleteCompany(String sessionId, Long id){
 
         SessionManager.requireAdmin(sessionId, userRepository);
@@ -90,6 +115,11 @@ public class AdminService {
     }
 
 
+    /**
+     * Elimina una oferta de la plataforma. Requereix que l'usuari sigui administrador.
+     * @param sessionId El ID de sessió de l'usuari que sol·licita l'eliminació
+     * @param id El ID de l'oferta que es vol eliminar
+     */
     public void deleteOffer(String sessionId, Long id){
 
         SessionManager.requireAdmin(sessionId, userRepository);
@@ -100,6 +130,11 @@ public class AdminService {
         offerRepository.delete(offer);
     }
 
+    /**
+     * Obté una llista de totes les ofertes registrades a la plataforma. Requereix que l'usuari sigui administrador.
+     * @param sessionId El ID de sessió de l'usuari que sol·licita la informació
+     * @return Una llista de OfferResponseDto que representa les ofertes registrades a la plataforma
+     */
     public List<OfferResponseDto> getAllOffers(String sessionId){
 
         SessionManager.requireAdmin(sessionId, userRepository);

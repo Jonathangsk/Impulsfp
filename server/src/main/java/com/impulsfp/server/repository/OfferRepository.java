@@ -8,6 +8,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
+
+/**
+ * Repository per accedir a les dades de les ofertes; Proporciona mètodes per buscar ofertes per empresa, estat, ubicació i modalitat.
+ *
+ * @author Jonathan Giraldo Giraldo
+ */
 public interface OfferRepository extends JpaRepository<Offer, Long> {
 
 

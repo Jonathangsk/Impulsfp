@@ -13,6 +13,12 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 
+
+/**
+ * Servei que gestiona les aplicacions a les ofertes; Permet als estudiants aplicar a les ofertes, veure les seves aplicacions i permet a les empreses gestionar els candidats.
+ *
+ * @author Jonathan Giraldo Giraldo
+ */
 @Service
 public class ApplicationService {
 
@@ -38,7 +44,11 @@ public class ApplicationService {
         this.applicationMapper = applicationMapper;
     }
 
-    //APPLY
+    /**
+     * Permet a un estudiant aplicar a una oferta; Verifica la sessió, comprova que l'usuari és un estudiant, verifica que l'oferta existeix i que no ha aplicat abans, i crea una nova aplicació amb estat PENDING.
+     * @param sessionId La sessió de l'usuari que vol aplicar a l'oferta; S'utilitza per verificar la identitat i el rol de l'usuari.
+     * @param offerId L'identificador de l'oferta a la qual l'estudiant vol aplicar; S'utilitza per verificar que l'oferta existeix i associar la aplicació a l'oferta correcta.
+     */
     @Transactional
     public void apply(String sessionId, Long offerId){
 
@@ -75,7 +85,11 @@ public class ApplicationService {
 
     }
 
-    //MIS APPLICATIONS
+    /**
+     * Permet a un estudiant veure les seves aplicacions; Verifica la sessió, comprova que l'usuari és un estudiant, i retorna una llista de les aplicacions associades a aquest estudiant.
+     * @param sessionId La sessió de l'usuari que vol veure les seves aplicacions; S'utilitza per verificar la identitat i el rol de l'usuari, i per obtenir l'estudiant associat a aquest usuari.
+     * @return Una llista de ApplicationDto que representen les aplicacions associades a l'estudiant
+     */
     public List<ApplicationDto> getMyApplications(String sessionId){
 
         if(!SessionManager.isValid(sessionId)){
@@ -96,7 +110,12 @@ public class ApplicationService {
                 .toList();
     }
 
-    // UPDATE STATUS (empresa)
+    /**
+     * Permet a una empresa actualitzar l'estat d'una aplicació
+     * @param sessionId La sessió de l'usuari que vol actualitzar l'estat de l'aplicació
+     * @param applicationId L'identificador de l'aplicació que es vol actualitzar
+     * @param status El nou estat de l'aplicació; S'espera que sigui un valor vàlid de l'enum ApplicationStatus (PENDING, ACCEPTED, REJECTED); S'utilitza per actualitzar l'estat de l'aplicació a aquest nou valor.
+     */
     @Transactional
     public void updateStatus(String sessionId, Long applicationId, String status){
 
@@ -123,7 +142,14 @@ public class ApplicationService {
         app.setStatus(ApplicationStatus.valueOf(status));
     }
 
-    // APPLICANTS
+
+
+    /**
+     * Permet a una empresa veure els candidats que han aplicat a una oferta
+     * @param sessionId La sessió de l'usuari que vol veure els candidats; S'utilitza per verificar la identitat i el rol de l'usuari, i per obtenir l'empresa associada a aquest usuari.
+     * @param offerId L'identificador de l'oferta per la qual es vol veure els candidats
+     * @return Una llista de ApplicationDto que representen les aplicacions associades a l'oferta
+     */
     public List<ApplicationDto> getApplicants(String sessionId, Long offerId){
 
 
