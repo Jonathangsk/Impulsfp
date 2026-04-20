@@ -11,12 +11,16 @@ import java.net.UnknownHostException
 
 /**
  * Classe encarregada de gestionar la comunicació amb el servidor
- * per a les operacions d'autenticació.
+ * per a les operacions d'autenticació i registre d'usuaris.
  *
- * Aquesta classe envia les peticions de login i logout al backend
- * i transforma les respostes del servidor en objectes útils per a l'app.
+ * Aquesta classe centralitza les peticions relacionades amb la sessió
+ * d'usuari, com ara el login, logout i registre d'alumnes, transformant
+ * les respostes del backend en objectes útils per a l'aplicació.
  *
- * @abenitez
+ * També s'encarrega de controlar els possibles errors de connexió,
+ * servidor o validació, retornant missatges descriptius.
+ *
+ * @author abenitez
  */
 open class AuthController {
 
@@ -25,12 +29,16 @@ open class AuthController {
     /**
      * Realitza el login contra el servidor.
      *
-     * @param username Nom d'usuari introduït a la pantalla del login
-     * @param password Contrasenya introduïda a la pantalla del login
+     * Envia les credencials introduïdes per l'usuari al backend i,
+     * si l'autenticació és correcta, construeix un objecte [User]
+     * amb les dades retornades.
      *
-     * @return Result<User>
-     * - Si tot va bé retorna un User
-     * - Si hi ha error, retorna una excepció amb un missatge explicatiu
+     * @param username Nom d'usuari introduït a la pantalla de login
+     * @param password Contrasenya introduïda per l'usuari
+     *
+     * @return [Result] amb:
+     * - [User] si l'autenticació és correcta
+     * - Excepció amb missatge descriptiu si hi ha error
      */
     open suspend fun login(username: String, password: String): Result<User> {
         return try {
@@ -75,13 +83,16 @@ open class AuthController {
     }
 
     /**
-     * Realitza el logout contra el servidor utilitzant l'identificador de sessió.
+     * Realitza el tancament de sessió de l'usuari autenticat.
+     *
+     * Envia al servidor l'identificador de sessió actiu per invalidar-lo
+     * i finalitzar correctament la sessió.
      *
      * @param sessionId Identificador de sessió de l'usuari autenticat
      *
-     * @return Resultat de l'operació de logout:
-     * - Si és correcte, retorna [Unit]
-     * - Si hi ha error, retorna una excepció amb un missatge explicatiu
+     * @return [Result] amb:
+     * - [Unit] si el logout és correcte
+     * - Excepció amb missatge descriptiu si hi ha error
      */
     open suspend fun logout(sessionId: String): Result<Unit> {
         return try {
@@ -109,6 +120,19 @@ open class AuthController {
         }
     }
 
+    /**
+     * Registra un nou alumne al sistema.
+     *
+     * Envia al backend les dades del formulari de registre i,
+     * si el procés finalitza correctament, retorna l'usuari
+     * autenticat amb la sessió iniciada.
+     *
+     * @param request Dades necessàries per al registre de l'alumne
+     *
+     * @return [Result] amb:
+     * - [User] si el registre és correcte
+     * - Excepció amb missatge descriptiu si hi ha error
+     */
     open suspend fun registerStudent(
         request: RegisterRequest
     ): Result<User> {
@@ -149,19 +173,22 @@ open class AuthController {
     }
 
     /**
-     * Converteix el tipus d'usuari retornat pel backend al rol intern
-     * utilitzat per la interfície de l'app.
+     * Converteix el tipus d'usuari retornat pel backend
+     * al rol intern utilitzat per l'aplicació.
      *
-     * @param userType Valor rebut del servidor:
+     * Aquesta conversió permet desacoblar els valors rebuts
+     * del servidor dels valors interns utilitzats a la UI.
+     *
+     * @param userType Tipus d'usuari retornat pel backend:
      * - student
      * - company
      * - admin
      *
-     * @return Rol intern equivalent:
+     * @return Rol equivalent dins l'aplicació:
      * - ALUMNE
      * - EMPRESA
      * - ADMIN
-     * - DESCONEGUT en cas de valor no reconegut
+     * - DESCONEGUT si no coincideix amb cap valor esperat
      */
     private fun mapUserType(userType: String): String {
         return when (userType.lowercase()) {
@@ -171,6 +198,4 @@ open class AuthController {
             else -> "DESCONEGUT"
         }
     }
-
-
 }

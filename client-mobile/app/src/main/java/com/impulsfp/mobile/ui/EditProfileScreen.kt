@@ -28,6 +28,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.input.KeyboardType
@@ -37,6 +38,31 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.impulsfp.mobile.data.SessionData
 
+/**
+ * Pantalla d'edició del perfil d'usuari.
+ *
+ * Aquesta pantalla permet visualitzar i modificar les dades personals,
+ * acadèmiques i professionals del perfil de l'usuari autenticat.
+ *
+ * També inclou funcionalitats complementàries com:
+ * - desar els canvis del perfil
+ * - obrir el diàleg per canviar la contrasenya
+ * - obrir el diàleg per eliminar el compte
+ * - navegar a les diferents seccions principals de l'aplicació
+ *
+ * La pantalla utilitza [ProfileViewModel] per gestionar l'estat
+ * del perfil i les operacions de desament o eliminació.
+ *
+ * @param onHomeClick Funció executada en prémer l'accés a inici
+ * @param onSaveSuccess Funció executada quan el perfil es desa correctament
+ * @param onProfileClick Funció executada per tornar a la pantalla de perfil
+ * @param onApplicationsClick Funció executada en prémer l'accés a candidatures
+ * @param onLogout Funció executada quan l'usuari tanca la sessió
+ * @param profileViewModel ViewModel encarregat de gestionar l'estat del perfil
+ * @param menuViewModel ViewModel encarregat de gestionar accions del menú, com el logout
+ *
+ * @author abenitez
+ */
 @Composable
 fun EditProfileScreen(
     onHomeClick: () -> Unit,
@@ -91,7 +117,9 @@ fun EditProfileScreen(
     var changePasswordInfo by remember { mutableStateOf<String?>(null) }
 
     Column(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier
+            .fillMaxSize()
+            .testTag("editProfileScreen")
     ) {
 
         AppTopBar(
@@ -586,6 +614,22 @@ fun EditProfileScreen(
     }
 }
 
+/**
+ * Valida les dades introduïdes al formulari de canvi de contrasenya.
+ *
+ * Aquesta funció comprova que:
+ * - la contrasenya actual no sigui buida
+ * - la nova contrasenya compleixi els requisits mínims de seguretat
+ * - la confirmació no sigui buida
+ * - la nova contrasenya i la confirmació coincideixin
+ * - la nova contrasenya sigui diferent de l'actual
+ *
+ * @param currentPassword Contrasenya actual de l'usuari
+ * @param newPassword Nova contrasenya proposada
+ * @param confirmNewPassword Confirmació de la nova contrasenya
+ *
+ * @return Missatge d'error si la validació falla o `null` si és correcta
+ */
 private fun validatePasswordChange(
     currentPassword: String,
     newPassword: String,
@@ -633,6 +677,16 @@ private fun validatePasswordChange(
     return null
 }
 
+/**
+ * Targeta reutilitzable per agrupar seccions del formulari d'edició.
+ *
+ * Aquest component encapsula un bloc visual amb un títol i un contingut
+ * personalitzat, utilitzat per separar la informació personal, el perfil
+ * professional i les preferències.
+ *
+ * @param title Títol de la secció
+ * @param content Contingut composable que es mostrarà dins la targeta
+ */
 @Composable
 private fun EditSectionCard(
     title: String,
@@ -658,6 +712,25 @@ private fun EditSectionCard(
     }
 }
 
+/**
+ * Camp de text reutilitzable per al formulari d'edició del perfil.
+ *
+ * Aquest component encapsula un [OutlinedTextField] amb suport per:
+ * - etiqueta amb indicador de camp obligatori
+ * - missatge d'error
+ * - configuració del teclat
+ * - activació o desactivació del camp
+ *
+ * @param value Valor actual del camp
+ * @param onValueChange Funció executada quan canvia el valor
+ * @param label Text de l'etiqueta del camp
+ * @param required Indica si el camp és obligatori
+ * @param singleLine Indica si el camp ha de ser d'una sola línia
+ * @param isError Indica si el camp es mostra en estat d'error
+ * @param errorText Missatge d'error associat al camp
+ * @param keyboardType Tipus de teclat a mostrar
+ * @param enabled Indica si el camp es pot editar
+ */
 @Composable
 private fun AppTextField(
     value: String,
@@ -699,6 +772,16 @@ private fun AppTextField(
     Spacer(modifier = Modifier.height(12.dp))
 }
 
+/**
+ * Etiqueta reutilitzable per mostrar el nom d'un camp de formulari
+ * amb indicació visual si és obligatori.
+ *
+ * Quan [required] és `true`, s'afegeix un asterisc en color d'error
+ * al costat del text principal.
+ *
+ * @param text Text base de l'etiqueta
+ * @param required Indica si el camp és obligatori
+ */
 @Composable
 private fun RequiredLabel(
     text: String,

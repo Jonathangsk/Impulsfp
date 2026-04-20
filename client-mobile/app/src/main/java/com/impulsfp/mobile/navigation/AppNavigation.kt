@@ -3,29 +3,23 @@ package com.impulsfp.mobile.navigation
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
+import com.impulsfp.mobile.ui.ApplicationsScreen
 import com.impulsfp.mobile.ui.EditProfileScreen
 import com.impulsfp.mobile.ui.LoginScreen
-import com.impulsfp.mobile.ui.OffersScreen
-import com.impulsfp.mobile.ui.ProfileScreen
-import com.impulsfp.mobile.ui.RegisterScreen
+import com.impulsfp.mobile.ui.LoginViewModel
 import com.impulsfp.mobile.ui.OfferDetailScreen
-import androidx.navigation.NavType
-import androidx.navigation.navArgument
-import androidx.lifecycle.viewmodel.compose.viewModel
+import com.impulsfp.mobile.ui.OffersScreen
 import com.impulsfp.mobile.ui.OffersViewModel
-import com.impulsfp.mobile.ui.ApplicationsScreen
+import com.impulsfp.mobile.ui.ProfileScreen
 import com.impulsfp.mobile.ui.ProfileViewModel
+import com.impulsfp.mobile.ui.RegisterScreen
 
-/**
- * Defineix les rutes de navegació de l'aplicació.
- *
- * @property route Ruta associada a cada pantalla.
- *
- * @author abenitez
- */
 sealed class AppScreen(val route: String) {
     object Login : AppScreen("login")
     object Register : AppScreen("register")
@@ -38,19 +32,10 @@ sealed class AppScreen(val route: String) {
     }
 }
 
-/**
- * Gestiona la navegació principal de l'aplicació.
- *
- * @param LoginScreen Pantalla de login.
- * @param MenuScreen Pantalla de menú.
- * @param ProfileScreen Pantalla de perfil.
- * @param EditProfileScreen Pantalla d'edició del perfil.
- * @param RegisterScreen Pantalla de registre d'usuari.
- *
- * @author abenitez
- */
 @Composable
-fun AppNavigation() {
+fun AppNavigation(
+    loginViewModel: LoginViewModel? = null
+) {
     val navController = rememberNavController()
     val profileViewModel: ProfileViewModel = viewModel()
 
@@ -67,7 +52,8 @@ fun AppNavigation() {
                 },
                 onRegisterClick = {
                     navController.navigate(AppScreen.Register.route)
-                }
+                },
+                loginViewModel = loginViewModel ?: viewModel()
             )
         }
 
@@ -85,6 +71,8 @@ fun AppNavigation() {
         }
 
         composable(AppScreen.Offers.route) {
+            val offersViewModel: OffersViewModel = viewModel()
+
             OffersScreen(
                 onLogout = {
                     navController.navigate(AppScreen.Login.route) {
@@ -99,7 +87,8 @@ fun AppNavigation() {
                 },
                 onOfferClick = { offerId ->
                     navController.navigate(AppScreen.OfferDetail.createRoute(offerId))
-                }
+                },
+                offersViewModel = offersViewModel
             )
         }
 
@@ -109,13 +98,14 @@ fun AppNavigation() {
                 navArgument("offerId") { type = NavType.StringType }
             )
         ) { backStackEntry ->
-            val offerId = backStackEntry.arguments?.getString("offerId")
             val offersViewModel: OffersViewModel = viewModel()
+
+            val offerId = backStackEntry.arguments?.getString("offerId")
             val offersUiState by offersViewModel.uiState.collectAsState()
             val offer = offersUiState.offers.find { it.id == offerId }
 
-            val profileViewModel: ProfileViewModel = viewModel()
             val profile = profileViewModel.profile
+
             if (offer != null) {
                 OfferDetailScreen(
                     offer = offer,
@@ -143,6 +133,7 @@ fun AppNavigation() {
                 )
             }
         }
+
         composable(AppScreen.Profile.route) {
             ProfileScreen(
                 onHomeClick = {

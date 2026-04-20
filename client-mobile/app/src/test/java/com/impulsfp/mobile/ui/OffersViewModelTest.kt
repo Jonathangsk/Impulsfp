@@ -11,6 +11,7 @@ import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Rule
 import org.junit.Test
+import kotlin.String
 
 /**
  * Tests unitaris de OffersViewModel.
@@ -73,7 +74,9 @@ class OffersViewModelTest {
                 contractType = "Pràctiques",
                 salary = null,
                 createdAt = "2026-03-31",
-                applicantsCount = 5
+                state = "OPEN",
+                applicantsCount = 5,
+                cycle = "DAM"
             ),
             Offer(
                 id = "2",
@@ -86,7 +89,9 @@ class OffersViewModelTest {
                 contractType = "Pràctiques",
                 salary = null,
                 createdAt = "2026-03-05",
-                applicantsCount = 3
+                state = "OPEN",
+                applicantsCount = 3,
+                cycle = "ASIX"
             ),
             Offer(
                 id = "3",
@@ -99,7 +104,9 @@ class OffersViewModelTest {
                 contractType = "Pràctiques",
                 salary = null,
                 createdAt = "2026-03-10",
-                applicantsCount = 2
+                state = "OPEN",
+                applicantsCount = 2,
+                cycle = "DAW"
             )
         )
     }

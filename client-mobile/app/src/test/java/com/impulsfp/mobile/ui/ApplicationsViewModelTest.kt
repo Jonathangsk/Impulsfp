@@ -32,11 +32,13 @@ class ApplicationsViewModelTest {
         private val applicationsToReturn: List<ApplicationUiModel>
     ) : ApplicationsController() {
 
-        var getApplicationsCalled = false
+        var getMyApplicationsCalled = false
         var receivedSessionId: String? = null
 
-        override suspend fun getApplications(sessionId: String): Result<List<ApplicationUiModel>> {
-            getApplicationsCalled = true
+        override suspend fun getMyApplications(
+            sessionId: String
+        ): Result<List<ApplicationUiModel>> {
+            getMyApplicationsCalled = true
             receivedSessionId = sessionId
             return Result.success(applicationsToReturn)
         }
@@ -49,11 +51,13 @@ class ApplicationsViewModelTest {
         private val errorMessage: String
     ) : ApplicationsController() {
 
-        var getApplicationsCalled = false
+        var getMyApplicationsCalled = false
         var receivedSessionId: String? = null
 
-        override suspend fun getApplications(sessionId: String): Result<List<ApplicationUiModel>> {
-            getApplicationsCalled = true
+        override suspend fun getMyApplications(
+            sessionId: String
+        ): Result<List<ApplicationUiModel>> {
+            getMyApplicationsCalled = true
             receivedSessionId = sessionId
             return Result.failure(Exception(errorMessage))
         }
@@ -108,7 +112,7 @@ class ApplicationsViewModelTest {
         // Assert
         val state = viewModel.uiState.value
 
-        assertFalse(fakeController.getApplicationsCalled)
+        assertFalse(fakeController.getMyApplicationsCalled)
         assertEquals("No hi ha cap sessió activa", state.errorMessage)
         assertFalse(state.isLoading)
         assertTrue(state.applications.isEmpty())
@@ -137,7 +141,7 @@ class ApplicationsViewModelTest {
         // Assert
         val state = viewModel.uiState.value
 
-        assertTrue(fakeController.getApplicationsCalled)
+        assertTrue(fakeController.getMyApplicationsCalled)
         assertEquals("session-123", fakeController.receivedSessionId)
         assertFalse(state.isLoading)
         assertEquals(null, state.errorMessage)
@@ -167,7 +171,7 @@ class ApplicationsViewModelTest {
         // Assert
         val state = viewModel.uiState.value
 
-        assertTrue(fakeController.getApplicationsCalled)
+        assertTrue(fakeController.getMyApplicationsCalled)
         assertEquals("session-123", fakeController.receivedSessionId)
         assertFalse(state.isLoading)
         assertEquals("Error en carregar les candidatures", state.errorMessage)
@@ -196,7 +200,7 @@ class ApplicationsViewModelTest {
         // Assert
         val state = viewModel.uiState.value
 
-        assertTrue(fakeController.getApplicationsCalled)
+        assertTrue(fakeController.getMyApplicationsCalled)
         assertFalse(state.isLoading)
         assertEquals(null, state.errorMessage)
         assertTrue(state.applications.isEmpty())
