@@ -10,7 +10,20 @@ import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Rule
 import org.junit.Test
-
+/**
+ * Tests unitaris de càrrega del perfil dins [ProfileViewModel].
+ *
+ * Aquestes proves verifiquen:
+ * - recuperació correcta del perfil des del backend
+ * - tractament d'errors de servidor
+ * - actualització de l'estat loading
+ * - integritat de les dades locals
+ *
+ * S'utilitzen controladors fake per evitar dependència
+ * del backend real.
+ *
+ * @author abenitez
+ */
 class ProfileViewModelTest {
 
     @get:Rule

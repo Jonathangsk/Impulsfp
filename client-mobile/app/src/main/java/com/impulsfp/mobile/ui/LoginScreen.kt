@@ -32,15 +32,19 @@ import com.impulsfp.mobile.R
  * Pantalla de login de l'aplicació.
  *
  * Mostra la interfície d'autenticació de l'usuari, permetent introduir
- * el nom d'usuari i la contrasenya, mostrar errors de validació o
- * autenticació i iniciar el procés de login.
+ * el nom d'usuari i la contrasenya, visualitzar errors d'autenticació
+ * i iniciar el procés de validació contra el sistema.
  *
- * Qual l'autenticació finalitza correctament, s'executa el callback
- * [onLoginSuccess] i es reinicia l'estat de navegació del ViewModel.
+ * Quan el procés de login finalitza correctament, s'executa el callback
+ * [onLoginSuccess] i es reinicia l'estat corresponent del ViewModel
+ * per evitar navegacions repetides.
+ *
+ * També ofereix un accés directe a la pantalla de registre per als
+ * usuaris que encara no tenen compte.
  *
  * @param onLoginSuccess Funció que s'executa quan el login és correcte
- * @param loginViewModel ViewModel encarregat de gestionar l'estat i la
- * lògica de la pantalla de login
+ * @param onRegisterClick Funció que s'executa quan l'usuari vol anar al registre
+ * @param loginViewModel ViewModel encarregat de gestionar l'estat i la lògica del login
  *
  * @author abenitez
  */
@@ -60,9 +64,9 @@ fun LoginScreen(
     }
 
     Box(
-       modifier = Modifier
-           .fillMaxSize()
-           .padding(24.dp),
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(24.dp),
         contentAlignment = Alignment.Center
     ) {
         Column(
@@ -137,8 +141,4 @@ fun LoginScreen(
             )
         }
     }
-
-
-
 }
-

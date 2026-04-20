@@ -7,14 +7,17 @@ import com.impulsfp.mobile.data.SessionData
 import kotlinx.coroutines.launch
 
 /**
- * ViewModel de la pantalla de menú d'usuari.
+ * ViewModel encarregat de gestionar les accions del menú d'usuari.
  *
+ * Aquesta classe controla les operacions disponibles un cop
+ * l'usuari ha iniciat sessió, especialment el procés de
+ * tancament de sessió.
  *
- * Gestiona les accions disponibles un cop l'usuari ha iniciat sessió,
- * especialment el procés de tancament de sessió (logout).
+ * Utilitza [AuthController] per comunicar-se amb el backend
+ * i [SessionData] per netejar la sessió emmagatzemada localment.
  *
- * @property authController Controler encarregat de comunicar-se amb el servidor
- * per realitzar l'operació de logout
+ * @property authController Controlador encarregat de comunicar-se
+ * amb el servidor per realitzar l'operació de logout
  *
  * @author abenitez
  */
@@ -22,15 +25,18 @@ class MenuViewModel(
     private val authController: AuthController = AuthController()
 ) : ViewModel() {
 
-
     /**
      * Tanca la sessió de l'usuari actual.
      *
-     * Si hi ha sessionId, intenta enviar el logout al servidor.
-     * Tant si el servidor respon correctament com si falla la connexió,
-     * es neteja la sessió local i es continua el flux de sortida.
+     * Si existeix un identificador de sessió, intenta notificar
+     * el logout al servidor. Tant si l'operació remota és correcta
+     * com si falla, es neteja igualment la sessió local i es
+     * continua el flux de sortida.
      *
-     * @param onFinished Funció que s'executa quan el procés de logout ha acabat.
+     * Si no hi ha cap sessió activa, es neteja directament
+     * l'estat local i s'executa el callback final.
+     *
+     * @param onFinished Funció que s'executa quan el procés de logout ha finalitzat
      */
     fun logout(onFinished: () -> Unit) {
         val sessionId = SessionData.getSessionId()

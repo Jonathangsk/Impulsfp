@@ -32,7 +32,8 @@ open class OffersController {
                             salary = offer.salary?.toString(),
                             createdAt = offer.creationDate,
                             state = offer.state,
-                            applicantsCount = offer.applicantsCount ?: 0
+                            applicantsCount = offer.applicantsCount ?: 0,
+                            cycle = offer.cycle ?: ""
                         )
                     }
 

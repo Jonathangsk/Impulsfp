@@ -58,5 +58,13 @@ class SessionDataTest {
         assertNull(SessionData.getSessionId())
     }
 
+    @Test
+    fun clear_deletes_currentUser() {
+        SessionData.currentUser = createTestUser()
 
+        SessionData.clear()
+
+        assertNull(SessionData.currentUser)
+        assertFalse(SessionData.isLoggedIn())
+    }
 }

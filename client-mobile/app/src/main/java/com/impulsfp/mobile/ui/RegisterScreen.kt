@@ -33,6 +33,23 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.impulsfp.mobile.R
 
+/**
+ * Pantalla de registre d'usuaris de l'aplicació.
+ *
+ * Aquesta pantalla mostra un formulari complet per crear un nou compte,
+ * incloent camps obligatoris i opcionals relacionats amb la informació
+ * personal, acadèmica i professional de l'usuari.
+ *
+ * També gestiona:
+ * - la visualització d'errors de validació
+ * - l'estat de càrrega durant el registre
+ * - la navegació quan el registre finalitza correctament
+ * - el desplaçament automàtic fins al primer error detectat
+ *
+ * @param onRegisterSuccess Funció executada quan el registre es completa correctament
+ * @param onBackToLogin Funció executada quan l'usuari vol tornar a la pantalla de login
+ * @param registerViewModel ViewModel encarregat de gestionar l'estat i la lògica del registre
+ */
 @Composable
 fun RegisterScreen(
     onRegisterSuccess: () -> Unit,
@@ -353,6 +370,26 @@ fun RegisterScreen(
     }
 }
 
+/**
+ * Camp de text reutilitzable per al formulari de registre.
+ *
+ * Aquest component encapsula un camp de text amb suport per:
+ * - etiqueta amb indicador de camp obligatori
+ * - missatge d'error de validació
+ * - configuració del teclat
+ * - transformació visual del text, com per exemple contrasenyes
+ *
+ * @param value Valor actual del camp
+ * @param onValueChange Funció executada quan canvia el text introduït
+ * @param label Text de l'etiqueta del camp
+ * @param required Indica si el camp és obligatori
+ * @param singleLine Indica si el camp s'ha de mostrar en una sola línia
+ * @param isError Indica si el camp està en estat d'error
+ * @param errorText Missatge d'error que es mostra sota el camp
+ * @param keyboardType Tipus de teclat que s'ha de mostrar
+ * @param visualTransformation Transformació visual aplicada al text
+ * @param modifier Modifier aplicat al component
+ */
 @Composable
 private fun RegisterTextField(
     value: String,
@@ -391,6 +428,16 @@ private fun RegisterTextField(
     )
 }
 
+/**
+ * Mostra una etiqueta de camp amb un asterisc en vermell
+ * quan el camp és obligatori.
+ *
+ * Aquest component s'utilitza dins dels camps del formulari
+ * per indicar visualment quins valors s'han d'omplir de manera obligatòria.
+ *
+ * @param text Text principal de l'etiqueta
+ * @param required Indica si s'ha d'afegir el marcador de camp obligatori
+ */
 @Composable
 private fun RequiredLabel(
     text: String,

@@ -320,6 +320,11 @@ private fun OfferCard(
                 )
             }
 
+            Text(
+                text = "🎓 ${offer.cycle}",
+                style = MaterialTheme.typography.bodyMedium
+            )
+
             Spacer(modifier = Modifier.height(14.dp))
 
             Text(

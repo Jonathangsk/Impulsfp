@@ -12,5 +12,6 @@ data class Offer(
     val salary: String? = null,
     val createdAt: String,
     val state: String,
-    val applicantsCount: Int = 0
+    val applicantsCount: Int = 0,
+    val cycle: String = ""
 )

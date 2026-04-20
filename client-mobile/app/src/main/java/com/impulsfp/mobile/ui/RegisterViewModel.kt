@@ -11,15 +11,46 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
+/**
+ * ViewModel encarregat de gestionar l'estat i la lògica
+ * del procés de registre d'usuaris.
+ *
+ * Aquesta classe controla:
+ * - l'estat del formulari de registre
+ * - l'actualització dels camps introduïts per l'usuari
+ * - la validació de les dades obligatòries
+ * - la comunicació amb el controlador d'autenticació
+ * - el tractament dels resultats del registre
+ *
+ * També exposa un estat observable perquè la interfície
+ * pugui reaccionar als canvis de manera automàtica.
+ *
+ * @property authController Controlador encarregat de gestionar
+ * les operacions d'autenticació i registre
+ */
 class RegisterViewModel(
     private val authController: AuthController = AuthController()
 ) : ViewModel() {
 
 
+    /**
+     * Flux mutable intern que conté l'estat actual
+     * del formulari de registre.
+     */
     private val _uiState = MutableStateFlow(RegisterUiState())
+
+    /**
+     * Flux públic de només lectura que exposa l'estat actual
+     * del formulari de registre a la interfície d'usuari.
+     */
     val uiState: StateFlow<RegisterUiState> = _uiState.asStateFlow()
 
-
+    /**
+     * Actualitza el valor del camp nom d'usuari
+     * i reinicia el seu error de validació.
+     *
+     * @param value Nou valor introduït al camp
+     */
     fun onUsernameChange(value: String) {
         _uiState.value = _uiState.value.copy(
             username = value,
@@ -27,6 +58,12 @@ class RegisterViewModel(
         )
     }
 
+    /**
+     * Actualitza el valor del camp nom
+     * i reinicia el seu error de validació.
+     *
+     * @param value Nou valor introduït al camp
+     */
     fun onNameChange(value: String) {
         _uiState.value = _uiState.value.copy(
             name = value,
@@ -34,6 +71,12 @@ class RegisterViewModel(
         )
     }
 
+    /**
+     * Actualitza el valor del camp cognoms
+     * i reinicia el seu error de validació.
+     *
+     * @param value Nou valor introduït al camp
+     */
     fun onSurnameChange(value: String) {
         _uiState.value = _uiState.value.copy(
             surname = value,
@@ -41,6 +84,12 @@ class RegisterViewModel(
         )
     }
 
+    /**
+     * Actualitza el valor del camp correu electrònic
+     * i reinicia el seu error de validació.
+     *
+     * @param value Nou valor introduït al camp
+     */
     fun onEmailChange(value: String) {
         _uiState.value = _uiState.value.copy(
             email = value,
@@ -48,6 +97,12 @@ class RegisterViewModel(
         )
     }
 
+    /**
+     * Actualitza el valor del camp contrasenya
+     * i reinicia el seu error de validació.
+     *
+     * @param value Nou valor introduït al camp
+     */
     fun onPasswordChange(value: String) {
         _uiState.value = _uiState.value.copy(
             password = value,
@@ -55,6 +110,12 @@ class RegisterViewModel(
         )
     }
 
+    /**
+     * Actualitza el valor del camp de confirmació
+     * de contrasenya i reinicia el seu error de validació.
+     *
+     * @param value Nou valor introduït al camp
+     */
     fun onConfirmPasswordChange(value: String) {
         _uiState.value = _uiState.value.copy(
             confirmPassword = value,
@@ -62,50 +123,122 @@ class RegisterViewModel(
         )
     }
 
+    /**
+     * Actualitza el valor del camp telèfon.
+     *
+     * @param value Nou valor introduït al camp
+     */
     fun onPhoneNumberChange(value: String) {
         _uiState.value = _uiState.value.copy(phoneNumber = value)
     }
 
+    /**
+     * Actualitza el valor del camp ciutat.
+     *
+     * @param value Nou valor introduït al camp
+     */
     fun onCityChange(value: String) {
         _uiState.value = _uiState.value.copy(city = value)
     }
 
+    /**
+     * Actualitza el valor del camp biografia.
+     *
+     * @param value Nou valor introduït al camp
+     */
     fun onBioChange(value: String) {
         _uiState.value = _uiState.value.copy(bio = value)
     }
 
+    /**
+     * Actualitza el valor del camp cicle formatiu.
+     *
+     * @param value Nou valor introduït al camp
+     */
     fun onCycleChange(value: String) {
         _uiState.value = _uiState.value.copy(cycle = value)
     }
 
+    /**
+     * Actualitza el text del camp d'habilitats
+     * separades per comes.
+     *
+     * @param value Nou valor introduït al camp
+     */
     fun onSkillsTextChange(value: String) {
         _uiState.value = _uiState.value.copy(skillsText = value)
     }
 
+    /**
+     * Actualitza el valor del camp nivell d'experiència.
+     *
+     * @param value Nou valor introduït al camp
+     */
     fun onExperienceLevelChange(value: String) {
         _uiState.value = _uiState.value.copy(experienceLevel = value)
     }
 
+    /**
+     * Actualitza el text del camp idiomes
+     * separats per comes.
+     *
+     * @param value Nou valor introduït al camp
+     */
     fun onLanguagesChange(value: String) {
         _uiState.value = _uiState.value.copy(languagesText = value)
     }
 
+    /**
+     * Actualitza el text del camp rols preferits
+     * separats per comes.
+     *
+     * @param value Nou valor introduït al camp
+     */
     fun onPreferredRolesTextChange(value: String) {
         _uiState.value = _uiState.value.copy(preferredRolesText = value)
     }
 
+    /**
+     * Actualitza el valor del camp ubicació preferida.
+     *
+     * @param value Nou valor introduït al camp
+     */
     fun onPreferredLocationChange(value: String) {
         _uiState.value = _uiState.value.copy(preferredLocation = value)
     }
 
+    /**
+     * Actualitza el valor del camp disponibilitat.
+     *
+     * @param value Nou valor introduït al camp
+     */
     fun onAvailabilityChange(value: String) {
         _uiState.value = _uiState.value.copy(availability = value)
     }
 
+    /**
+     * Actualitza el valor del camp portfolio.
+     *
+     * @param value Nou valor introduït al camp
+     */
     fun onPortfolioChange(value: String) {
         _uiState.value = _uiState.value.copy(portfolio = value)
     }
 
+    /**
+     * Inicia el procés de registre d'un nou usuari.
+     *
+     * Primer valida el formulari i actualitza l'estat amb els errors
+     * detectats. Si les dades són correctes, fa la petició de registre
+     * al controlador d'autenticació.
+     *
+     * En cas d'èxit:
+     * - desa l'usuari registrat a la sessió actual
+     * - marca el registre com a completat
+     *
+     * En cas d'error:
+     * - actualitza l'estat amb el missatge d'error del servidor
+     */
     fun register() {
         val currentState = _uiState.value
 
@@ -163,6 +296,21 @@ class RegisterViewModel(
         }
     }
 
+    /**
+     * Valida les dades del formulari de registre.
+     *
+     * Comprova:
+     * - que els camps obligatoris estiguin informats
+     * - que el nom d'usuari compleixi el format establert
+     * - que el correu electrònic sigui vàlid
+     * - que la contrasenya compleixi els requisits mínims
+     * - que la confirmació de contrasenya coincideixi
+     *
+     * @param state Estat actual del formulari
+     *
+     * @return Una còpia de l'estat amb els missatges d'error
+     * de validació corresponents
+     */
     private fun validateForm(state: RegisterUiState): RegisterUiState {
 
         val usernameError = when {
@@ -240,6 +388,18 @@ class RegisterViewModel(
         )
     }
 
+    /**
+     * Comprova si una adreça de correu electrònic
+     * té un format vàlid.
+     *
+     * Primer intenta validar-la utilitzant el patró estàndard
+     * d'Android. Si aquest no està disponible, aplica una
+     * expressió regular alternativa.
+     *
+     * @param email Correu electrònic a validar
+     *
+     * @return true si el correu és vàlid; false en cas contrari
+     */
     private fun isValidEmail(email: String): Boolean {
         return android.util.Patterns.EMAIL_ADDRESS
             ?.matcher(email.trim())
@@ -247,10 +407,30 @@ class RegisterViewModel(
             ?: Regex("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$").matches(email.trim())
     }
 
+    /**
+     * Reinicia l'estat que indica que el registre
+     * s'ha completat correctament.
+     *
+     * Aquest mètode s'utilitza habitualment després
+     * de gestionar la navegació associada a un registre exitós.
+     */
     fun resetRegisterSuccess() {
         _uiState.value = _uiState.value.copy(registerSuccess = false)
     }
 
+    /**
+     * Converteix un text amb valors separats per comes
+     * en una llista de cadenes netes i no buides.
+     *
+     * Cada element:
+     * - es separa per comes
+     * - s'eliminen els espais sobrants
+     * - es descarten els valors en blanc
+     *
+     * @param text Text que conté elements separats per comes
+     *
+     * @return Llista d'elements processats
+     */
     fun parseCommaSeparatedList(text: String): List<String> {
         return text
             .split(",")
