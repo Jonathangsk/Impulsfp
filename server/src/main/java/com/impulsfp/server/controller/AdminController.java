@@ -54,4 +54,11 @@ public class AdminController {
         adminService.deleteOffer(sessionId, id);
         return ResponseEntity.ok(Map.of("message", "Oferta eliminada"));
     }
+
+    @GetMapping("/offers")
+    public ResponseEntity<?> getAllOffers(@RequestParam String sessionId){
+        return ResponseEntity.ok(adminService.getAllOffers(sessionId));
+    }
+
+
 }

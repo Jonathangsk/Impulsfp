@@ -1,9 +1,11 @@
 package com.impulsfp.server.service;
 
 import com.impulsfp.server.dto.CompanyProfileDto;
+import com.impulsfp.server.dto.OfferResponseDto;
 import com.impulsfp.server.dto.StudentProfileDto;
 import com.impulsfp.server.exception.ApiException;
 import com.impulsfp.server.exception.ErrorCode;
+import com.impulsfp.server.mapper.OfferMapper;
 import com.impulsfp.server.mapper.ProfileMapper;
 import com.impulsfp.server.model.Company;
 import com.impulsfp.server.model.Offer;
@@ -27,17 +29,19 @@ public class AdminService {
     private final OfferRepository offerRepository;
     private final UserRepository userRepository;
     private final ProfileMapper profileMapper;
+    private final OfferMapper offerMapper;
 
     public AdminService(StudentRepository studentRepository,
                         CompanyRepository companyRepository,
                         OfferRepository offerRepository,
                         UserRepository userRepository,
-                        ProfileMapper profileMapper) {
+                        ProfileMapper profileMapper, OfferMapper offerMapper) {
         this.studentRepository = studentRepository;
         this.companyRepository = companyRepository;
         this.offerRepository = offerRepository;
         this.userRepository = userRepository;
         this.profileMapper = profileMapper;
+        this.offerMapper = offerMapper;
     }
 
 
@@ -93,5 +97,15 @@ public class AdminService {
                 .orElseThrow(() -> new ApiException(ErrorCode.INVALID_REQUEST, "Oferta no trobada"));
 
         offerRepository.delete(offer);
+    }
+
+    public List<OfferResponseDto> getAllOffers(String sessionId){
+
+        SessionManager.requireAdmin(sessionId, userRepository);
+
+        return offerRepository.findAll()
+                .stream()
+                .map(offerMapper::toDto)
+                .collect(Collectors.toList());
     }
 }
