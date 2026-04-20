@@ -74,8 +74,8 @@ public class AdminService {
         Student student = studentRepository.findById(id)
                 .orElseThrow(() -> new ApiException(ErrorCode.USER_NOT_FOUND, "Estudiant no trobat"));
 
-        studentRepository.delete(student);
-    }
+        User user = student.getUser();
+        userRepository.delete(user);    }
 
 
     public void deleteCompany(String sessionId, Long id){
@@ -85,7 +85,8 @@ public class AdminService {
         Company company = companyRepository.findById(id)
                 .orElseThrow(() -> new ApiException(ErrorCode.USER_NOT_FOUND, "Empresa no trobada"));
 
-        companyRepository.delete(company);
+        User user = company.getUser();
+        userRepository.delete(user);
     }
 
 
