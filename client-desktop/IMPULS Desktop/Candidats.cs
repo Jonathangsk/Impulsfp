@@ -6,11 +6,13 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static System.Net.WebRequestMethods;
-
 
 namespace IMPULS_Desktop
 {
+    /// <summary>
+    /// Formulari que mostra els candidats d’una oferta.
+    /// Permet acceptar o rebutjar candidatures.
+    /// </summary>
     public partial class Candidats : Form
     {
         private readonly HttpClient client = new HttpClient();
@@ -21,24 +23,38 @@ namespace IMPULS_Desktop
 
     $"http://0bb0dfb7-9b4c-40bc-a0be.5b8c35470a40.bastion.elmeuescriptori.cat/offers/{ofertaId}/applicants?sessionId={PantallaPrincipal.SessionId}";
 
+        /// <summary>
+        /// Constructor del formulari
+        /// </summary>
         public Candidats(int ofertaId)
         {
             InitializeComponent();
             this.ofertaId = ofertaId;
         }
 
+        /// <summary>
+        /// Esdeveniment Load del formulari.
+        /// Configura el DataGridView i carrega els candidats.
+        /// </summary>
         private async void Candidats_Load(object sender, EventArgs e)
         {
-            await CargarCandidats();
+            // Configuració del DataGridView
+            dataGridView1.ReadOnly = true;
+            dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dataGridView1.MultiSelect = false;
 
-
-            dataGridView1.CellEndEdit += dataGridView1_CellEndEdit;
+            // Event per colorear estats
             dataGridView1.CellFormatting += dataGridView1_CellFormatting;
-            dataGridView1.DataSource = candidats;
 
+            // Carregar dades
+            await CarregarCandidats();
+
+            // Ajustar tamany despres de carregar
             AjustarAlturaGrid();
-
         }
+        /// <summary>
+        /// Ajusta l’alçada del DataGridView segons les files
+        /// </summary>
         private void AjustarAlturaGrid()
         {
             int height = dataGridView1.ColumnHeadersHeight;
@@ -50,6 +66,9 @@ namespace IMPULS_Desktop
 
             dataGridView1.Height = height;
         }
+        /// <summary>
+        /// Pinta les files segons l’estat del candidat
+        /// </summary>
         private void dataGridView1_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
             if (dataGridView1.Columns[e.ColumnIndex].Name == "status")
@@ -70,7 +89,10 @@ namespace IMPULS_Desktop
                 }
             }
         }
-        private async System.Threading.Tasks.Task CargarCandidats()
+        /// <summary>
+        /// Carrega els candidats des de l’API
+        /// </summary>
+        private async System.Threading.Tasks.Task CarregarCandidats()
         {
             try
             {
@@ -95,31 +117,9 @@ namespace IMPULS_Desktop
             }
         }
 
-
-        private async void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
-        {
-            try
-            {
-                var c = (Candidatos)dataGridView1.Rows[e.RowIndex].DataBoundItem;
-
-                var json = JsonSerializer.Serialize(c);
-                var content = new StringContent(json, Encoding.UTF8, "application/json");
-
-
-            }
-            catch (HttpRequestException)
-            {
-                MessageBox.Show("Error de conexión quan guardem");
-                await CargarCandidats();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error quan actualitzem: " + ex.Message);
-                await CargarCandidats();
-            }
-        }
-
-
+        /// <summary>
+        /// Accepta un candidat seleccionat
+        /// </summary>
         private async void btnTriarCandidat_Click(object sender, EventArgs e)
         {
             if (dataGridView1.CurrentRow == null)
@@ -140,10 +140,10 @@ namespace IMPULS_Desktop
 
             try
             {
-                await CambiarEstado(c.applicationId, "ACCEPTED");
+                await CambiarEstat(c.applicationId, "ACCEPTED");
                 MessageBox.Show("Candidatura acceptada");
 
-                await CargarCandidats();
+                await CarregarCandidats();
             }
             catch (HttpRequestException ex)
             {
@@ -151,7 +151,11 @@ namespace IMPULS_Desktop
                 MessageBox.Show("Error de connexió");
             }
         }
-        private async Task CambiarEstado(int applicationId, string nuevoEstado)
+
+        /// <summary>
+        /// Canvia l’estat d’una candidatura (PATCH a l’API)
+        /// </summary>
+        private async Task CambiarEstat(int applicationId, string nuevoEstado)
         {
             var json = JsonSerializer.Serialize(new { status = nuevoEstado });
             var content = new StringContent(json, Encoding.UTF8, "application/json");
@@ -167,6 +171,9 @@ namespace IMPULS_Desktop
             var response = await client.SendAsync(request);
             response.EnsureSuccessStatusCode();
         }
+        /// <summary>
+        /// Rebutja un candidat seleccionat
+        /// </summary>
         private async void btnEliminarCandidat_Click(object sender, EventArgs e)
         {
             if (dataGridView1.CurrentRow == null)
@@ -187,12 +194,11 @@ namespace IMPULS_Desktop
 
             try
             {
-                await CambiarEstado(c.applicationId, "REJECTED");
-              //  await CambiarEstado(c.IdCandidatura, "Rechazada");
-
+                await CambiarEstat(c.applicationId, "REJECTED");
+              
                 MessageBox.Show("Candidatura rebutjada");
 
-                await CargarCandidats();
+                await CarregarCandidats();
             }
             catch (HttpRequestException)
             {
@@ -200,11 +206,17 @@ namespace IMPULS_Desktop
             }
         }
 
+        /// <summary>
+        /// Tanca l’aplicació
+        /// </summary>
         private void btnTancar_Click(object sender, EventArgs e)
         {
             Application.Exit();
         }
 
+        /// <summary>
+        /// Tanca el formulari actual
+        /// </summary>
         private void btnTornar_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -215,6 +227,4 @@ namespace IMPULS_Desktop
 
         }
     }
-
-
 }

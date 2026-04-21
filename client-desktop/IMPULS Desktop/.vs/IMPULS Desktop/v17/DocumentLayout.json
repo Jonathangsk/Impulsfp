@@ -3,8 +3,71 @@
   "WorkspaceRootPath": "C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{39954942-16D4-4DD6-8821-8FF9C04589C6}|IMPULS Desktop.csproj|C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\ofertesdetreball.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{00000000-0000-0000-0000-000000000000}|\u003CSolution\u003E|IMPULS Desktop||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{39954942-16D4-4DD6-8821-8FF9C04589C6}|IMPULS Desktop.csproj|c:\\users\\jgran\\desktop\\impulsfp\\client-desktop\\impuls desktop\\ofertesdetreball.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{39954942-16D4-4DD6-8821-8FF9C04589C6}|IMPULS Desktop.csproj|solutionrelative:ofertesdetreball.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{39954942-16D4-4DD6-8821-8FF9C04589C6}|IMPULS Desktop.csproj|C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\ofertesdetreball.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{39954942-16D4-4DD6-8821-8FF9C04589C6}|IMPULS Desktop.csproj|solutionrelative:ofertesdetreball.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{39954942-16D4-4DD6-8821-8FF9C04589C6}|IMPULS Desktop.csproj|C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\eliminarempresa.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{39954942-16D4-4DD6-8821-8FF9C04589C6}|IMPULS Desktop.csproj|solutionrelative:eliminarempresa.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{39954942-16D4-4DD6-8821-8FF9C04589C6}|IMPULS Desktop.csproj|C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\eliminarempresa.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{39954942-16D4-4DD6-8821-8FF9C04589C6}|IMPULS Desktop.csproj|solutionrelative:eliminarempresa.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{39954942-16D4-4DD6-8821-8FF9C04589C6}|IMPULS Desktop.csproj|C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\canvicontrasenya.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{39954942-16D4-4DD6-8821-8FF9C04589C6}|IMPULS Desktop.csproj|solutionrelative:canvicontrasenya.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{39954942-16D4-4DD6-8821-8FF9C04589C6}|IMPULS Desktop.csproj|C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\canvicontrasenya.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{39954942-16D4-4DD6-8821-8FF9C04589C6}|IMPULS Desktop.csproj|solutionrelative:canvicontrasenya.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{39954942-16D4-4DD6-8821-8FF9C04589C6}|IMPULS Desktop.csproj|C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\candidats.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{39954942-16D4-4DD6-8821-8FF9C04589C6}|IMPULS Desktop.csproj|solutionrelative:candidats.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{39954942-16D4-4DD6-8821-8FF9C04589C6}|IMPULS Desktop.csproj|C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\candidats.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{39954942-16D4-4DD6-8821-8FF9C04589C6}|IMPULS Desktop.csproj|solutionrelative:candidats.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{39954942-16D4-4DD6-8821-8FF9C04589C6}|IMPULS Desktop.csproj|C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\candidatos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{39954942-16D4-4DD6-8821-8FF9C04589C6}|IMPULS Desktop.csproj|solutionrelative:candidatos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{39954942-16D4-4DD6-8821-8FF9C04589C6}|IMPULS Desktop.csproj|c:\\users\\jgran\\desktop\\impulsfp\\client-desktop\\impuls desktop\\app.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
+      "RelativeMoniker": "D:0:0:{39954942-16D4-4DD6-8821-8FF9C04589C6}|IMPULS Desktop.csproj|solutionrelative:app.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{39954942-16D4-4DD6-8821-8FF9C04589C6}|IMPULS Desktop.csproj|C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\apiclient.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{39954942-16D4-4DD6-8821-8FF9C04589C6}|IMPULS Desktop.csproj|solutionrelative:apiclient.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{39954942-16D4-4DD6-8821-8FF9C04589C6}|IMPULS Desktop.csproj|C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\alumnes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{39954942-16D4-4DD6-8821-8FF9C04589C6}|IMPULS Desktop.csproj|solutionrelative:alumnes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{39954942-16D4-4DD6-8821-8FF9C04589C6}|IMPULS Desktop.csproj|C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\alumnes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{39954942-16D4-4DD6-8821-8FF9C04589C6}|IMPULS Desktop.csproj|solutionrelative:alumnes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{39954942-16D4-4DD6-8821-8FF9C04589C6}|IMPULS Desktop.csproj|C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\alumne.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{39954942-16D4-4DD6-8821-8FF9C04589C6}|IMPULS Desktop.csproj|solutionrelative:alumne.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{39954942-16D4-4DD6-8821-8FF9C04589C6}|IMPULS Desktop.csproj|C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\administrador.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{39954942-16D4-4DD6-8821-8FF9C04589C6}|IMPULS Desktop.csproj|solutionrelative:administrador.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{39954942-16D4-4DD6-8821-8FF9C04589C6}|IMPULS Desktop.csproj|C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\administrador.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{39954942-16D4-4DD6-8821-8FF9C04589C6}|IMPULS Desktop.csproj|solutionrelative:administrador.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
       "AbsoluteMoniker": "D:0:0:{39954942-16D4-4DD6-8821-8FF9C04589C6}|IMPULS Desktop.csproj|C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\perfildeempresa.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -23,15 +86,11 @@
       "RelativeMoniker": "D:0:0:{39954942-16D4-4DD6-8821-8FF9C04589C6}|IMPULS Desktop.csproj|solutionrelative:pantalla principal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{39954942-16D4-4DD6-8821-8FF9C04589C6}|IMPULS Desktop.csproj|C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\ofertesdetreball.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{39954942-16D4-4DD6-8821-8FF9C04589C6}|IMPULS Desktop.csproj|solutionrelative:ofertesdetreball.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{39954942-16D4-4DD6-8821-8FF9C04589C6}|IMPULS Desktop.csproj|c:\\users\\jgran\\desktop\\impulsfp\\client-desktop\\impuls desktop\\offerservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{39954942-16D4-4DD6-8821-8FF9C04589C6}|IMPULS Desktop.csproj|C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\offerservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{39954942-16D4-4DD6-8821-8FF9C04589C6}|IMPULS Desktop.csproj|solutionrelative:offerservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{39954942-16D4-4DD6-8821-8FF9C04589C6}|IMPULS Desktop.csproj|c:\\users\\jgran\\desktop\\impulsfp\\client-desktop\\impuls desktop\\loginresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{39954942-16D4-4DD6-8821-8FF9C04589C6}|IMPULS Desktop.csproj|C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\loginresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{39954942-16D4-4DD6-8821-8FF9C04589C6}|IMPULS Desktop.csproj|solutionrelative:loginresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
@@ -59,7 +118,7 @@
       "RelativeMoniker": "D:0:0:{39954942-16D4-4DD6-8821-8FF9C04589C6}|IMPULS Desktop.csproj|solutionrelative:publicaroferta.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{39954942-16D4-4DD6-8821-8FF9C04589C6}|IMPULS Desktop.csproj|c:\\users\\jgran\\desktop\\impulsfp\\client-desktop\\impuls desktop\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{39954942-16D4-4DD6-8821-8FF9C04589C6}|IMPULS Desktop.csproj|C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{39954942-16D4-4DD6-8821-8FF9C04589C6}|IMPULS Desktop.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
@@ -75,22 +134,6 @@
       "RelativeMoniker": "D:0:0:{39954942-16D4-4DD6-8821-8FF9C04589C6}|IMPULS Desktop.csproj|solutionrelative:empreses.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{39954942-16D4-4DD6-8821-8FF9C04589C6}|IMPULS Desktop.csproj|C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\eliminarempresa.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{39954942-16D4-4DD6-8821-8FF9C04589C6}|IMPULS Desktop.csproj|solutionrelative:eliminarempresa.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{39954942-16D4-4DD6-8821-8FF9C04589C6}|IMPULS Desktop.csproj|C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\apiclient.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{39954942-16D4-4DD6-8821-8FF9C04589C6}|IMPULS Desktop.csproj|solutionrelative:apiclient.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{39954942-16D4-4DD6-8821-8FF9C04589C6}|IMPULS Desktop.csproj|C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\alumne.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{39954942-16D4-4DD6-8821-8FF9C04589C6}|IMPULS Desktop.csproj|solutionrelative:alumne.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{39954942-16D4-4DD6-8821-8FF9C04589C6}|IMPULS Desktop.csproj|C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\administrador.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{39954942-16D4-4DD6-8821-8FF9C04589C6}|IMPULS Desktop.csproj|solutionrelative:administrador.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{3FB5C57F-42AB-4126-B248-17EF1EE024A1}|..\\IMPULS.Tests\\IMPULS.Tests.csproj|c:\\users\\jgran\\desktop\\impulsfp\\client-desktop\\impuls.tests\\testregistreempresa.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
@@ -104,23 +147,8 @@
       "RelativeMoniker": "D:0:0:{39954942-16D4-4DD6-8821-8FF9C04589C6}|IMPULS Desktop.csproj|solutionrelative:empreses.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{39954942-16D4-4DD6-8821-8FF9C04589C6}|IMPULS Desktop.csproj|C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\alumnes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{39954942-16D4-4DD6-8821-8FF9C04589C6}|IMPULS Desktop.csproj|solutionrelative:alumnes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{39954942-16D4-4DD6-8821-8FF9C04589C6}|IMPULS Desktop.csproj|C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\alumnes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{39954942-16D4-4DD6-8821-8FF9C04589C6}|IMPULS Desktop.csproj|solutionrelative:alumnes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{39954942-16D4-4DD6-8821-8FF9C04589C6}|IMPULS Desktop.csproj|C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\administrador.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{39954942-16D4-4DD6-8821-8FF9C04589C6}|IMPULS Desktop.csproj|solutionrelative:administrador.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{39954942-16D4-4DD6-8821-8FF9C04589C6}|IMPULS Desktop.csproj|C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\alumnes.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{39954942-16D4-4DD6-8821-8FF9C04589C6}|IMPULS Desktop.csproj|solutionrelative:alumnes.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{00000000-0000-0000-0000-000000000000}|\u003CSolution\u003E|IMPULS Desktop||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|"
     },
     {
       "AbsoluteMoniker": "D:0:0:{39954942-16D4-4DD6-8821-8FF9C04589C6}|IMPULS Desktop.csproj|C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\empreses.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -131,20 +159,8 @@
       "RelativeMoniker": "D:0:0:{39954942-16D4-4DD6-8821-8FF9C04589C6}|IMPULS Desktop.csproj|solutionrelative:pantalla principal.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{39954942-16D4-4DD6-8821-8FF9C04589C6}|IMPULS Desktop.csproj|C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\candidats.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{39954942-16D4-4DD6-8821-8FF9C04589C6}|IMPULS Desktop.csproj|solutionrelative:candidats.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{39954942-16D4-4DD6-8821-8FF9C04589C6}|IMPULS Desktop.csproj|C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\publicaroferta.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{39954942-16D4-4DD6-8821-8FF9C04589C6}|IMPULS Desktop.csproj|solutionrelative:publicaroferta.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{39954942-16D4-4DD6-8821-8FF9C04589C6}|IMPULS Desktop.csproj|C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\candidats.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{39954942-16D4-4DD6-8821-8FF9C04589C6}|IMPULS Desktop.csproj|solutionrelative:candidats.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{39954942-16D4-4DD6-8821-8FF9C04589C6}|IMPULS Desktop.csproj|C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\candidatos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{39954942-16D4-4DD6-8821-8FF9C04589C6}|IMPULS Desktop.csproj|solutionrelative:candidatos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{39954942-16D4-4DD6-8821-8FF9C04589C6}|IMPULS Desktop.csproj|C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\pantallaempresa.resx||{81828910-B8B3-4D2B-99A3-067027C180C1}",
@@ -184,20 +200,8 @@
       "AbsoluteMoniker": "D:0:0:{3FB5C57F-42AB-4126-B248-17EF1EE024A1}|..\\IMPULS.Tests\\IMPULS.Tests.csproj|c:\\users\\jgran\\desktop\\impulsfp\\client-desktop\\impuls.tests\\testempresaconsultaimodificaperfilempresa.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{39954942-16D4-4DD6-8821-8FF9C04589C6}|IMPULS Desktop.csproj|C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\canvicontrasenya.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{39954942-16D4-4DD6-8821-8FF9C04589C6}|IMPULS Desktop.csproj|solutionrelative:canvicontrasenya.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{39954942-16D4-4DD6-8821-8FF9C04589C6}|IMPULS Desktop.csproj|C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\canvicontrasenya.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{39954942-16D4-4DD6-8821-8FF9C04589C6}|IMPULS Desktop.csproj|solutionrelative:canvicontrasenya.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{39954942-16D4-4DD6-8821-8FF9C04589C6}|IMPULS Desktop.csproj|C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\ofertesdetreball.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{39954942-16D4-4DD6-8821-8FF9C04589C6}|IMPULS Desktop.csproj|solutionrelative:ofertesdetreball.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{39954942-16D4-4DD6-8821-8FF9C04589C6}|IMPULS Desktop.csproj|C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\eliminarempresa.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{39954942-16D4-4DD6-8821-8FF9C04589C6}|IMPULS Desktop.csproj|solutionrelative:eliminarempresa.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{39954942-16D4-4DD6-8821-8FF9C04589C6}|IMPULS Desktop.csproj|C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\candidats.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -209,6 +213,9 @@
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS.Tests\\TestAdminConsultaIbaixaUsuaris.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{39954942-16D4-4DD6-8821-8FF9C04589C6}|IMPULS Desktop.csproj|c:\\users\\jgran\\desktop\\impulsfp\\client-desktop\\impuls desktop\\||{B270807C-D8C6-49EB-8EBE-8E8D566637A1}|a54ad834-9219-4aa6-b589-607af21c3e26"
     }
   ],
   "DocumentGroupContainers": [
@@ -218,7 +225,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 30,
+          "SelectedChildIndex": 20,
           "Children": [
             {
               "$type": "Bookmark",
@@ -238,46 +245,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "LoginResponse.cs",
-              "DocumentMoniker": "C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\LoginResponse.cs",
-              "RelativeDocumentMoniker": "LoginResponse.cs",
-              "ToolTip": "C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\LoginResponse.cs",
-              "RelativeToolTip": "LoginResponse.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-21T10:29:04.233Z",
+              "DocumentIndex": 10,
+              "Title": "App.config",
+              "DocumentMoniker": "C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\App.config",
+              "RelativeDocumentMoniker": "App.config",
+              "ToolTip": "C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\App.config",
+              "RelativeToolTip": "App.config",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000601|",
+              "WhenOpened": "2026-04-21T11:55:58.933Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "OfferService.cs",
-              "DocumentMoniker": "C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\OfferService.cs",
-              "RelativeDocumentMoniker": "OfferService.cs",
-              "ToolTip": "C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\OfferService.cs",
-              "RelativeToolTip": "OfferService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB4AAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-21T10:22:31.156Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 14,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\Program.cs",
-              "RelativeDocumentMoniker": "Program.cs",
-              "ToolTip": "C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\Program.cs",
-              "RelativeToolTip": "Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAANAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-21T10:10:58.991Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 44,
+              "DocumentIndex": 48,
               "Title": "MSTestSettings.cs",
               "DocumentMoniker": "C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS.Tests\\MSTestSettings.cs",
               "RelativeDocumentMoniker": "..\\IMPULS.Tests\\MSTestSettings.cs",
@@ -289,7 +270,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 34,
               "Title": "TestEmpresaMiraIgestionaCandidats.cs",
               "DocumentMoniker": "C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS.Tests\\TestEmpresaMiraIgestionaCandidats.cs",
               "RelativeDocumentMoniker": "..\\IMPULS.Tests\\TestEmpresaMiraIgestionaCandidats.cs",
@@ -297,12 +278,11 @@
               "RelativeToolTip": "..\\IMPULS.Tests\\TestEmpresaMiraIgestionaCandidats.cs",
               "ViewState": "AgIAACEAAAAAAAAAAAAQwCgAAABNAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-14T21:52:14.653Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-14T21:52:14.653Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 45,
+              "DocumentIndex": 49,
               "Title": "TestEmpresaGestionaImodificaOfertes.cs",
               "DocumentMoniker": "C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS.Tests\\TestEmpresaGestionaImodificaOfertes.cs",
               "RelativeDocumentMoniker": "..\\IMPULS.Tests\\TestEmpresaGestionaImodificaOfertes.cs",
@@ -314,7 +294,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 46,
+              "DocumentIndex": 50,
               "Title": "TestEmpresaConsultaImodificaPerfilEmpresa.cs",
               "DocumentMoniker": "C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS.Tests\\TestEmpresaConsultaImodificaPerfilEmpresa.cs",
               "RelativeDocumentMoniker": "..\\IMPULS.Tests\\TestEmpresaConsultaImodificaPerfilEmpresa.cs",
@@ -326,7 +306,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
+              "DocumentIndex": 35,
               "Title": "IMPULS.Tests.csproj",
               "DocumentMoniker": "C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS.Tests\\IMPULS.Tests.csproj",
               "RelativeDocumentMoniker": "..\\IMPULS.Tests\\IMPULS.Tests.csproj",
@@ -334,11 +314,12 @@
               "RelativeToolTip": "..\\IMPULS.Tests\\IMPULS.Tests.csproj",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2026-04-14T21:43:15.024Z"
+              "WhenOpened": "2026-04-14T21:43:15.024Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 33,
               "Title": "TestRegistreEmpresa.cs",
               "DocumentMoniker": "C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS.Tests\\TestRegistreEmpresa.cs",
               "RelativeDocumentMoniker": "..\\IMPULS.Tests\\TestRegistreEmpresa.cs",
@@ -346,12 +327,11 @@
               "RelativeToolTip": "..\\IMPULS.Tests\\TestRegistreEmpresa.cs",
               "ViewState": "AgIAACQAAAAAAAAAAAAYwBcAAAAuAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-14T10:07:30.801Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-14T10:07:30.801Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 53,
+              "DocumentIndex": 54,
               "Title": "TestAdminConsultaIbaixaUsuaris.cs",
               "DocumentMoniker": "C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS.Tests\\TestAdminConsultaIbaixaUsuaris.cs",
               "RelativeDocumentMoniker": "..\\IMPULS.Tests\\TestAdminConsultaIbaixaUsuaris.cs",
@@ -363,7 +343,56 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 25,
+              "DocumentIndex": 1,
+              "Title": "OfertesDeTreball.cs",
+              "DocumentMoniker": "C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\OfertesDeTreball.cs",
+              "RelativeDocumentMoniker": "OfertesDeTreball.cs",
+              "ToolTip": "C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\OfertesDeTreball.cs",
+              "RelativeToolTip": "OfertesDeTreball.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAASAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-01T14:06:29.73Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "LoginResponse.cs",
+              "DocumentMoniker": "C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\LoginResponse.cs",
+              "RelativeDocumentMoniker": "LoginResponse.cs",
+              "ToolTip": "C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\LoginResponse.cs",
+              "RelativeToolTip": "LoginResponse.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-21T10:29:04.233Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "OfferService.cs",
+              "DocumentMoniker": "C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\OfferService.cs",
+              "RelativeDocumentMoniker": "OfferService.cs",
+              "ToolTip": "C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\OfferService.cs",
+              "RelativeToolTip": "OfferService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB4AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-21T10:22:31.156Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 29,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-21T10:10:58.991Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 36,
               "Title": "Empreses.cs",
               "DocumentMoniker": "C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\Empreses.cs",
               "RelativeDocumentMoniker": "Empreses.cs",
@@ -371,12 +400,11 @@
               "RelativeToolTip": "Empreses.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAACYAAAALAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-14T08:57:22.94Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-14T08:57:22.94Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 29,
+              "DocumentIndex": 37,
               "Title": "Alumnes.Designer.cs",
               "DocumentMoniker": "C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\Alumnes.Designer.cs",
               "RelativeDocumentMoniker": "Alumnes.Designer.cs",
@@ -384,22 +412,24 @@
               "RelativeToolTip": "Alumnes.Designer.cs",
               "ViewState": "AgIAABsAAAAAAAAAAAAlwC8AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-21T09:27:36.684Z"
+              "WhenOpened": "2026-04-21T09:27:36.684Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 27,
+              "DocumentIndex": 13,
               "Title": "Alumnes.cs [Dise\u00F1o]",
               "DocumentMoniker": "C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\Alumnes.cs",
               "RelativeDocumentMoniker": "Alumnes.cs",
               "ToolTip": "C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\Alumnes.cs [Dise\u00F1o]",
               "RelativeToolTip": "Alumnes.cs [Dise\u00F1o]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-14T08:47:46.834Z"
+              "WhenOpened": "2026-04-14T08:47:46.834Z",
+              "EditorCaption": " [Dise\u00F1o]"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 23,
               "Title": "Oferta.cs",
               "DocumentMoniker": "C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\Oferta.cs",
               "RelativeDocumentMoniker": "Oferta.cs",
@@ -407,23 +437,23 @@
               "RelativeToolTip": "Oferta.cs",
               "ViewState": "AgIAAAIAAAAAAAAAAAAYwBMAAAAlAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-01T07:40:47.712Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-01T07:40:47.712Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 30,
+              "DocumentIndex": 0,
               "Title": "IMPULS Desktop",
               "DocumentMoniker": "C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\IMPULS Desktop.csproj",
               "RelativeDocumentMoniker": "IMPULS Desktop.csproj",
               "ToolTip": "C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\IMPULS Desktop.csproj",
               "RelativeToolTip": "IMPULS Desktop.csproj",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
-              "WhenOpened": "2026-04-01T13:11:36.363Z"
+              "WhenOpened": "2026-04-01T13:11:36.363Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 31,
+              "DocumentIndex": 38,
               "Title": "Empreses.Designer.cs",
               "DocumentMoniker": "C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\Empreses.Designer.cs",
               "RelativeDocumentMoniker": "Empreses.Designer.cs",
@@ -431,12 +461,11 @@
               "RelativeToolTip": "Empreses.Designer.cs",
               "ViewState": "AgIAAEIAAAAAAAAAAAAAwFcAAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-21T08:56:28.066Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-21T08:56:28.066Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 32,
+              "DocumentIndex": 39,
               "Title": "Pantalla Principal.Designer.cs",
               "DocumentMoniker": "C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\Pantalla Principal.Designer.cs",
               "RelativeDocumentMoniker": "Pantalla Principal.Designer.cs",
@@ -444,72 +473,70 @@
               "RelativeToolTip": "Pantalla Principal.Designer.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-21T08:12:47.324Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-21T08:12:47.324Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 25,
               "Title": "PantallaEmpresa.cs [Dise\u00F1o]",
               "DocumentMoniker": "C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\PantallaEmpresa.cs",
               "RelativeDocumentMoniker": "PantallaEmpresa.cs",
               "ToolTip": "C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\PantallaEmpresa.cs [Dise\u00F1o]",
               "RelativeToolTip": "PantallaEmpresa.cs [Dise\u00F1o]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-01T07:20:33.049Z",
-              "EditorCaption": " [Dise\u00F1o]"
+              "WhenOpened": "2026-04-01T07:20:33.049Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 26,
               "Title": "PerfilDeEmpresa.cs [Dise\u00F1o]",
               "DocumentMoniker": "C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\PerfilDeEmpresa.cs",
               "RelativeDocumentMoniker": "PerfilDeEmpresa.cs",
               "ToolTip": "C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\PerfilDeEmpresa.cs [Dise\u00F1o]",
               "RelativeToolTip": "PerfilDeEmpresa.cs [Dise\u00F1o]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-01T13:23:01.903Z",
-              "EditorCaption": " [Dise\u00F1o]"
+              "WhenOpened": "2026-04-01T13:23:01.903Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 37,
+              "DocumentIndex": 41,
               "Title": "PantallaEmpresa.resx",
               "DocumentMoniker": "C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\PantallaEmpresa.resx",
               "RelativeDocumentMoniker": "PantallaEmpresa.resx",
               "ToolTip": "C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\PantallaEmpresa.resx",
               "RelativeToolTip": "PantallaEmpresa.resx",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001005|",
-              "WhenOpened": "2026-04-20T17:02:42.861Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-20T17:02:42.861Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 35,
+              "DocumentIndex": 7,
               "Title": "Candidats.cs",
               "DocumentMoniker": "C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\Candidats.cs",
               "RelativeDocumentMoniker": "Candidats.cs",
               "ToolTip": "C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\Candidats.cs",
               "RelativeToolTip": "Candidats.cs",
-              "ViewState": "AgIAANUAAAAAAAAAAAAAANoAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAL0AAAAAAAAAAAAqwM0AAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-01T13:24:51.24Z"
+              "WhenOpened": "2026-04-01T13:24:51.24Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 36,
+              "DocumentIndex": 9,
               "Title": "Candidatos.cs",
               "DocumentMoniker": "C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\Candidatos.cs",
               "RelativeDocumentMoniker": "Candidatos.cs",
               "ToolTip": "C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\Candidatos.cs",
               "RelativeToolTip": "Candidatos.cs",
-              "ViewState": "AgIAAAcAAAAAAAAAAAAAABYAAAAXAAAAAAAAAA==",
+              "ViewState": "AgIAAAcAAAAAAAAAAAA1wCAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-20T04:28:04.518Z"
+              "WhenOpened": "2026-04-20T04:28:04.518Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 27,
               "Title": "PublicarOferta.cs",
               "DocumentMoniker": "C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\PublicarOferta.cs",
               "RelativeDocumentMoniker": "PublicarOferta.cs",
@@ -517,61 +544,44 @@
               "RelativeToolTip": "PublicarOferta.cs",
               "ViewState": "AgIAAJEAAAAAAAAAAAAawKMAAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-01T13:38:44.982Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-01T13:38:44.982Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 41,
+              "DocumentIndex": 45,
               "Title": "PerfilDeEmpresa.resx",
               "DocumentMoniker": "C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\PerfilDeEmpresa.resx",
               "RelativeDocumentMoniker": "PerfilDeEmpresa.resx",
               "ToolTip": "C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\PerfilDeEmpresa.resx",
               "RelativeToolTip": "PerfilDeEmpresa.resx",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001005|",
-              "WhenOpened": "2026-04-18T23:22:20.665Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-18T23:22:20.665Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 28,
               "Title": "PublicarOferta.cs [Dise\u00F1o]",
               "DocumentMoniker": "C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\PublicarOferta.cs",
               "RelativeDocumentMoniker": "PublicarOferta.cs",
               "ToolTip": "C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\PublicarOferta.cs [Dise\u00F1o]",
               "RelativeToolTip": "PublicarOferta.cs [Dise\u00F1o]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-01T13:44:51.625Z",
-              "EditorCaption": " [Dise\u00F1o]"
+              "WhenOpened": "2026-04-01T13:44:51.625Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 43,
+              "DocumentIndex": 47,
               "Title": "PublicarOferta.resx",
               "DocumentMoniker": "C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\PublicarOferta.resx",
               "RelativeDocumentMoniker": "PublicarOferta.resx",
               "ToolTip": "C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\PublicarOferta.resx",
               "RelativeToolTip": "PublicarOferta.resx",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001005|",
-              "WhenOpened": "2026-04-18T21:58:08.757Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-18T21:58:08.757Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "OfertesDeTreball.cs",
-              "DocumentMoniker": "C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\OfertesDeTreball.cs",
-              "RelativeDocumentMoniker": "OfertesDeTreball.cs",
-              "ToolTip": "C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\OfertesDeTreball.cs",
-              "RelativeToolTip": "OfertesDeTreball.cs",
-              "ViewState": "AgIAAJMAAAAAAAAAAAAcwJ8AAAAWAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-01T14:06:29.73Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 42,
+              "DocumentIndex": 46,
               "Title": "PantallaEmpresa.Designer.cs",
               "DocumentMoniker": "C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\PantallaEmpresa.Designer.cs",
               "RelativeDocumentMoniker": "PantallaEmpresa.Designer.cs",
@@ -579,12 +589,11 @@
               "RelativeToolTip": "PantallaEmpresa.Designer.cs",
               "ViewState": "AgIAAAgAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-18T21:20:56.224Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-18T21:20:56.224Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 34,
+              "DocumentIndex": 40,
               "Title": "PublicarOferta.Designer.cs",
               "DocumentMoniker": "C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\PublicarOferta.Designer.cs",
               "RelativeDocumentMoniker": "PublicarOferta.Designer.cs",
@@ -592,35 +601,36 @@
               "RelativeToolTip": "PublicarOferta.Designer.cs",
               "ViewState": "AgIAABYAAAAAAAAAAAAAABYAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-18T07:28:29.81Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-18T07:28:29.81Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 48,
+              "DocumentIndex": 5,
               "Title": "CanviContrasenya.cs",
               "DocumentMoniker": "C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\CanviContrasenya.cs",
               "RelativeDocumentMoniker": "CanviContrasenya.cs",
               "ToolTip": "C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\CanviContrasenya.cs",
               "RelativeToolTip": "CanviContrasenya.cs",
-              "ViewState": "AgIAABsAAAAAAAAAAAAawCoAAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAAC4AAAAAAAAAAAAQwEwAAAAWAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-16T09:53:56.711Z"
+              "WhenOpened": "2026-04-16T09:53:56.711Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 47,
+              "DocumentIndex": 6,
               "Title": "CanviContrasenya.cs [Dise\u00F1o]",
               "DocumentMoniker": "C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\CanviContrasenya.cs",
               "RelativeDocumentMoniker": "CanviContrasenya.cs",
               "ToolTip": "C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\CanviContrasenya.cs [Dise\u00F1o]",
               "RelativeToolTip": "CanviContrasenya.cs [Dise\u00F1o]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-16T00:09:35.314Z"
+              "WhenOpened": "2026-04-16T00:09:35.314Z",
+              "EditorCaption": " [Dise\u00F1o]"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 11,
               "Title": "ApiClient.cs",
               "DocumentMoniker": "C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\ApiClient.cs",
               "RelativeDocumentMoniker": "ApiClient.cs",
@@ -633,7 +643,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 38,
+              "DocumentIndex": 42,
               "Title": "IApiClient.cs",
               "DocumentMoniker": "C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\IApiClient.cs",
               "RelativeDocumentMoniker": "IApiClient.cs",
@@ -645,57 +655,57 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 14,
               "Title": "Alumne.cs",
               "DocumentMoniker": "C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\Alumne.cs",
               "RelativeDocumentMoniker": "Alumne.cs",
               "ToolTip": "C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\Alumne.cs",
               "RelativeToolTip": "Alumne.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAA4AAAAAAAAAAAAAABUAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-04-14T09:06:37.87Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 26,
+              "DocumentIndex": 12,
               "Title": "Alumnes.cs",
               "DocumentMoniker": "C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\Alumnes.cs",
               "RelativeDocumentMoniker": "Alumnes.cs",
               "ToolTip": "C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\Alumnes.cs",
               "RelativeToolTip": "Alumnes.cs",
-              "ViewState": "AgIAACoAAAAAAAAAAAAowC0AAAAMAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAWAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-14T08:57:10.869Z"
+              "WhenOpened": "2026-04-14T08:57:10.869Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 32,
               "Title": "Empreses.cs [Dise\u00F1o]",
               "DocumentMoniker": "C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\Empreses.cs",
               "RelativeDocumentMoniker": "Empreses.cs",
               "ToolTip": "C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\Empreses.cs [Dise\u00F1o]",
               "RelativeToolTip": "Empreses.cs [Dise\u00F1o]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-14T08:51:45.023Z",
-              "EditorCaption": " [Dise\u00F1o]"
+              "WhenOpened": "2026-04-14T08:51:45.023Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 28,
+              "DocumentIndex": 15,
               "Title": "Administrador.cs",
               "DocumentMoniker": "C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\Administrador.cs",
               "RelativeDocumentMoniker": "Administrador.cs",
               "ToolTip": "C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\Administrador.cs",
               "RelativeToolTip": "Administrador.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAABQAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAABgAAAAAAAAAAAAlwCwAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-04-14T08:37:26.238Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 16,
               "Title": "Administrador.cs [Dise\u00F1o]",
               "DocumentMoniker": "C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\Administrador.cs",
               "RelativeDocumentMoniker": "Administrador.cs",
@@ -707,7 +717,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 39,
+              "DocumentIndex": 43,
               "Title": "RegistreNovaEmpresa.Designer.cs",
               "DocumentMoniker": "C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\RegistreNovaEmpresa.Designer.cs",
               "RelativeDocumentMoniker": "RegistreNovaEmpresa.Designer.cs",
@@ -715,25 +725,24 @@
               "RelativeToolTip": "RegistreNovaEmpresa.Designer.cs",
               "ViewState": "AgIAABYAAAAAAAAAAAAAABYAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-14T07:50:05.729Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-14T07:50:05.729Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 50,
+              "DocumentIndex": 3,
               "Title": "EliminarEmpresa.cs",
               "DocumentMoniker": "C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\EliminarEmpresa.cs",
               "RelativeDocumentMoniker": "EliminarEmpresa.cs",
               "ToolTip": "C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\EliminarEmpresa.cs",
               "RelativeToolTip": "EliminarEmpresa.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAfAAAAAAAAAA==",
+              "ViewState": "AgIAAFoAAAAAAAAAAAAAAGwAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-04-13T14:32:08.632Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 4,
               "Title": "EliminarEmpresa.cs [Dise\u00F1o]",
               "DocumentMoniker": "C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\EliminarEmpresa.cs",
               "RelativeDocumentMoniker": "EliminarEmpresa.cs",
@@ -745,7 +754,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 52,
+              "DocumentIndex": 53,
               "Title": "EliminarComptes.cs [Dise\u00F1o]",
               "DocumentMoniker": "C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\EliminarComptes.cs",
               "RelativeDocumentMoniker": "EliminarComptes.cs",
@@ -756,7 +765,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 49,
+              "DocumentIndex": 51,
               "Title": "OfertesDeTreball.Designer.cs",
               "DocumentMoniker": "C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\OfertesDeTreball.Designer.cs",
               "RelativeDocumentMoniker": "OfertesDeTreball.Designer.cs",
@@ -769,7 +778,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 51,
+              "DocumentIndex": 52,
               "Title": "Candidats.Designer.cs",
               "DocumentMoniker": "C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\Candidats.Designer.cs",
               "RelativeDocumentMoniker": "Candidats.Designer.cs",
@@ -777,11 +786,12 @@
               "RelativeToolTip": "Candidats.Designer.cs",
               "ViewState": "AgIAACMAAAAAAAAAAAAvwC8AAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-01T15:12:47.961Z"
+              "WhenOpened": "2026-04-01T15:12:47.961Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 40,
+              "DocumentIndex": 44,
               "Title": "PerfilDeEmpresa.Designer.cs",
               "DocumentMoniker": "C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\PerfilDeEmpresa.Designer.cs",
               "RelativeDocumentMoniker": "PerfilDeEmpresa.Designer.cs",
@@ -789,12 +799,11 @@
               "RelativeToolTip": "PerfilDeEmpresa.Designer.cs",
               "ViewState": "AgIAAAIAAAAAAAAAAAAAAH4AAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-01T13:35:35.255Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-01T13:35:35.255Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 17,
               "Title": "PerfilDeEmpresa.cs",
               "DocumentMoniker": "C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\PerfilDeEmpresa.cs",
               "RelativeDocumentMoniker": "PerfilDeEmpresa.cs",
@@ -802,23 +811,23 @@
               "RelativeToolTip": "PerfilDeEmpresa.cs",
               "ViewState": "AgIAAE8BAAAAAAAAAAAAwGMBAABSAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-01T13:24:43.944Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-01T13:24:43.944Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 33,
+              "DocumentIndex": 8,
               "Title": "Candidats.cs [Dise\u00F1o]",
               "DocumentMoniker": "C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\Candidats.cs",
               "RelativeDocumentMoniker": "Candidats.cs",
               "ToolTip": "C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\Candidats.cs [Dise\u00F1o]",
               "RelativeToolTip": "Candidats.cs [Dise\u00F1o]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-01T13:23:50.815Z"
+              "WhenOpened": "2026-04-01T13:23:50.815Z",
+              "EditorCaption": " [Dise\u00F1o]"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 2,
               "Title": "OfertesDeTreball.cs [Dise\u00F1o]",
               "DocumentMoniker": "C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\OfertesDeTreball.cs",
               "RelativeDocumentMoniker": "OfertesDeTreball.cs",
@@ -830,19 +839,18 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 30,
               "Title": "RegistreNovaEmpresa.cs [Dise\u00F1o]",
               "DocumentMoniker": "C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\RegistreNovaEmpresa.cs",
               "RelativeDocumentMoniker": "RegistreNovaEmpresa.cs",
               "ToolTip": "C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\RegistreNovaEmpresa.cs [Dise\u00F1o]",
               "RelativeToolTip": "RegistreNovaEmpresa.cs [Dise\u00F1o]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-01T13:20:04.115Z",
-              "EditorCaption": " [Dise\u00F1o]"
+              "WhenOpened": "2026-04-01T13:20:04.115Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 19,
               "Title": "Pantalla Principal.cs",
               "DocumentMoniker": "C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\Pantalla Principal.cs",
               "RelativeDocumentMoniker": "Pantalla Principal.cs",
@@ -850,24 +858,22 @@
               "RelativeToolTip": "Pantalla Principal.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-01T08:34:18.585Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-01T08:34:18.585Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 20,
               "Title": "Pantalla Principal.cs [Dise\u00F1o]",
               "DocumentMoniker": "C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\Pantalla Principal.cs",
               "RelativeDocumentMoniker": "Pantalla Principal.cs",
               "ToolTip": "C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\Pantalla Principal.cs [Dise\u00F1o]",
               "RelativeToolTip": "Pantalla Principal.cs [Dise\u00F1o]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-01T08:34:16.83Z",
-              "EditorCaption": " [Dise\u00F1o]"
+              "WhenOpened": "2026-04-01T08:34:16.83Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 18,
               "Title": "RegistreNovaEmpresa.cs",
               "DocumentMoniker": "C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\RegistreNovaEmpresa.cs",
               "RelativeDocumentMoniker": "RegistreNovaEmpresa.cs",
@@ -875,12 +881,11 @@
               "RelativeToolTip": "RegistreNovaEmpresa.cs",
               "ViewState": "AgIAADQAAAAAAAAAAAAAwEgAAABAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-01T07:24:07.364Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-01T07:24:07.364Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 24,
               "Title": "PantallaEmpresa.cs",
               "DocumentMoniker": "C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\PantallaEmpresa.cs",
               "RelativeDocumentMoniker": "PantallaEmpresa.cs",
@@ -888,12 +893,11 @@
               "RelativeToolTip": "PantallaEmpresa.cs",
               "ViewState": "AgIAAHQAAAAAAAAAAAAUwJMAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-01T07:20:50.181Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-01T07:20:50.181Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 31,
               "Title": "Empresa.cs",
               "DocumentMoniker": "C:\\Users\\jgran\\Desktop\\Impulsfp\\client-desktop\\IMPULS Desktop\\Empresa.cs",
               "RelativeDocumentMoniker": "Empresa.cs",
@@ -901,8 +905,7 @@
               "RelativeToolTip": "Empresa.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAAGAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-01T07:51:06.055Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-01T07:51:06.055Z"
             }
           ]
         }

@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Net.Http;
-using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -29,7 +27,7 @@ namespace IMPULS_Desktop
          
         }
 
-        // Editem i guardem automaticament
+       
         private async void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
         }

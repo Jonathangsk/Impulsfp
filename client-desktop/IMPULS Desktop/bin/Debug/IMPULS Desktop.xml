@@ -21,6 +21,63 @@
             the contents of this method with the code editor.
             </summary>
         </member>
+        <member name="T:IMPULS_Desktop.Candidats">
+            <summary>
+            Formulari que mostra els candidats d’una oferta.
+            Permet acceptar o rebutjar candidatures.
+            </summary>
+        </member>
+        <member name="M:IMPULS_Desktop.Candidats.#ctor(System.Int32)">
+            <summary>
+            Constructor del formulari
+            </summary>
+        </member>
+        <member name="M:IMPULS_Desktop.Candidats.Candidats_Load(System.Object,System.EventArgs)">
+            <summary>
+            Esdeveniment Load del formulari.
+            Configura el DataGridView i carrega els candidats.
+            </summary>
+        </member>
+        <member name="M:IMPULS_Desktop.Candidats.AjustarAlturaGrid">
+            <summary>
+            Ajusta l’alçada del DataGridView segons les files
+            </summary>
+        </member>
+        <member name="M:IMPULS_Desktop.Candidats.dataGridView1_CellFormatting(System.Object,System.Windows.Forms.DataGridViewCellFormattingEventArgs)">
+            <summary>
+            Pinta les files segons l’estat del candidat
+            </summary>
+        </member>
+        <member name="M:IMPULS_Desktop.Candidats.CarregarCandidats">
+            <summary>
+            Carrega els candidats des de l’API
+            </summary>
+        </member>
+        <member name="M:IMPULS_Desktop.Candidats.btnTriarCandidat_Click(System.Object,System.EventArgs)">
+            <summary>
+            Accepta un candidat seleccionat
+            </summary>
+        </member>
+        <member name="M:IMPULS_Desktop.Candidats.CambiarEstat(System.Int32,System.String)">
+            <summary>
+            Canvia l’estat d’una candidatura (PATCH a l’API)
+            </summary>
+        </member>
+        <member name="M:IMPULS_Desktop.Candidats.btnEliminarCandidat_Click(System.Object,System.EventArgs)">
+            <summary>
+            Rebutja un candidat seleccionat
+            </summary>
+        </member>
+        <member name="M:IMPULS_Desktop.Candidats.btnTancar_Click(System.Object,System.EventArgs)">
+            <summary>
+            Tanca l’aplicació
+            </summary>
+        </member>
+        <member name="M:IMPULS_Desktop.Candidats.btnTornar_Click(System.Object,System.EventArgs)">
+            <summary>
+            Tanca el formulari actual
+            </summary>
+        </member>
         <member name="F:IMPULS_Desktop.Candidats.components">
             <summary>
             Required designer variable.
@@ -38,6 +95,33 @@
             the contents of this method with the code editor.
             </summary>
         </member>
+        <member name="T:IMPULS_Desktop.CanviContrasenya">
+            <summary>
+            Formulari per al canvi de contrasenya.
+            Permet validar dues contrasenyes i simular el restabliment.
+            </summary>
+        </member>
+        <member name="M:IMPULS_Desktop.CanviContrasenya.#ctor">
+            <summary>
+            Esdeveniment de càrrega del formulari
+            </summary>
+        </member>
+        <member name="M:IMPULS_Desktop.CanviContrasenya.restaurar_Click(System.Object,System.EventArgs)">
+            <summary>
+            Botó per restaurar la contrasenya.
+            Comprova que les dues contrasenyes coincideixen.
+            </summary>
+        </member>
+        <member name="M:IMPULS_Desktop.CanviContrasenya.button1_Click(System.Object,System.EventArgs)">
+            <summary>
+            Tanca l’aplicació
+            </summary>
+        </member>
+        <member name="M:IMPULS_Desktop.CanviContrasenya.button2_Click(System.Object,System.EventArgs)">
+            <summary>
+            Torna a la finestra anterior sense guardar canvis
+            </summary>
+        </member>
         <member name="F:IMPULS_Desktop.CanviContrasenya.components">
             <summary>
             Required designer variable.
@@ -53,6 +137,33 @@
             <summary>
             Required method for Designer support - do not modify
             the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:IMPULS_Desktop.EliminarEmpresa">
+            <summary>
+            Formulari per eliminar el compte d’una empresa.
+            Permet confirmar la supressió i fer la crida a l’API.
+            </summary>
+        </member>
+        <member name="M:IMPULS_Desktop.EliminarEmpresa.#ctor(System.Windows.Forms.Form)">
+            <summary>
+            Constructor que rep el formulari d’origen per poder tornar enrere.
+            </summary>
+        </member>
+        <member name="M:IMPULS_Desktop.EliminarEmpresa.btnTornar_Click(System.Object,System.EventArgs)">
+            <summary>
+            Botó per tornar a la pantalla anterior sense fer canvis.
+            </summary>
+        </member>
+        <member name="M:IMPULS_Desktop.EliminarEmpresa.button7_Click(System.Object,System.EventArgs)">
+            <summary>
+            Botó principal per eliminar el compte de l’empresa.
+            Fa la petició DELETE a l’API després de confirmar.
+            </summary>
+        </member>
+        <member name="M:IMPULS_Desktop.EliminarEmpresa.tancar_Click(System.Object,System.EventArgs)">
+            <summary>
+            Botó per tancar l’aplicació.
             </summary>
         </member>
         <member name="F:IMPULS_Desktop.EliminarEmpresa.components">

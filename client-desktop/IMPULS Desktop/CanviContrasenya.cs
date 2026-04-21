@@ -11,8 +11,15 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace IMPULS_Desktop
 {
+    /// <summary>
+    /// Formulari per al canvi de contrasenya.
+    /// Permet validar dues contrasenyes i simular el restabliment.
+    /// </summary>
     public partial class CanviContrasenya : Form
     {
+        /// <summary>
+        /// Esdeveniment de càrrega del formulari
+        /// </summary>
         public CanviContrasenya()
         {
             InitializeComponent();
@@ -37,7 +44,10 @@ namespace IMPULS_Desktop
         {
 
         }
-
+        /// <summary>
+        /// Botó per restaurar la contrasenya.
+        /// Comprova que les dues contrasenyes coincideixen.
+        /// </summary>
         private void restaurar_Click(object sender, EventArgs e)
         {
          
@@ -54,11 +64,17 @@ namespace IMPULS_Desktop
           
         }
 
+        /// <summary>
+        /// Tanca l’aplicació
+        /// </summary>
         private void button1_Click(object sender, EventArgs e)
         {
             Application.Exit();
         }
 
+        /// <summary>
+        /// Torna a la finestra anterior sense guardar canvis
+        /// </summary>
         private void button2_Click(object sender, EventArgs e)
         {
             this.Owner.Show(); 
