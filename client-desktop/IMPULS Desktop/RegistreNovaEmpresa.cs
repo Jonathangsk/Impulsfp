@@ -11,11 +11,19 @@ using System.Text.Json;
 
 namespace IMPULS_Desktop
 {
-    
+    /// <summary>
+    /// <author>Josep Mª</author>
+    /// Formulari de registre d’una nova empresa.
+    /// Permet introduir dades, validar-les i enviar-les a una API.
+    /// </summary>
     public partial class RegistreNovaEmpresa : Form
     {
         private string rutaImagen;
         private Form formularioAnterior;
+        /// <summary>
+        /// Constructor del formulari.
+        /// Guarda el formulari anterior per poder tornar enrere.
+        /// </summary>
         public RegistreNovaEmpresa(Form formAnterior)
         {
             InitializeComponent();
@@ -23,7 +31,11 @@ namespace IMPULS_Desktop
         }
 
 
-
+        /// <summary>
+        /// Envia les dades de l’empresa a l’API per registrar-la.
+        /// Si l’operació és correcta, guarda la sessió i retorna true.
+        /// Gestiona errors de connexió, timeout i errors del servidor.
+        /// </summary>
         private async Task<bool> RegistrarEmpresaAPI(Empresa empresa, List<string> technologiesList)
         {
             try
@@ -58,7 +70,7 @@ namespace IMPULS_Desktop
                     {
                         var responseString = await response.Content.ReadAsStringAsync();
 
-                        var result = JsonSerializer.Deserialize<PantallaPrincipal.LoginResponse>(
+                        var result = JsonSerializer.Deserialize<LoginResponse>(
                             responseString,
                             new JsonSerializerOptions
                             {
@@ -109,8 +121,13 @@ namespace IMPULS_Desktop
 
         }
 
-    
-            public async void btnDesar_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Esdeveniment del botó Guardar.
+        /// Valida tots els camps del formulari,
+        /// crea l’objecte Empresa i envia les dades a l’API.
+        /// Si tot és correcte, neteja el formulari i torna a la pantalla anterior.
+        /// </summary>
+        public async void btnDesar_Click(object sender, EventArgs e)
         {
             string username = textUsuari.Text.Trim();
             string password = textContrasenya.Text.Trim();
@@ -193,7 +210,7 @@ namespace IMPULS_Desktop
                 return;
             }
 
-            
+            //Creem de objecte una empresa
             Empresa empresa = new Empresa
             {
                 Username = textUsuari.Text,
@@ -206,13 +223,13 @@ namespace IMPULS_Desktop
                 Phone = textTelefon.Text,
                 Niche = textSector.Text
             };
-
+            //convertem la llista de tecnologies a partir del text introduït, separant per comes
             var technologiesList = textTecnologies.Text
                 .Split(',')
                 .Select(t => t.Trim())
                 .Where(t => !string.IsNullOrEmpty(t))
                 .ToList();
-
+            // Enviem les dades a l'API
             bool ok = await RegistrarEmpresaAPI(empresa, technologiesList);
 
 
@@ -241,12 +258,15 @@ namespace IMPULS_Desktop
         {
 
         }
-        
-     /*         USUARI
-     *          4 a 20 caracters nomes lletres i números
-     */
+        /// <summary>
+        /// Valida el nom d’usuari.
+        /// Ha de tenir entre 4 i 20 caràcters alfanumèrics.
+        /// </summary>
+        /*         USUARI
+        *          4 a 20 caracters nomes lletres i números
+        */
 
-public bool ValidarUsername(string username)
+        public bool ValidarUsername(string username)
     {
         return Regex.IsMatch(username, @"^[a-zA-Z0-9]{4,20}$");
     }
@@ -260,7 +280,9 @@ public bool ValidarUsername(string username)
         {
             return Regex.IsMatch(password, @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,}$");
         }
-
+        /// <summary>
+        /// Esborra tots els camps del formulari.
+        /// </summary>
         private void btnReset_Click(object sender, EventArgs e)
         {
             textUsuari.Clear();

@@ -182,42 +182,6 @@
             el contenido de este método con el editor de código.
             </summary>
         </member>
-        <member name="T:IMPULS_Desktop.Administrador">
-            <summary>
-            <author>Josep Mª</author>
-            Formulari de gestió d'usuari administratiu.
-            Permet tancar sessió (logout) de l'aplicació contra l'API REST.
-            </summary>
-        </member>
-        <member name="F:IMPULS_Desktop.Administrador.client">
-            <summary>
-            Client HTTP reutilitzable per fer peticions a l'API.
-            </summary>
-        </member>
-        <member name="M:IMPULS_Desktop.Administrador.#ctor">
-            <summary>
-            Constructor del formulari.
-            Inicialitza els components del formulari.
-            </summary>
-        </member>
-        <member name="M:IMPULS_Desktop.Administrador.Form2_Load(System.Object,System.EventArgs)">
-            <summary>
-            Esdeveniment de càrrega del formulari.
-            Actualment sense funcionalitat addicional.
-            </summary>
-        </member>
-        <member name="M:IMPULS_Desktop.Administrador.LogoutAPI">
-            <summary>
-            Realitza el logout de l'usuari a l'API.
-            </summary>
-            <returns>true si el logout és correcte, false en cas contrari.</returns>
-        </member>
-        <member name="M:IMPULS_Desktop.Administrador.button1_Click(System.Object,System.EventArgs)">
-            <summary>
-            Event del botó de logout.
-            Invoca LogoutAPI i, si és correcte, neteja la sessió i tanca el formulari.
-            </summary>
-        </member>
         <member name="F:IMPULS_Desktop.Administrador.components">
             <summary>
             Required designer variable.

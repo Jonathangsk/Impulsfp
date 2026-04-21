@@ -37,9 +37,8 @@ namespace IMPULS.Tests
         {
             var fakeJson = JsonSerializer.Serialize(new[]
             {
-                new Alumne { Id = 1, Name = "Anna", Skills = "Java" },
-                new Alumne { Id = 2, Name = "Marc", Skills = "Angular" }
-            });
+        new Alumne { Id = 1, Name = "Anna", Skills = new List<string> { "Java" } },
+new Alumne { Id = 2, Name = "Marc", Skills = new List<string> { "Angular" } }  });
 
             // Simulem resposta OK de l'API amb llista de candidats
             _apiMock.Setup(x => x.GetAsync(It.IsAny<string>()))

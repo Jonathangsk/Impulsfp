@@ -117,7 +117,7 @@
             this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Location = new System.Drawing.Point(97, 212);
+            this.groupBox1.Location = new System.Drawing.Point(103, 100);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(689, 620);
             this.groupBox1.TabIndex = 5;
@@ -276,7 +276,7 @@
             this.btnDesar.Name = "btnDesar";
             this.btnDesar.Size = new System.Drawing.Size(141, 40);
             this.btnDesar.TabIndex = 14;
-            this.btnDesar.Text = "Desar";
+            this.btnDesar.Text = "💾Desar";
             this.btnDesar.UseVisualStyleBackColor = false;
             this.btnDesar.Click += new System.EventHandler(this.btnDesar_Click);
             // 

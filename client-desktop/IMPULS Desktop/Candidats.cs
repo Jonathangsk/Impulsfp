@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Net.WebRequestMethods;
 
@@ -12,11 +14,11 @@ namespace IMPULS_Desktop
     public partial class Candidats : Form
     {
         private readonly HttpClient client = new HttpClient();
-        private List<Candidat> candidats = new List<Candidat>();
+        private List<Candidatos> candidats = new List<Candidatos>();
 
         private int ofertaId = 1;
         private string apiUrl =>
-        
+
     $"http://0bb0dfb7-9b4c-40bc-a0be.5b8c35470a40.bastion.elmeuescriptori.cat/offers/{ofertaId}/applicants?sessionId={PantallaPrincipal.SessionId}";
 
         public Candidats(int ofertaId)
@@ -29,11 +31,45 @@ namespace IMPULS_Desktop
         {
             await CargarCandidats();
 
-            
-            dataGridView1.CellEndEdit += dataGridView1_CellEndEdit;
-        }
 
-      
+            dataGridView1.CellEndEdit += dataGridView1_CellEndEdit;
+            dataGridView1.CellFormatting += dataGridView1_CellFormatting;
+            dataGridView1.DataSource = candidats;
+
+            AjustarAlturaGrid();
+
+        }
+        private void AjustarAlturaGrid()
+        {
+            int height = dataGridView1.ColumnHeadersHeight;
+
+            foreach (DataGridViewRow row in dataGridView1.Rows)
+            {
+                height += row.Height;
+            }
+
+            dataGridView1.Height = height;
+        }
+        private void dataGridView1_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (dataGridView1.Columns[e.ColumnIndex].Name == "status")
+            {
+                var valor = e.Value?.ToString();
+
+                if (valor == "ACCEPTED")
+                {
+                    e.CellStyle.BackColor = Color.LightGreen;
+                }
+                else if (valor == "REJECTED")
+                {
+                    e.CellStyle.BackColor = Color.LightCoral;
+                }
+                else if (valor == "PENDING")
+                {
+                    e.CellStyle.BackColor = Color.LightYellow;
+                }
+            }
+        }
         private async System.Threading.Tasks.Task CargarCandidats()
         {
             try
@@ -43,7 +79,7 @@ namespace IMPULS_Desktop
 
                 var json = await response.Content.ReadAsStringAsync();
 
-                candidats = JsonSerializer.Deserialize<List<Candidat>>(json,
+                candidats = JsonSerializer.Deserialize<List<Candidatos>>(json,
                     new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 
                 dataGridView1.DataSource = null;
@@ -59,12 +95,12 @@ namespace IMPULS_Desktop
             }
         }
 
-      
+
         private async void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
             try
             {
-                var c = (Candidat)dataGridView1.Rows[e.RowIndex].DataBoundItem;
+                var c = (Candidatos)dataGridView1.Rows[e.RowIndex].DataBoundItem;
 
                 var json = JsonSerializer.Serialize(c);
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
@@ -92,41 +128,10 @@ namespace IMPULS_Desktop
                 return;
             }
 
-            var c = (Candidat)dataGridView1.CurrentRow.DataBoundItem;
-
-            try
-            { 
-
-                
-
-                // 2. Marquem oferta com expired
-                await client.PutAsync(
-                    $"http://localhost:8080/offers/{ofertaId}/expire",
-                    null
-                );
-
-                MessageBox.Show("Candidat seleccionat i oferta tancada");
-
-                await CargarCandidats();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error: " + ex.Message);
-            }
-        }
-
-        private async void btnEliminarCandidat_Click(object sender, EventArgs e)
-        {
-            if (dataGridView1.CurrentRow == null)
-            {
-                MessageBox.Show("Tria un candidat");
-                return;
-            }
-
-            var c = (Candidat)dataGridView1.CurrentRow.DataBoundItem;
+            var c = (Candidatos)dataGridView1.CurrentRow.DataBoundItem;
 
             var confirm = MessageBox.Show(
-                "Segur que vols eliminar a " + c.Name + "?",
+                "Acceptar candidatura de " + c.Name + "?",
                 "Confirmar",
                 MessageBoxButtons.YesNo);
 
@@ -135,14 +140,63 @@ namespace IMPULS_Desktop
 
             try
             {
-//                var response = await client.DeleteAsync($"{apiUrl}/{c.Id}");
-  //              response.EnsureSuccessStatusCode();
+                await CambiarEstado(c.applicationId, "ACCEPTED");
+                MessageBox.Show("Candidatura acceptada");
+
+                await CargarCandidats();
+            }
+            catch (HttpRequestException ex)
+            {
+                MessageBox.Show("Error HTTP: " + ex.Message);
+                MessageBox.Show("Error de connexió");
+            }
+        }
+        private async Task CambiarEstado(int applicationId, string nuevoEstado)
+        {
+            var json = JsonSerializer.Serialize(new { status = nuevoEstado });
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var request = new HttpRequestMessage(
+                new HttpMethod("PATCH"),
+                $"http://0bb0dfb7-9b4c-40bc-a0be.5b8c35470a40.bastion.elmeuescriptori.cat/applications/{applicationId}?sessionId={PantallaPrincipal.SessionId}"
+            )
+            {
+                Content = content
+            };
+
+            var response = await client.SendAsync(request);
+            response.EnsureSuccessStatusCode();
+        }
+        private async void btnEliminarCandidat_Click(object sender, EventArgs e)
+        {
+            if (dataGridView1.CurrentRow == null)
+            {
+                MessageBox.Show("Tria un candidat");
+                return;
+            }
+
+            var c = (Candidatos)dataGridView1.CurrentRow.DataBoundItem;
+
+            var confirm = MessageBox.Show(
+                "Rebutjar candidatura de " + c.Name + "?",
+                "Confirmar",
+                MessageBoxButtons.YesNo);
+
+            if (confirm != DialogResult.Yes)
+                return;
+
+            try
+            {
+                await CambiarEstado(c.applicationId, "REJECTED");
+              //  await CambiarEstado(c.IdCandidatura, "Rechazada");
+
+                MessageBox.Show("Candidatura rebutjada");
 
                 await CargarCandidats();
             }
             catch (HttpRequestException)
             {
-                MessageBox.Show("Error de conexió");
+                MessageBox.Show("Error de connexió");
             }
         }
 
@@ -156,26 +210,11 @@ namespace IMPULS_Desktop
             this.Close();
         }
 
+        private void label1_Click(object sender, EventArgs e)
+        {
 
+        }
     }
 
 
-    public class Candidat
-    {
-        public string Name { get; set; }
-        public string Surname { get; set; }
-        public string Email { get; set; }
-        public string PhoneNumber { get; set; }
-        public string City { get; set; }
-        public string Bio { get; set; }
-        public string Cycle { get; set; }
-        public string ExperienceLevel { get; set; }
-        public string Availability { get; set; }
-        public string PreferredLocation { get; set; }
-        public string Portfolio { get; set; }
-
-        public List<string> Languages { get; set; }
-        public List<string> Skills { get; set; }
-        public List<string> PreferredRoles { get; set; }
-    }
 }

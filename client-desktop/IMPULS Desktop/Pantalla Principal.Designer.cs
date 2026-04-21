@@ -34,11 +34,11 @@
             this.textBoxUsuario = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
             this.g = new System.Windows.Forms.GroupBox();
+            this.textBoxContraseña = new System.Windows.Forms.TextBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
             this.linkLabel2 = new System.Windows.Forms.LinkLabel();
-            this.textBoxContraseña = new System.Windows.Forms.TextBox();
             this.g.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -49,7 +49,7 @@
             this.label4.BackColor = System.Drawing.Color.White;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.ForeColor = System.Drawing.Color.Black;
-            this.label4.Location = new System.Drawing.Point(6, 30);
+            this.label4.Location = new System.Drawing.Point(40, 30);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(171, 54);
             this.label4.TabIndex = 12;
@@ -62,7 +62,7 @@
             this.label5.BackColor = System.Drawing.Color.White;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.ForeColor = System.Drawing.Color.Black;
-            this.label5.Location = new System.Drawing.Point(6, 127);
+            this.label5.Location = new System.Drawing.Point(40, 127);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(285, 44);
             this.label5.TabIndex = 13;
@@ -74,10 +74,10 @@
             this.textBoxUsuario.BackColor = System.Drawing.Color.Gainsboro;
             this.textBoxUsuario.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.textBoxUsuario.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxUsuario.Location = new System.Drawing.Point(305, 46);
+            this.textBoxUsuario.Location = new System.Drawing.Point(331, 46);
             this.textBoxUsuario.Multiline = true;
             this.textBoxUsuario.Name = "textBoxUsuario";
-            this.textBoxUsuario.Size = new System.Drawing.Size(174, 38);
+            this.textBoxUsuario.Size = new System.Drawing.Size(212, 38);
             this.textBoxUsuario.TabIndex = 0;
             this.textBoxUsuario.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -103,12 +103,25 @@
             this.g.Controls.Add(this.label4);
             this.g.Controls.Add(this.textBoxUsuario);
             this.g.ForeColor = System.Drawing.Color.White;
-            this.g.Location = new System.Drawing.Point(615, 130);
+            this.g.Location = new System.Drawing.Point(548, 130);
             this.g.Name = "g";
-            this.g.Size = new System.Drawing.Size(507, 191);
+            this.g.Size = new System.Drawing.Size(574, 191);
             this.g.TabIndex = 17;
             this.g.TabStop = false;
             this.g.Text = "g";
+            // 
+            // textBoxContraseña
+            // 
+            this.textBoxContraseña.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.textBoxContraseña.BackColor = System.Drawing.Color.Gainsboro;
+            this.textBoxContraseña.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBoxContraseña.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBoxContraseña.Location = new System.Drawing.Point(331, 133);
+            this.textBoxContraseña.Multiline = true;
+            this.textBoxContraseña.Name = "textBoxContraseña";
+            this.textBoxContraseña.Size = new System.Drawing.Size(212, 38);
+            this.textBoxContraseña.TabIndex = 14;
+            this.textBoxContraseña.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // pictureBox1
             // 
@@ -126,7 +139,7 @@
             // 
             this.label1.BackColor = System.Drawing.Color.White;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(617, 100);
+            this.label1.Location = new System.Drawing.Point(559, 100);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(191, 27);
             this.label1.TabIndex = 18;
@@ -158,19 +171,6 @@
             this.linkLabel2.TabStop = true;
             this.linkLabel2.Text = "Registre nova empresa";
             this.linkLabel2.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.btnRegistreNovaEmpresa_LinkClicked);
-            // 
-            // textBoxContraseña
-            // 
-            this.textBoxContraseña.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.textBoxContraseña.BackColor = System.Drawing.Color.Gainsboro;
-            this.textBoxContraseña.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textBoxContraseña.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxContraseña.Location = new System.Drawing.Point(305, 133);
-            this.textBoxContraseña.Multiline = true;
-            this.textBoxContraseña.Name = "textBoxContraseña";
-            this.textBoxContraseña.Size = new System.Drawing.Size(174, 38);
-            this.textBoxContraseña.TabIndex = 14;
-            this.textBoxContraseña.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // PantallaPrincipal
             // 

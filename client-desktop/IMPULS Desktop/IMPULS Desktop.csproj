@@ -101,6 +101,7 @@
       <DependentUpon>Alumnes.cs</DependentUpon>
     </Compile>
     <Compile Include="ApiClient.cs" />
+    <Compile Include="Candidatos.cs" />
     <Compile Include="Candidats.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -127,6 +128,8 @@
       <DependentUpon>Empreses.cs</DependentUpon>
     </Compile>
     <Compile Include="IApiClient.cs" />
+    <Compile Include="LoginResponse.cs" />
+    <Compile Include="OfferService.cs" />
     <Compile Include="PerfilDeEmpresa.cs">
       <SubType>Form</SubType>
     </Compile>

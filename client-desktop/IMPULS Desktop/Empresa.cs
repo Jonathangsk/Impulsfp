@@ -20,7 +20,6 @@ namespace IMPULS_Desktop
         public string Username { get; set; }
         public string Password { get; set; }
 
-        // 🔥 CLAVE: acepta null y número
         public int? ActiveOffers { get; set; }
     }
 }
