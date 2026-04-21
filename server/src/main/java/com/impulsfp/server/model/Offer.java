@@ -6,6 +6,12 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
+
+/**
+ * Entitat que representa una oferta de feina publicada per una empresa. Conté informació com el títol, descripció, ubicació, cicle formatiu, modalitat, tipus de contracte, salari, data de creació i estat de l'oferta. També manté relacions amb l'entitat Company i les habilitats requerides per l'oferta.
+ *
+ * @author Jonathan Giraldo Giraldo
+ */
 @Entity
 @Table(name = "offers")
 public class Offer {
@@ -44,13 +50,6 @@ public class Offer {
     @OneToMany(mappedBy = "offer", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OfferSkill> requiredSkills;
 
-    @ManyToMany
-    @JoinTable(
-            name = "offer_applicants",
-            joinColumns = @JoinColumn(name = "offer_id"),
-            inverseJoinColumns = @JoinColumn(name = "student_id")
-    )
-    private List<Student> applicants;
 
     // GETTERS & SETTERS
 
@@ -94,6 +93,5 @@ public class Offer {
     public List<OfferSkill> getRequiredSkills() { return requiredSkills; }
     public void setRequiredSkills(List<OfferSkill> requiredSkills) { this.requiredSkills = requiredSkills; }
 
-    public List<Student> getApplicants() { return applicants; }
-    public void setApplicants(List<Student> applicants) { this.applicants = applicants; }
+
 }

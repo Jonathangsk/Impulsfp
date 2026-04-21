@@ -22,6 +22,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.impulsfp.mobile.data.ApplicationUiModel
@@ -55,6 +56,8 @@ fun ApplicationsScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(20.dp)
+                .testTag("applicationsScreen")
+
         ) {
             Text(
                 text = "Les meves candidatures",

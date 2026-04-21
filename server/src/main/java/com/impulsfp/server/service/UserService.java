@@ -111,7 +111,7 @@ public class UserService {
     /**
      * Actualitza el perfil de l'usuari associat a la sessió actual.
      * @param sessionId identificador de sessió que s'ha d'utilitzar per identificar l'usuari del qual es vol actualitzar el perfil, proporcionat com a paràmetre de la petició
-     * @param body objecte JSON que conté les dades del perfil que es vol actualitzar, proporcionat al cos de la petició; el format del JSON dependrà de les dades que es vulguin actualitzar, però pot incloure camps com "name", "email", "phone", etc.
+     * @param body objecte JSON que conté les dades del perfil que es vol actualitzar, proporcionat al cos de la petició
      */
     @Transactional
     public void updateProfile(String sessionId, Map<String, Object> body){
@@ -142,7 +142,7 @@ public class UserService {
     /**
      * Actualitza el perfil de l'estudiant associat a l'usuari
      * @param user objecte User que representa l'usuari del qual es vol actualitzar el perfil d'estudiant
-     * @param body objecte JSON que conté les dades del perfil d'estudiant que es vol actualitzar, proporcionat al cos de la petició; el format del JSON dependrà de les dades que es vulguin actualitzar, però pot incloure camps com "city", "bio", "preferredLocation", "availability", "portfolio", "experienceLevel", "languages", "preferredRoles" i "skills"
+     * @param body objecte JSON que conté les dades del perfil d'estudiant que es vol actualitzar, proporcionat al cos de la petició
      */
     private void updateStudent(User user, Map<String, Object> body){
 
@@ -187,11 +187,6 @@ public class UserService {
 
         if(body.containsKey("phoneNumber"))
             student.setPhoneNumber((String) body.get("phoneNumber"));
-
-
-
-
-
 
 
 

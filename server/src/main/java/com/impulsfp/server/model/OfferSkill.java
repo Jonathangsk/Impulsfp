@@ -2,6 +2,11 @@ package com.impulsfp.server.model;
 
 import jakarta.persistence.*;
 
+/**
+ * Entitat que representa les habilitats associades a una oferta de pràctiques; permet emmagatzemar les habilitats requerides o desitjades per una oferta específica.
+ *
+ * @author Jonathan Giraldo Giraldo
+ */
 @Entity
 @Table(name = "offer_skills")
 public class OfferSkill {

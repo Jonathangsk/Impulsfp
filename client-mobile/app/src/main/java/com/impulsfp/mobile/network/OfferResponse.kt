@@ -12,5 +12,6 @@ data class OfferResponse(
     val skills: List<String>,
     val state: String,
     val creationDate: String,
-    val applicantsCount: Int?
+    val applicantsCount: Int?,
+    val cycle: String?
 )

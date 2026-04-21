@@ -9,10 +9,39 @@ import java.net.ConnectException
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 
+/**
+ * Classe encarregada de gestionar la comunicació amb el servidor
+ * per a les operacions relacionades amb el perfil de l'usuari.
+ *
+ * Aquesta classe permet obtenir la informació del perfil, actualitzar
+ * les dades personals i eliminar el compte de l'usuari autenticat.
+ *
+ * També s'encarrega de tractar els possibles errors de connexió,
+ * autenticació o resposta del servidor, retornant missatges descriptius
+ * per facilitar la gestió des de la capa de presentació.
+ *
+ * @author abenitez
+ */
 open class ProfileController {
 
     private val apiService = ApiClient.profileApiService
 
+    /**
+     * Recupera el perfil de l'usuari autenticat.
+     *
+     * Fa una petició al backend utilitzant l'identificador de sessió
+     * i transforma la resposta en un objecte [UserProfile] apte per
+     * ser utilitzat dins l'aplicació.
+     *
+     * En cas que alguns camps opcionals no arribin informats, s'assignen
+     * valors per defecte com cadenes buides o llistes buides.
+     *
+     * @param sessionId Identificador de sessió de l'usuari autenticat
+     *
+     * @return [Result] amb:
+     * - [UserProfile] si la consulta és correcta
+     * - Excepció amb missatge descriptiu si es produeix algun error
+     */
     open suspend fun getProfile(sessionId: String): Result<UserProfile> {
         return try {
             val response = apiService.getProfile(sessionId)
@@ -63,6 +92,19 @@ open class ProfileController {
         }
     }
 
+    /**
+     * Actualitza les dades del perfil de l'usuari autenticat.
+     *
+     * Envia al servidor les noves dades del perfil associades a la sessió
+     * activa i retorna el missatge confirmant el resultat de l'operació.
+     *
+     * @param sessionId Identificador de sessió de l'usuari autenticat
+     * @param request Dades noves del perfil que s'han d'actualitzar
+     *
+     * @return [Result] amb:
+     * - Missatge de confirmació si l'actualització és correcta
+     * - Excepció amb missatge descriptiu si es produeix algun error
+     */
     open suspend fun updateProfile(
         sessionId: String,
         request: UpdateProfileRequest
@@ -108,6 +150,20 @@ open class ProfileController {
         }
     }
 
+    /**
+     * Elimina el compte de l'usuari autenticat.
+     *
+     * Envia al servidor la sol·licitud d'eliminació del compte,
+     * validant la sessió activa i la contrasenya proporcionada
+     * per confirmar l'operació.
+     *
+     * @param sessionId Identificador de sessió de l'usuari autenticat
+     * @param password Contrasenya introduïda per confirmar l'eliminació
+     *
+     * @return [Result] amb:
+     * - Missatge de confirmació si el compte s'ha eliminat correctament
+     * - Excepció amb missatge descriptiu si es produeix algun error
+     */
     open suspend fun deleteAccount(
         sessionId: String,
         password: String

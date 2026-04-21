@@ -31,10 +31,36 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.impulsfp.mobile.data.SessionData
 
+/**
+ * Pantalla de visualització del perfil d'usuari.
+ *
+ * Aquesta pantalla mostra la informació personal, acadèmica
+ * i professional de l'usuari autenticat, organitzada en diferents
+ * seccions visuals.
+ *
+ * També permet accedir a funcionalitats relacionades com:
+ * - editar el perfil
+ * - obrir el portafolis en un navegador extern
+ * - navegar a altres pantalles principals de l'aplicació
+ * - tancar la sessió
+ *
+ * Quan la pantalla es carrega, es refresquen les dades del perfil
+ * a partir de la sessió activa.
+ *
+ * @param onHomeClick Funció executada en prémer l'accés a inici
+ * @param onEditProfile Funció executada en prémer el botó d'editar perfil
+ * @param onApplicationsClick Funció executada en prémer l'accés a candidatures
+ * @param onLogout Funció executada quan l'usuari tanca la sessió
+ * @param profileViewModel ViewModel encarregat de gestionar les dades del perfil
+ * @param menuViewModel ViewModel encarregat de gestionar accions del menú, com el logout
+ *
+ * @author abenitez
+ */
 @Composable
 fun ProfileScreen(
     onHomeClick: () -> Unit,
@@ -56,7 +82,9 @@ fun ProfileScreen(
     }
 
     Column(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier
+            .fillMaxSize()
+            .testTag("profileScreen")
     ) {
         AppTopBar(
             name = profile.name,
@@ -173,7 +201,9 @@ fun ProfileScreen(
 
             Button(
                 onClick = onEditProfile,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .testTag("editProfileButton")
             ) {
                 Text("Editar perfil")
             }
@@ -183,6 +213,17 @@ fun ProfileScreen(
     }
 }
 
+/**
+ * Targeta reutilitzable per agrupar una secció d'informació
+ * dins la pantalla de perfil.
+ *
+ * Aquest component mostra un títol i un contingut composable
+ * personalitzat, mantenint un estil visual coherent entre
+ * les diferents seccions.
+ *
+ * @param title Títol de la secció
+ * @param content Contingut composable que es mostrarà dins la targeta
+ */
 @Composable
 private fun ProfileSectionCard(
     title: String,
@@ -208,6 +249,15 @@ private fun ProfileSectionCard(
     }
 }
 
+/**
+ * Mostra una fila d'informació textual del perfil.
+ *
+ * Aquest component s'utilitza per presentar una etiqueta
+ * i el seu valor associat dins les seccions del perfil.
+ *
+ * @param label Nom del camp que es mostra
+ * @param value Valor associat al camp
+ */
 @Composable
 private fun ProfileRow(label: String, value: String) {
     Column(
@@ -228,6 +278,16 @@ private fun ProfileRow(label: String, value: String) {
     }
 }
 
+/**
+ * Mostra una secció de valors en format xip.
+ *
+ * Aquest component s'utilitza per representar llistes com
+ * habilitats, idiomes o rols preferits. Si la llista és buida,
+ * es mostra un text indicant que no hi ha informació especificada.
+ *
+ * @param title Títol de la secció
+ * @param items Llista d'elements a mostrar
+ */
 @Composable
 private fun ProfileChipSection(
     title: String,

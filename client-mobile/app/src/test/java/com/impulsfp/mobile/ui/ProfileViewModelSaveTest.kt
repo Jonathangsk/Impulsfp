@@ -15,6 +15,23 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
+/**
+ * Tests unitaris del procés de desament del perfil
+ * dins [ProfileViewModel].
+ *
+ * Aquestes proves verifiquen:
+ * - validacions dels camps obligatoris
+ * - comportament quan no hi ha sessió activa
+ * - enviament correcte al backend
+ * - tractament d'errors del backend
+ * - actualització local de l'estat del perfil
+ *
+ * S'utilitzen controladors fake per simular respostes
+ * correctes i errònies sense dependre del servidor real.
+ *
+ * @author abenitez
+ */
+
 class ProfileViewModelSaveTest {
 
     @get:Rule

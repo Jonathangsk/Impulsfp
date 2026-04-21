@@ -2,6 +2,7 @@ package com.impulsfp.mobile.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.impulsfp.mobile.communications.ApplicationsController
 import com.impulsfp.mobile.communications.OffersController
 import com.impulsfp.mobile.data.Offer
 import com.impulsfp.mobile.data.OffersUiState
@@ -12,7 +13,8 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class OffersViewModel(
-    private val offersController: OffersController = OffersController()
+    private val offersController: OffersController = OffersController(),
+    private val applicationsController: ApplicationsController = ApplicationsController()
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(OffersUiState())
@@ -91,13 +93,14 @@ class OffersViewModel(
             _applySuccessMessage.value = null
             _applyErrorMessage.value = null
 
-            val result = offersController.applyToOffer(offerId, sessionId)
+            val result = applicationsController.apply(offerId, sessionId)
 
             result.onSuccess { message ->
                 _applySuccessMessage.value = message
                 _applyLoading.value = false
             }.onFailure { error ->
-                _applyErrorMessage.value = error.message ?: "No s'ha pogut completar la inscripció"
+                _applyErrorMessage.value =
+                    error.message ?: "No s'ha pogut completar la inscripció"
                 _applyLoading.value = false
             }
         }

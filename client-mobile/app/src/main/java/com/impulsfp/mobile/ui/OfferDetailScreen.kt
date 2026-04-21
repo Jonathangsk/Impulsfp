@@ -30,6 +30,28 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import com.impulsfp.mobile.data.Offer
 
+/**
+ * Pantalla de detall d'una oferta.
+ *
+ * Mostra tota la informació rellevant d'una oferta seleccionada:
+ * títol, empresa, descripció, localització, tipus de contracte,
+ * salari, data de publicació, cicle formatiu i tecnologies requerides.
+ *
+ * També permet a l'usuari inscriure's a l'oferta o tornar
+ * a la pantalla anterior.
+ *
+ * La pantalla incorpora identificadors de test (`testTag`)
+ * per facilitar els tests d'integració i navegació.
+ *
+ * @param offer Oferta seleccionada que es vol mostrar en detall
+ * @param userName Nom de l'usuari actual
+ * @param onHomeClick Funció executada en prémer inici
+ * @param onApplicationsClick Funció executada en prémer candidatures
+ * @param onProfileClick Funció executada en prémer perfil
+ * @param onLogoutClick Funció executada en prémer tancar sessió
+ * @param onBackClick Funció executada en prémer el botó de tornar
+ * @param offersViewModel ViewModel encarregat de gestionar les ofertes
+ */
 @Composable
 fun OfferDetailScreen(
     offer: Offer,
@@ -47,6 +69,9 @@ fun OfferDetailScreen(
     val applySuccessMessage by offersViewModel.applySuccessMessage.collectAsState()
     val applyErrorMessage by offersViewModel.applyErrorMessage.collectAsState()
 
+    /**
+     * Mostra un missatge Toast quan la candidatura s'ha enviat correctament.
+     */
     applySuccessMessage?.let { message ->
         LaunchedEffect(message) {
             Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
@@ -54,6 +79,9 @@ fun OfferDetailScreen(
         }
     }
 
+    /**
+     * Mostra un missatge Toast quan s'ha produït un error en la candidatura.
+     */
     applyErrorMessage?.let { message ->
         LaunchedEffect(message) {
             Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
@@ -72,11 +100,18 @@ fun OfferDetailScreen(
             onLogoutClick = onLogoutClick
         )
 
+        /**
+         * Contingut principal de la pantalla de detall.
+         *
+         * Inclou un testTag per facilitar la seva validació
+         * en tests de navegació.
+         */
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
-                .padding(horizontal = 16.dp, vertical = 16.dp),
+                .padding(horizontal = 16.dp, vertical = 16.dp)
+                .testTag("offerDetailScreen"),
             verticalArrangement = Arrangement.Top
         ) {
             Card(
@@ -165,6 +200,14 @@ fun OfferDetailScreen(
                         style = MaterialTheme.typography.bodyLarge
                     )
 
+                    if (offer.cycle.isNotBlank()) {
+                        Spacer(modifier = Modifier.height(6.dp))
+                        Text(
+                            text = "🎓 ${offer.cycle}",
+                            style = MaterialTheme.typography.bodyLarge
+                        )
+                    }
+
                     Spacer(modifier = Modifier.height(18.dp))
 
                     Text(
@@ -192,6 +235,7 @@ fun OfferDetailScreen(
                     }
                 }
             }
+
             Spacer(modifier = Modifier.height(18.dp))
 
             Text(
@@ -201,6 +245,11 @@ fun OfferDetailScreen(
 
             Spacer(modifier = Modifier.height(24.dp))
 
+            /**
+             * Botó per inscriure's a l'oferta seleccionada.
+             *
+             * testTag: "applyOfferButton"
+             */
             Button(
                 onClick = {
                     offersViewModel.applyToOffer(offer.id)
@@ -218,6 +267,11 @@ fun OfferDetailScreen(
 
             Spacer(modifier = Modifier.height(12.dp))
 
+            /**
+             * Botó per tornar a la pantalla anterior.
+             *
+             * testTag: "backFromOfferDetailButton"
+             */
             OutlinedButton(
                 onClick = onBackClick,
                 modifier = Modifier

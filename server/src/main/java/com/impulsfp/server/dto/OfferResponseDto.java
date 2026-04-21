@@ -2,6 +2,13 @@ package com.impulsfp.server.dto;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+/**
+ * DTO per representar les dades d'una oferta de feina en les respostes de l'API; Inclou informació com el títol, descripció, ubicació, modalitat, tipus de contracte, salari, data de creació, estat, cicle formatiu associat, nom de l'empresa, habilitats requerides i nombre d'aplicants.
+ *
+ * @author Jonathan Giraldo Giraldo
+ */
 
 public class OfferResponseDto {
 
@@ -12,6 +19,7 @@ public class OfferResponseDto {
     private String modality;
     private String contractType;
     private Double salary;
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDateTime creationDate;
     private String state;
     private String cycle;

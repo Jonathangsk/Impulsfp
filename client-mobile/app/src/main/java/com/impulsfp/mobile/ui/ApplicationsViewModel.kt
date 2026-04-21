@@ -38,7 +38,7 @@ class ApplicationsViewModel(
                 errorMessage = null
             )
 
-            val result = applicationsController.getApplications(sessionId)
+            val result = applicationsController.getMyApplications(sessionId)
 
             result.onSuccess { applications ->
                 _uiState.value = _uiState.value.copy(
