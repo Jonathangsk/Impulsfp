@@ -85,13 +85,30 @@ public class OfferService {
         offer.setTitle(dto.getTitle());
         offer.setDescription(dto.getDescription());
         offer.setLocation(dto.getLocation());
-        offer.setModality(Modality.valueOf(dto.getModality()));
-        offer.setContractType(ContractType.valueOf(dto.getContractType()));
+        try {
+            Modality modality = Modality.valueOf(dto.getModality());
+            // seguir amb la creació de l'oferta
+        } catch (IllegalArgumentException | NullPointerException e) {
+            throw new ApiException(ErrorCode.INVALID_REQUEST, "Modality inválida: ");
+        }
+
+        try {
+            ContractType contractType = ContractType.valueOf(dto.getContractType());
+            // seguir amb la creació de la oferta
+        } catch (IllegalArgumentException | NullPointerException e) {
+            throw new ApiException(ErrorCode.INVALID_REQUEST, "ContractType inválido: ");
+        }
         offer.setSalary(dto.getSalary());
         offer.setCreationDate(LocalDateTime.now());
         offer.setState(OfferState.OPEN);
         offer.setCompany(company);
-        offer.setCycle(Cycle.valueOf(dto.getCycle()));
+
+
+        try {
+            offer.setCycle(Cycle.valueOf(dto.getCycle()));
+        } catch (IllegalArgumentException | NullPointerException e) {
+            throw new ApiException(ErrorCode.INVALID_REQUEST, "Cycle inválido: ");
+        }
 
         List<OfferSkill> skills = dto.getSkills().stream().map(s -> {
             OfferSkill skill = new OfferSkill();
@@ -107,6 +124,8 @@ public class OfferService {
         company.setActiveOffers(
                 company.getActiveOffers() == null ? 1 : company.getActiveOffers() + 1
         );
+
+
 
     }
 
