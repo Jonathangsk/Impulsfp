@@ -45,9 +45,6 @@ namespace IMPULS_Desktop
         /// <returns>true si el logout és correcte, false en cas contrari.</returns>
         private async Task<bool> LogoutAPI()
         {
-//            string url = $"http://localhost:8080/auth/logout?sessionId={PantallaPrincipal.SessionId}";//
-            //    string url = $"{Form1.apiBase}/logout?sessionId={Form1.SessionId}";
-            //string url = $"{PantallaPrincipal.apiBase}/logout?sessionId={PantallaPrincipal.SessionId}";
 
             string url = $"{PantallaPrincipal.apiBase.Replace("/auth", "")}/auth/logout?sessionId={PantallaPrincipal.SessionId}"; 
             try
@@ -88,6 +85,9 @@ namespace IMPULS_Desktop
         private void groupBox1_Enter(object sender, EventArgs e) { }
         private void pictureBox1_Click(object sender, EventArgs e) { }
 
+        /// <summary>
+        /// Obre el formulari de perfil d’empresa.
+        /// </summary>
         private void button7_Click(object sender, EventArgs e)
         {
             
@@ -96,6 +96,9 @@ namespace IMPULS_Desktop
             this.Hide();
         }
 
+        /// <summary>
+        /// Obre el formulari de visualització d’ofertes.
+        /// </summary>
         private void button6_Click(object sender, EventArgs e)
         {
             OfertesDeTreball form = new OfertesDeTreball(this);
@@ -103,6 +106,9 @@ namespace IMPULS_Desktop
             this.Hide();
         }
 
+        /// <summary>
+        /// Obre el formulari per publicar una oferta nova.
+        /// </summary>
         private void button5_Click(object sender, EventArgs e)
         {
             PublicarOferta form = new PublicarOferta(this);
@@ -111,18 +117,26 @@ namespace IMPULS_Desktop
 
 
         }
-
+        /// <summary>
+        /// Tanca completament l’aplicació.
+        /// </summary>
         private void btnTancar_Click(object sender, EventArgs e)
         {
            
             Application.Exit();
         }
 
+        /// <summary>
+        /// Tanca el formulari actual.
+        /// </summary>
         private void btnTornar_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
+        /// <summary>
+        /// Obre el formulari d’eliminació de compte d’empresa.
+        /// </summary>
         private async void EliminarCompte_Click_1(object sender, EventArgs e)
         {
             EliminarEmpresa formEliminar = new EliminarEmpresa(this);

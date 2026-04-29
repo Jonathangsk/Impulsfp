@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace IMPULS_Desktop
@@ -9,7 +6,7 @@ namespace IMPULS_Desktop
     internal static class Program
     {
         /// <summary>
-        /// Punto de entrada principal para la aplicación.
+        /// Punt d'entrada principal de l'aplicació.
         /// </summary>
         [STAThread]
         static void Main()

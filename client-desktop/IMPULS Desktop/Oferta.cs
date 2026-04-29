@@ -22,11 +22,12 @@ namespace IMPULS_Desktop
 //        public decimal Salary { get; set; }
         public decimal? Salary { get; set; }
 
-        public DateTime CreationDate { get; set; }
-
+        //public DateTime? CreationDate { get; set; }
+       
+        public string CreationDate { get; set; }
         public string State { get; set; }
+        public string Cycle { get; set; }
 
-       // public List<string> Skills { get; set; }
 
         public int ApplicantsCount { get; set; }
     }

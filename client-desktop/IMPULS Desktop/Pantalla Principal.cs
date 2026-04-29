@@ -16,7 +16,7 @@ namespace IMPULS_Desktop
     {
         public static string SessionId; // ID de sessió de l'usuari
         public static string apiBase = "http://0bb0dfb7-9b4c-40bc-a0be.5b8c35470a40.bastion.elmeuescriptori.cat:80/auth";
-       // public static string apiBase = "http://0bb0dfb7-9b4c-40bc-a0be.5b8c35470a40.bastion.elmeuescriptori.cat:80";
+       
         public PantallaPrincipal()
         {
             InitializeComponent();
@@ -128,39 +128,42 @@ namespace IMPULS_Desktop
                 }
             }
         }
-
+        /// <summary>
+        /// Quan es tanca un formulari secundari, es torna al login i es netegen camps.
+        /// </summary>
         private void FormulariUsuari_FormClosed(object sender, FormClosedEventArgs e)
         {
             this.Show();
             textBoxUsuario.Text = "";
             textBoxContraseña.Text = "";
         }
-
+        /// <summary>
+        /// Tanca completament l’aplicació quan es tanca la finestra principal.
+        /// </summary>
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             Application.Exit();
         }
 
-        /// <summary>
-        /// Representa la resposta de l'API de login.
-        /// </summary>
-        public class LoginResponse
-        {
-            public string SessionId { get; set; }
-            public string UserType { get; set; }
-        }
+
 
         // Events buits del projecte original
         private void label4_Click(object sender, EventArgs e) { }
         private void textBox1_TextChanged(object sender, EventArgs e) { }
         private void groupBox1_Enter(object sender, EventArgs e) { }
         private void pictureBox1_Click(object sender, EventArgs e) { }
-
+        /// <summary>
+        /// Botó de sortida de l’aplicació.
+        /// Tanca completament el programa.
+        /// </summary>
         private void button2_Click(object sender, EventArgs e)
         {
             Application.Exit();
         }
-
+        /// <summary>
+        /// Obre el formulari de canvi de contrasenya.
+        /// Amaga la pantalla principal.
+        /// </summary>
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             CanviContrasenya form = new CanviContrasenya();
@@ -169,7 +172,10 @@ namespace IMPULS_Desktop
 
             this.Hide();
         }
-
+        /// <summary>
+        /// Obre el formulari de registre de nova empresa.
+        /// Amaga la pantalla principal.
+        /// </summary>
         private void btnRegistreNovaEmpresa_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             RegistreNovaEmpresa form = new RegistreNovaEmpresa(this);

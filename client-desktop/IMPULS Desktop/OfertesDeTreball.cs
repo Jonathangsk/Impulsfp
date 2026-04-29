@@ -4,20 +4,34 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Net.Http;
 using System.Text.Json;
+using System.Text;
 
 namespace IMPULS_Desktop
-{
+{/// <summary>
+/// Formulari que mostra les ofertes de treball d’una empresa.
+/// Permet visualitzar, editar, eliminar i veure candidats.
+/// </summary>
     public partial class OfertesDeTreball : Form
     {
         private PantallaEmpresa _pantallaEmpresa;
+        /// <summary>
+        /// Client HTTP per fer peticions a l’API.
+        /// </summary>
         private readonly HttpClient client = new HttpClient();
+        /// <summary>
+        /// Constructor del formulari.
+        /// Assigna pantalla pare i events inicials.
+        /// </summary>
         public OfertesDeTreball(PantallaEmpresa pantallaEmpresa)
         {
             InitializeComponent();
             _pantallaEmpresa = pantallaEmpresa;
             this.FormClosing += OfertesDeTreball_FormClosing;
+            dataGridView1.CellEndEdit += dataGridView1_CellEndEdit;
         }
-
+        /// <summary>
+        /// Carrega les ofertes quan s’obre el formulari.
+        /// </summary>
         private async void OfertesDeTreball_Load(object sender, EventArgs e)
         {
             var offers = await GetOffers();
@@ -27,7 +41,7 @@ namespace IMPULS_Desktop
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dataGridView1.MultiSelect = false;
 
-            
+            // Ocultem columnes no necessàries
             if (dataGridView1.Columns.Contains("Skills"))
                 dataGridView1.Columns["Skills"].Visible = false;
 
@@ -41,6 +55,9 @@ namespace IMPULS_Desktop
                 dataGridView1.Columns["Observacions"].Visible = false;
         }
 
+        /// <summary>
+        /// Obté les ofertes de l’API.
+        /// </summary>
         private async Task<List<Oferta>> GetOffers()
         {
             using (HttpClient client = new HttpClient())
@@ -61,7 +78,7 @@ namespace IMPULS_Desktop
 
                     var offers = JsonSerializer.Deserialize<List<Oferta>>(json, options);
 
-                 
+                    // Evitem null a skills
                     foreach (var o in offers)
                     {
                         if (o.skills == null)
@@ -86,26 +103,48 @@ namespace IMPULS_Desktop
                 return new List<Oferta>();
             }
         }
+        /// <summary>
+        /// Actualitza una oferta quan s’edita una cel·la.
+        /// </summary>
         private async void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
             try
             {
-                var oferta = (Oferta)dataGridView1.Rows[e.RowIndex].DataBoundItem;
+                if (e.RowIndex < 0) return;
+
+                var fila = dataGridView1.Rows[e.RowIndex];
+
+                int id = Convert.ToInt32(fila.Cells["id"].Value);
+
+                var oferta = new
+                {
+                    title = fila.Cells["title"].Value?.ToString(),
+                    description = fila.Cells["description"].Value?.ToString(),
+
+                    location = fila.Cells["location"].Value?.ToString(),
+                    modality = fila.Cells["modality"].Value?.ToString(),
+                    contractType = fila.Cells["contractType"].Value?.ToString(),
+                    salary = ParseDecimalSafe(fila.Cells["salary"].Value)
+                };
+
+                string url =
+                    $"http://0bb0dfb7-9b4c-40bc-a0be.5b8c35470a40.bastion.elmeuescriptori.cat:80/offers/{id}?sessionId={PantallaPrincipal.SessionId}";
 
                 using (HttpClient client = new HttpClient())
                 {
-
-                    string url =
-                      $"http://0bb0dfb7-9b4c-40bc-a0be.5b8c35470a40.bastion.elmeuescriptori.cat:80/offers/my?sessionId={PantallaPrincipal.SessionId}";
-
                     var json = JsonSerializer.Serialize(oferta);
-                    var content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
+                    var content = new StringContent(json, Encoding.UTF8, "application/json");
 
                     var response = await client.PutAsync(url, content);
+                    var responseText = await response.Content.ReadAsStringAsync();
 
-                    if (!response.IsSuccessStatusCode)
+                    if (response.IsSuccessStatusCode)
                     {
-                        MessageBox.Show("Error guardando cambios");
+                        MessageBox.Show("Oferta actualizada ✔");
+                    }
+                    else
+                    {
+                        MessageBox.Show("ERROR:\n" + responseText);
                     }
                 }
             }
@@ -114,16 +153,10 @@ namespace IMPULS_Desktop
                 MessageBox.Show("Error: " + ex.Message);
             }
         }
-       
-        private void btnEditar_Click(object sender, EventArgs e)
-        {
-            if (dataGridView1.CurrentRow == null) return;
-
-            var oferta = (Oferta)dataGridView1.CurrentRow.DataBoundItem;
-
-          
-            MessageBox.Show("Editar oferta ID: " + oferta.Id);
-        }
+        /// <summary>
+        /// Convierte un valor de tipo object a decimal de forma segura.
+        /// Evita errores cuando el valor es null o tiene formato incorrecto.
+        /// </summary>
         private decimal ParseDecimalSafe(object value)
         {
             if (value == null) return 0;
@@ -139,7 +172,9 @@ namespace IMPULS_Desktop
 
             return result;
         }
-     
+        /// <summary>
+        /// Elimina una oferta seleccionada.
+        /// </summary>
         private async void btnEliminar_Click(object sender, EventArgs e)
         {
             if (dataGridView1.CurrentRow == null)
@@ -181,7 +216,9 @@ namespace IMPULS_Desktop
             }
         }
 
-        
+        /// <summary>
+        /// Obre el formulari de candidats de l’oferta seleccionada.
+        /// </summary>
         private void btnCandidats_Click(object sender, EventArgs e)
         {
             if (dataGridView1.CurrentRow == null)
@@ -196,19 +233,25 @@ namespace IMPULS_Desktop
             form.Show();
         }
 
-     
+        /// <summary>
+        /// Tanca l’aplicació.
+        /// </summary>
         private void btnTancar_Click(object sender, EventArgs e)
         {
             Application.Exit();
         }
 
-        
+        /// <summary>
+        /// Torna a la pantalla anterior.
+        /// </summary>
         private void btnTornar_Click(object sender, EventArgs e)
         {
             _pantallaEmpresa.Show();
             this.Close();
         }
-
+        /// <summary>
+        /// Mostra la pantalla anterior quan es tanca el formulari.
+        /// </summary>
         private void OfertesDeTreball_FormClosing(object sender, FormClosingEventArgs e)
         {
             _pantallaEmpresa.Show();

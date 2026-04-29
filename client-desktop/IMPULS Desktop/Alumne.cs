@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace IMPULS_Desktop
 {
@@ -19,8 +20,8 @@ namespace IMPULS_Desktop
         public string Cycle { get; set; }
         public string ExperienceLevel { get; set; }
 
-        public string Skills { get; set; }
-        public string Languages { get; set; }
+        public List<string> Skills { get; set; }
+        public List<string> Languages { get; set; }
 
         public string PreferredRoles { get; set; }
         public string PreferredLocation { get; set; }
