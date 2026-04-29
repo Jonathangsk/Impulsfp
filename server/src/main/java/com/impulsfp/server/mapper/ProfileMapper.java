@@ -23,7 +23,7 @@ public class ProfileMapper {
     public StudentProfileDto toStudentDto(Student student){
 
         StudentProfileDto dto = new StudentProfileDto();
-        dto.setId(student.getUser().getId());
+        dto.setId(student.getId());
         dto.setUsername(student.getUser().getUsername());
         dto.setName(student.getName());
         dto.setSurname(student.getSurname());
@@ -71,7 +71,7 @@ public class ProfileMapper {
     public CompanyProfileDto toCompanyDto(Company company){
 
         CompanyProfileDto dto = new CompanyProfileDto();
-        dto.setId(company.getUser().getId());
+        dto.setId(company.getId());
         dto.setUsername(company.getUser().getUsername());
         dto.setName(company.getName());
         dto.setEmail(company.getEmail());
