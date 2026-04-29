@@ -9,6 +9,7 @@ import java.util.List;
  */
 public class CompanyProfileDto {
 
+    private long id;
     private String username;
     private String name;
     private String email;
@@ -24,6 +25,14 @@ public class CompanyProfileDto {
     private List<String> technologies;
 
     // getters & setters
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public String getUsername() { return username; }
     public void setUsername(String username) { this.username = username; }
