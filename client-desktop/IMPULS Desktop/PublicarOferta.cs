@@ -109,7 +109,9 @@ namespace IMPULS_Desktop
                     contractType = comboTipusdecontracte.SelectedItem.ToString(),
                     cycle = comboCycle.SelectedItem.ToString(),
 
-                    salary = salary
+                    salary = salary,
+
+                     hasTest = checkTeProva.Checked
                 };
 
                 using (HttpClient client = new HttpClient())
@@ -163,6 +165,11 @@ namespace IMPULS_Desktop
         {
             _pantallaEmpresa?.Show();
             this.Close();
+        }
+
+        private void checkBox2_CheckedChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

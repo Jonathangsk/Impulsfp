@@ -19,15 +19,11 @@ namespace IMPULS_Desktop
 
         public string ContractType { get; set; }
 
-//        public decimal Salary { get; set; }
         public decimal? Salary { get; set; }
-
-        //public DateTime? CreationDate { get; set; }
-       
+      
         public string CreationDate { get; set; }
         public string State { get; set; }
         public string Cycle { get; set; }
-
 
         public int ApplicantsCount { get; set; }
     }
