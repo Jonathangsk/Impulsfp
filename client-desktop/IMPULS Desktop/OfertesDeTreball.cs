@@ -256,5 +256,10 @@ namespace IMPULS_Desktop
         {
             _pantallaEmpresa.Show();
         }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -4,6 +4,45 @@
         <name>IMPULS Desktop</name>
     </assembly>
     <members>
+        <member name="T:IMPULS_Desktop.Alumnes">
+            <summary>
+            Formulari que mostra i gestiona els alumnes del sistema.
+            Permet carregar, visualitzar i eliminar alumnes des de l’API d’administració.
+            </summary>
+        </member>
+        <member name="M:IMPULS_Desktop.Alumnes.#ctor">
+            <summary>
+            Constructor del formulari Alumnes.
+            Inicialitza components i assigna l’esdeveniment Load.
+            </summary>
+        </member>
+        <member name="M:IMPULS_Desktop.Alumnes.Alumnes_Load(System.Object,System.EventArgs)">
+            <summary>
+            Esdeveniment que s’executa quan el formulari es carrega.
+            Carrega la llista d’alumnes des del servidor.
+            </summary>
+        </member>
+        <member name="M:IMPULS_Desktop.Alumnes.CarregarAlumnes">
+            <summary>
+            Carrega els alumnes des de l’API i els mostra al DataGridView.
+            </summary>
+        </member>
+        <member name="M:IMPULS_Desktop.Alumnes.btnEliminarCandidat_Click(System.Object,System.EventArgs)">
+            <summary>
+            Elimina l’alumne seleccionat al DataGridView.
+            Fa una petició DELETE a l’API d’administració.
+            </summary>
+        </member>
+        <member name="M:IMPULS_Desktop.Alumnes.btnTornar_Click(System.Object,System.EventArgs)">
+            <summary>
+            Tanca el formulari actual i torna a la pantalla anterior.
+            </summary>
+        </member>
+        <member name="M:IMPULS_Desktop.Alumnes.btnTancar_Click(System.Object,System.EventArgs)">
+            <summary>
+            Tanca completament l’aplicació.
+            </summary>
+        </member>
         <member name="F:IMPULS_Desktop.Alumnes.components">
             <summary>
             Required designer variable.
@@ -181,6 +220,50 @@
             <summary>
             Required method for Designer support - do not modify
             the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:IMPULS_Desktop.Empreses">
+            <summary>
+            Formulari que mostra les empreses i les seves ofertes.
+            Permet visualitzar, filtrar i eliminar empreses o ofertes.
+            </summary>
+        </member>
+        <member name="M:IMPULS_Desktop.Empreses.#ctor">
+            <summary>
+            Constructor del formulari Empreses.
+            Inicialitza els components i assigna els events principals.
+            </summary>
+        </member>
+        <member name="M:IMPULS_Desktop.Empreses.Empreses_Load(System.Object,System.EventArgs)">
+            <summary>
+            Esdeveniment Load del formulari.
+            Carrega les empreses des de l’API.
+            </summary>
+        </member>
+        <member name="M:IMPULS_Desktop.Empreses.CarregarEmpreses">
+            <summary>
+            Carrega les empreses des del servidor i les mostra al DataGridView.
+            </summary>
+        </member>
+        <member name="M:IMPULS_Desktop.Empreses.dataGridViewEmpreses_SelectionChanged(System.Object,System.EventArgs)">
+            <summary>
+            Esdeveniment que es dispara quan es selecciona una empresa.
+            Carrega les ofertes associades a l’empresa seleccionada.
+            </summary>
+        </member>
+        <member name="M:IMPULS_Desktop.Empreses.btnTornar_Click(System.Object,System.EventArgs)">
+            <summary>
+            Tanca el formulari actual i torna enrere.
+            </summary>
+        </member>
+        <member name="M:IMPULS_Desktop.Empreses.btnTancar_Click(System.Object,System.EventArgs)">
+            <summary>
+            Tanca completament l’aplicació.
+            </summary>
+        </member>
+        <member name="M:IMPULS_Desktop.Empreses.btnEliminar_Click(System.Object,System.EventArgs)">
+            <summary>
+            Elimina una oferta seleccionada o, si no n’hi ha, elimina una empresa.
             </summary>
         </member>
         <member name="F:IMPULS_Desktop.Empreses.components">
@@ -498,6 +581,42 @@
             <summary>
             Método necesario para admitir el Diseñador. No se puede modificar
             el contenido de este método con el editor de código.
+            </summary>
+        </member>
+        <member name="T:IMPULS_Desktop.Administrador">
+            <summary>
+            <author>Josep Mª</author>
+            Formulari de gestió d'usuari administratiu.
+            Permet tancar sessió (logout) de l'aplicació contra l'API REST.
+            </summary>
+        </member>
+        <member name="F:IMPULS_Desktop.Administrador.client">
+            <summary>
+            Client HTTP reutilitzable per fer peticions a l'API.
+            </summary>
+        </member>
+        <member name="M:IMPULS_Desktop.Administrador.#ctor">
+            <summary>
+            Constructor del formulari.
+            Inicialitza els components del formulari.
+            </summary>
+        </member>
+        <member name="M:IMPULS_Desktop.Administrador.Form2_Load(System.Object,System.EventArgs)">
+            <summary>
+            Esdeveniment de càrrega del formulari.
+            Actualment sense funcionalitat addicional.
+            </summary>
+        </member>
+        <member name="M:IMPULS_Desktop.Administrador.LogoutAPI">
+            <summary>
+            Realitza el logout de l'usuari a l'API.
+            </summary>
+            <returns>true si el logout és correcte, false en cas contrari.</returns>
+        </member>
+        <member name="M:IMPULS_Desktop.Administrador.button1_Click(System.Object,System.EventArgs)">
+            <summary>
+            Event del botó de logout.
+            Invoca LogoutAPI i, si és correcte, neteja la sessió i tanca el formulari.
             </summary>
         </member>
         <member name="F:IMPULS_Desktop.Administrador.components">
