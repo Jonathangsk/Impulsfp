@@ -6,6 +6,7 @@ import com.impulsfp.server.exception.ErrorCode;
 import com.impulsfp.server.model.User;
 import com.impulsfp.server.repository.UserRepository;
 import com.impulsfp.server.session.SessionManager;
+import com.impulsfp.server.validation.PasswordValidator;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.impulsfp.server.dto.RegisterStudentRequestDto;
@@ -208,9 +209,11 @@ public class AuthService {
             throw new ApiException(ErrorCode.USER_ALREADY_EXISTS, "El nom d'usuari ja existeix. Si us plau, tria un altre nom d'usuari.");
         }
 
-        if (dto.getPassword() == null || !dto.getPassword().matches("^(?=.*[A-Z])(?=.*\\d)(?=.*[a-z]).{6,}$")) { //el regex verifica que la contrasenya té al menys 6 caracteres, una mayúscula, una minúscula y un número
+        /**if (dto.getPassword() == null || !dto.getPassword().matches("^(?=.*[A-Z])(?=.*\\d)(?=.*[a-z]).{6,}$")) { //el regex verifica que la contrasenya té al menys 6 caracteres, una mayúscula, una minúscula y un número
             throw new ApiException(ErrorCode.INVALID_PASSWORD, "La contrasenya no és vàlida; > 6 caracteres, mínim una majúscula, una minúscula i un número.");
-        }
+        }**/
+
+        PasswordValidator.validate(dto.getPassword()); //fa servir la clase PasswordValidator para validar la contrasenya; si no es válida, lanza una ApiException con un mensaje descriptivo
 
         if(dto.getEmail() == null || !dto.getEmail().matches("^[A-Za-z0-9+_.-]+@(.+)$")){ //el regex verifica que tingui un format d'email bàsic
             throw new ApiException(ErrorCode.INVALID_EMAIL, "El format de l'email no és vàlid.");
@@ -243,9 +246,7 @@ public class AuthService {
             throw new ApiException(ErrorCode.USER_ALREADY_EXISTS, "El nom d'usuari ja existeix. L'usuari ha de triar un altre.");
         }
 
-        if (dto.getPassword() == null || !dto.getPassword().matches("^(?=.*[A-Z])(?=.*\\d)(?=.*[a-z]).{6,}$")) { //el regex verifica que la contrasenya té al menys 6 caracteres, una mayúscula, una minúscula y un número
-            throw new ApiException(ErrorCode.INVALID_PASSWORD, "La contrasenya no és vàlida; > 6 caracteres, mínim una majúscula, una minúscula i un número.");
-        }
+        PasswordValidator.validate(dto.getPassword()); //fa servir la clase PasswordValidator para validar la contrasenya; si no es válida, lanza una ApiException con un mensaje descriptivo
 
         if(dto.getEmail() == null || !dto.getEmail().matches("^[A-Za-z0-9+_.-]+@(.+)$")){ //el regex verifica que tingui un format d'email bàsic
             throw new ApiException(ErrorCode.INVALID_EMAIL, "El format de l'email no és vàlid.");

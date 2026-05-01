@@ -1,5 +1,6 @@
 package com.impulsfp.server.controller;
 
+import com.impulsfp.server.dto.ChangePasswordDto;
 import com.impulsfp.server.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -63,4 +64,22 @@ public class UserController {
         userService.updateProfile(sessionId, body);
         return ResponseEntity.ok(Map.of("message", "Perfil actualitzat correctament"));
     }
+
+
+    /**
+     * Endpoint per canviar la contrasenya de l'usuari associat a la sessió actual
+     * @param sessionId identificador de sessió que s'ha d'utilitzar per identificar l'usuari del qual es vol canviar la contrasenya, proporcionat com a paràmetre de la petició
+     * @param dto objecte JSON que conté la contrasenya actual i la nova contrasenya de l'usuari, proporcionat al cos de la petició
+     * @return ResponseEntity amb un missatge de confirmació si la contrasenya s'ha canviat correctament, o un error 401 si el sessionId no és vàlid o la contrasenya actual és incorrecta
+     */
+    @PostMapping("/users/password")
+    public ResponseEntity<Void> changePassword(
+            @RequestParam String sessionId,
+            @RequestBody ChangePasswordDto dto){
+
+        userService.changePassword(sessionId, dto);
+        return ResponseEntity.ok().build();
+    }
+
+
 }
