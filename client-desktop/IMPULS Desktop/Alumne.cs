@@ -22,8 +22,8 @@ namespace IMPULS_Desktop
 
         public List<string> Skills { get; set; }
         public List<string> Languages { get; set; }
+        public List<string> PreferredRoles { get; set; }
 
-        public string PreferredRoles { get; set; }
         public string PreferredLocation { get; set; }
         public string Availability { get; set; }
 

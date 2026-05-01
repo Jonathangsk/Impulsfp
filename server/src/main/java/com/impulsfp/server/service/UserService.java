@@ -1,10 +1,12 @@
 package com.impulsfp.server.service;
 
+import com.impulsfp.server.dto.ChangePasswordDto;
 import com.impulsfp.server.exception.ApiException;
 import com.impulsfp.server.exception.ErrorCode;
 import com.impulsfp.server.model.*;
 import com.impulsfp.server.repository.*;
 import com.impulsfp.server.session.SessionManager;
+import com.impulsfp.server.validation.PasswordValidator;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -279,6 +281,39 @@ public class UserService {
         }
 
         companyRepository.save(company);
+    }
+
+    /**
+     * Canvia la contrasenya de l'usuari associat a la sessió actual
+     * @param sessionId identificador de sessió que s'ha d'utilitzar per identificar l'usuari del qual es vol cambiar la contrasenya, proporcionado como parámetro de la petición
+     * @param dto objecte ChangePasswordDto que conté la contrasenya actual i la nova contrasenya que es vol establecer, proporcionado al cuerpo de la petición
+     */
+    public void changePassword(String sessionId, ChangePasswordDto dto){
+
+        if(!SessionManager.isValid(sessionId)){
+            throw new ApiException(ErrorCode.INVALID_SESSION, "Sessió no vàlida");
+        }
+
+        String username = SessionManager.getUsername(sessionId);
+
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new ApiException(ErrorCode.USER_NOT_FOUND, "Usuari no trobat"));
+
+        //comprovar password actual
+        if(!passwordEncoder.matches(dto.getCurrentPassword(), user.getPassword())){
+            throw new ApiException(ErrorCode.INVALID_REQUEST, "Contrasenya actual incorrecta");
+        }
+
+        PasswordValidator.validate(dto.getNewPassword());
+
+        //evitar que la nova contrasenya sigui igual a l'actual
+        if(passwordEncoder.matches(dto.getNewPassword(), user.getPassword())){
+            throw new ApiException(ErrorCode.INVALID_REQUEST, "La nova contrasenya no pot ser igual");
+        }
+
+        //actualitzar contrasenya
+        user.setPassword(passwordEncoder.encode(dto.getNewPassword()));
+        userRepository.save(user);
     }
 
 

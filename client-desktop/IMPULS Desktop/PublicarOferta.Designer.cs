@@ -50,6 +50,8 @@
             this.label8 = new System.Windows.Forms.Label();
             this.btnTancar = new System.Windows.Forms.Button();
             this.btnDesar = new System.Windows.Forms.Button();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.checkTeProva = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -97,6 +99,7 @@
             // groupBox1
             // 
             this.groupBox1.BackColor = System.Drawing.Color.Gainsboro;
+            this.groupBox1.Controls.Add(this.checkTeProva);
             this.groupBox1.Controls.Add(this.btnTornar);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.comboCycle);
@@ -119,7 +122,7 @@
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Location = new System.Drawing.Point(103, 100);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(689, 620);
+            this.groupBox1.Size = new System.Drawing.Size(689, 661);
             this.groupBox1.TabIndex = 5;
             this.groupBox1.TabStop = false;
             // 
@@ -128,7 +131,7 @@
             this.btnTornar.BackColor = System.Drawing.SystemColors.Highlight;
             this.btnTornar.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnTornar.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.btnTornar.Location = new System.Drawing.Point(284, 566);
+            this.btnTornar.Location = new System.Drawing.Point(284, 605);
             this.btnTornar.Name = "btnTornar";
             this.btnTornar.Size = new System.Drawing.Size(145, 40);
             this.btnTornar.TabIndex = 16;
@@ -259,7 +262,7 @@
             this.btnTancar.BackColor = System.Drawing.SystemColors.Highlight;
             this.btnTancar.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnTancar.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.btnTancar.Location = new System.Drawing.Point(538, 566);
+            this.btnTancar.Location = new System.Drawing.Point(538, 605);
             this.btnTancar.Name = "btnTancar";
             this.btnTancar.Size = new System.Drawing.Size(145, 40);
             this.btnTancar.TabIndex = 15;
@@ -272,13 +275,35 @@
             this.btnDesar.BackColor = System.Drawing.SystemColors.HotTrack;
             this.btnDesar.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnDesar.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.btnDesar.Location = new System.Drawing.Point(0, 566);
+            this.btnDesar.Location = new System.Drawing.Point(0, 605);
             this.btnDesar.Name = "btnDesar";
             this.btnDesar.Size = new System.Drawing.Size(141, 40);
             this.btnDesar.TabIndex = 14;
             this.btnDesar.Text = "💾Desar";
             this.btnDesar.UseVisualStyleBackColor = false;
             this.btnDesar.Click += new System.EventHandler(this.btnDesar_Click);
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(0, 0);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(95, 20);
+            this.checkBox1.TabIndex = 6;
+            this.checkBox1.Text = "checkBox1";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            // 
+            // checkTeProva
+            // 
+            this.checkTeProva.AutoSize = true;
+            this.checkTeProva.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.checkTeProva.Location = new System.Drawing.Point(353, 528);
+            this.checkTeProva.Name = "checkTeProva";
+            this.checkTeProva.Size = new System.Drawing.Size(97, 33);
+            this.checkTeProva.TabIndex = 32;
+            this.checkTeProva.Text = "Prova";
+            this.checkTeProva.UseVisualStyleBackColor = true;
+            this.checkTeProva.CheckedChanged += new System.EventHandler(this.checkBox2_CheckedChanged);
             // 
             // PublicarOferta
             // 
@@ -288,12 +313,14 @@
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.ClientSize = new System.Drawing.Size(939, 1055);
+            this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.groupBox1);
             this.Name = "PublicarOferta";
             this.Text = "Nova oferta";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -320,5 +347,7 @@
         private System.Windows.Forms.ComboBox comboCycle;
         private System.Windows.Forms.ComboBox comboTipusdecontracte;
         private System.Windows.Forms.Button btnTornar;
+        private System.Windows.Forms.CheckBox checkTeProva;
+        private System.Windows.Forms.CheckBox checkBox1;
     }
 }

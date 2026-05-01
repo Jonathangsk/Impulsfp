@@ -38,21 +38,22 @@
             // 
             // dataGridView1
             // 
+            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGridView1.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Location = new System.Drawing.Point(12, 3);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersWidth = 51;
             this.dataGridView1.RowTemplate.Height = 24;
-            this.dataGridView1.Size = new System.Drawing.Size(748, 334);
+            this.dataGridView1.Size = new System.Drawing.Size(1375, 334);
             this.dataGridView1.TabIndex = 1;
-            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
             // btnTancar
             // 
             this.btnTancar.BackColor = System.Drawing.SystemColors.HotTrack;
             this.btnTancar.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnTancar.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.btnTancar.Location = new System.Drawing.Point(602, 376);
+            this.btnTancar.Location = new System.Drawing.Point(962, 376);
             this.btnTancar.Name = "btnTancar";
             this.btnTancar.Size = new System.Drawing.Size(158, 47);
             this.btnTancar.TabIndex = 8;
@@ -65,7 +66,7 @@
             this.btnTornar.BackColor = System.Drawing.SystemColors.HotTrack;
             this.btnTornar.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnTornar.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.btnTornar.Location = new System.Drawing.Point(331, 376);
+            this.btnTornar.Location = new System.Drawing.Point(504, 376);
             this.btnTornar.Name = "btnTornar";
             this.btnTornar.Size = new System.Drawing.Size(158, 47);
             this.btnTornar.TabIndex = 9;
@@ -92,7 +93,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1428, 619);
             this.Controls.Add(this.btnEliminarCandidat);
             this.Controls.Add(this.btnTornar);
             this.Controls.Add(this.btnTancar);
