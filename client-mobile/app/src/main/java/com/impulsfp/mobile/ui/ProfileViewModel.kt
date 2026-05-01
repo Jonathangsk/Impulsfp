@@ -349,6 +349,45 @@ class ProfileViewModel(
                 }
         }
     }
+
+    /**
+     * Canvia la contrasenya de l'usuari autenticat.
+     *
+     * Envia la contrasenya actual i la nova contrasenya al servidor.
+     * En cas d'èxit, retorna el missatge de confirmació. En cas d'error,
+     * retorna el missatge corresponent a la interfície.
+     *
+     * @param sessionId Identificador de la sessió activa
+     * @param currentPassword Contrasenya actual de l'usuari
+     * @param newPassword Nova contrasenya que es vol establir
+     * @param onSuccess Funció que s'executa si la contrasenya es canvia correctament
+     * @param onError Funció que s'executa si es produeix un error durant l'operació
+     */
+    fun changePassword(
+        sessionId: String,
+        currentPassword: String,
+        newPassword: String,
+        onSuccess: (String) -> Unit,
+        onError: (String) -> Unit
+    ) {
+        viewModelScope.launch {
+            isLoading = true
+
+            profileController.changePassword(
+                sessionId = sessionId,
+                currentPassword = currentPassword,
+                newPassword = newPassword
+            )
+                .onSuccess { message ->
+                    isLoading = false
+                    onSuccess(message)
+                }
+                .onFailure { error ->
+                    isLoading = false
+                    onError(error.message ?: "No s'ha pogut canviar la contrasenya")
+                }
+        }
+    }
 }
 
 /**
