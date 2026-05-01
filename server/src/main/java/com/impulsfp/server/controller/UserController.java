@@ -72,13 +72,13 @@ public class UserController {
      * @param dto objecte JSON que conté la contrasenya actual i la nova contrasenya de l'usuari, proporcionat al cos de la petició
      * @return ResponseEntity amb un missatge de confirmació si la contrasenya s'ha canviat correctament, o un error 401 si el sessionId no és vàlid o la contrasenya actual és incorrecta
      */
-    @PostMapping("/users/password")
-    public ResponseEntity<Void> changePassword(
+    @PostMapping("/password")
+    public ResponseEntity<Map<String, String>> changePassword(
             @RequestParam String sessionId,
             @RequestBody ChangePasswordDto dto){
 
         userService.changePassword(sessionId, dto);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(Map.of("message", "Contrasenya canviada correctament"));
     }
 
 
