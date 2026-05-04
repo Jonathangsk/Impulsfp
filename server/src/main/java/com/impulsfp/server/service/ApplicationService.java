@@ -1,7 +1,9 @@
 package com.impulsfp.server.service;
 
 import com.impulsfp.server.dto.ApplicationDto;
+import com.impulsfp.server.dto.ApplyDto;
 import com.impulsfp.server.enums.ApplicationStatus;
+import com.impulsfp.server.enums.TestResult;
 import com.impulsfp.server.exception.*;
 import com.impulsfp.server.mapper.ApplicationMapper;
 import com.impulsfp.server.model.*;
@@ -28,13 +30,14 @@ public class ApplicationService {
     private final OfferRepository offerRepository;
     private final CompanyRepository companyRepository;
     private final ApplicationMapper applicationMapper;
+    private final OfferTestRepository offerTestRepository;
 
     public ApplicationService(ApplicationRepository applicationRepository,
                               UserRepository userRepository,
                               StudentRepository studentRepository,
                               OfferRepository offerRepository,
                               CompanyRepository companyRepository,
-                              ApplicationMapper applicationMapper) {
+                              ApplicationMapper applicationMapper, OfferTestRepository offerTestRepository) {
 
         this.applicationRepository = applicationRepository;
         this.userRepository = userRepository;
@@ -42,15 +45,16 @@ public class ApplicationService {
         this.offerRepository = offerRepository;
         this.companyRepository = companyRepository;
         this.applicationMapper = applicationMapper;
+        this.offerTestRepository = offerTestRepository;
     }
 
     /**
      * Permet a un estudiant aplicar a una oferta; Verifica la sessió, comprova que l'usuari és un estudiant, verifica que l'oferta existeix i que no ha aplicat abans, i crea una nova aplicació amb estat PENDING.
      * @param sessionId La sessió de l'usuari que vol aplicar a l'oferta; S'utilitza per verificar la identitat i el rol de l'usuari.
-     * @param offerId L'identificador de l'oferta a la qual l'estudiant vol aplicar; S'utilitza per verificar que l'oferta existeix i associar la aplicació a l'oferta correcta.
+     * @param dto Un objecte ApplyDto que conté l'identificador de l'oferta a la qual es vol aplicar i la resposta a un possible test associat a l'oferta
      */
     @Transactional
-    public void apply(String sessionId, Long offerId){
+    public void apply(String sessionId, ApplyDto dto){
 
         if(!SessionManager.isValid(sessionId)){
             throw new ApiException(ErrorCode.INVALID_SESSION, "Sessió no vàlida");
@@ -68,7 +72,7 @@ public class ApplicationService {
         Student student = studentRepository.findByUser(user)
                 .orElseThrow(() -> new ApiException(ErrorCode.USER_NOT_FOUND, "Estudiant no trobat"));
 
-        Offer offer = offerRepository.findById(offerId)
+        Offer offer = offerRepository.findById(dto.getOfferId())
                 .orElseThrow(() -> new ApiException(ErrorCode.INVALID_REQUEST, "Oferta no trobada"));
 
         if(applicationRepository.existsByStudentAndOffer(student, offer)){
@@ -81,8 +85,15 @@ public class ApplicationService {
         app.setStatus(ApplicationStatus.PENDING);
         app.setAppliedAt(LocalDateTime.now());
 
-        applicationRepository.save(app);
 
+        offerTestRepository.findByOffer(offer).ifPresent(test -> {
+            boolean passed = test.getCorrectAnswer()
+                    .equalsIgnoreCase(dto.getAnswer());
+
+            app.setTestResult(passed ? TestResult.PASSED : TestResult.FAILED);
+        });
+
+        applicationRepository.save(app);
     }
 
     /**

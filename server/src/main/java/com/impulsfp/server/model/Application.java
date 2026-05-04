@@ -1,6 +1,7 @@
 package com.impulsfp.server.model;
 
 import com.impulsfp.server.enums.ApplicationStatus;
+import com.impulsfp.server.enums.TestResult;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -31,7 +32,23 @@ public class Application {
 
     private LocalDateTime appliedAt;
 
+    @Enumerated(EnumType.STRING)
+    private TestResult testResult;
+
     // getters & setters
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public TestResult getTestResult() {
+        return testResult;
+    }
+
+    public void setTestResult(TestResult testResult) {
+        this.testResult = testResult;
+    }
+
     public Long getId() { return id; }
 
     public Student getStudent() { return student; }

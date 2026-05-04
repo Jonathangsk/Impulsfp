@@ -26,9 +26,45 @@ public class OfferResponseDto {
     private String companyName;
     private List<String> skills;
     private int applicantsCount;
+    private String testType;
+    private String testQuestion;
+    private String codeSnippet;
+    private String options;
 
     // getters & setters
 
+
+    public String getTestType() {
+        return testType;
+    }
+
+    public void setTestType(String testType) {
+        this.testType = testType;
+    }
+
+    public String getTestQuestion() {
+        return testQuestion;
+    }
+
+    public void setTestQuestion(String testQuestion) {
+        this.testQuestion = testQuestion;
+    }
+
+    public String getCodeSnippet() {
+        return codeSnippet;
+    }
+
+    public void setCodeSnippet(String codeSnippet) {
+        this.codeSnippet = codeSnippet;
+    }
+
+    public String getOptions() {
+        return options;
+    }
+
+    public void setOptions(String options) {
+        this.options = options;
+    }
 
     public String getCycle() {
         return cycle;
