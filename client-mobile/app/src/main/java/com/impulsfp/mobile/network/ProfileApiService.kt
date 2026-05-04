@@ -1,10 +1,12 @@
 package com.impulsfp.mobile.network
 
 import ProfileResponse
+import com.impulsfp.mobile.data.ChangePasswordRequest
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.HTTP
+import retrofit2.http.PATCH
 import retrofit2.http.PUT
 import retrofit2.http.Query
 
@@ -75,5 +77,22 @@ interface ProfileApiService {
     suspend fun deleteAccount(
         @Query("sessionId") sessionId: String,
         @Body request: DeleteAccountRequest
+    ): Response<Map<String, String>>
+
+    /**
+     * Canvia la contrasenya de l'usuari autenticat.
+     *
+     * Valida la contrasenya actual i actualitza la nova
+     * contrasenya al servidor.
+     *
+     * @param sessionId Identificador de sessió actiu
+     * @param request Contrasenya actual i nova contrasenya
+     *
+     * @return Resposta HTTP amb el resultat de l'operació
+     */
+    @PATCH("users/password")
+    suspend fun changePassword(
+        @Query("sessionId") sessionId: String,
+        @Body request: ChangePasswordRequest
     ): Response<Map<String, String>>
 }

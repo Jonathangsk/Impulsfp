@@ -1,5 +1,6 @@
 package com.impulsfp.mobile.ui
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -28,6 +29,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -73,6 +75,7 @@ fun EditProfileScreen(
     profileViewModel: ProfileViewModel,
     menuViewModel: MenuViewModel = viewModel()
 ) {
+    val context = LocalContext.current
     val currentProfile = profileViewModel.profile
 
     var username by remember(currentProfile.username) { mutableStateOf(currentProfile.username) }
@@ -512,11 +515,38 @@ fun EditProfileScreen(
                             return@TextButton
                         }
 
-                        changePasswordInfo =
-                            "Funcionalitat preparada a la UI. Pendent de connectar amb backend."
-                    }
+                        val sessionId = SessionData.getSessionId()
+
+                        if (sessionId == null) {
+                            changePasswordError = "No hi ha cap sessió activa"
+                            return@TextButton
+                        }
+
+                        profileViewModel.changePassword(
+                            sessionId = sessionId,
+                            currentPassword = currentPassword,
+                            newPassword = newPassword,
+                            onSuccess = { message ->
+                                Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+
+                                currentPassword = ""
+                                newPassword = ""
+                                confirmNewPassword = ""
+                                changePasswordError = null
+                                changePasswordInfo = null
+                                showChangePasswordDialog = false
+                            },
+                            onError = { error ->
+                                changePasswordError = error
+                            }
+                        )
+                    },
+                    enabled = !profileViewModel.isLoading
                 ) {
-                    Text("Confirmar")
+                    Text(
+                        if (profileViewModel.isLoading) "Canviant..."
+                        else "Confirmar"
+                    )
                 }
             },
             dismissButton = {
