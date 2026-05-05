@@ -85,13 +85,18 @@ public class ApplicationService {
         app.setStatus(ApplicationStatus.PENDING);
         app.setAppliedAt(LocalDateTime.now());
 
+        OfferTest test = offerTestRepository.findByOffer(offer).orElse(null);
 
-        offerTestRepository.findByOffer(offer).ifPresent(test -> {
+        if(test != null && (dto.getAnswer() == null || dto.getAnswer().isBlank())){
+            throw new ApiException(ErrorCode.INVALID_REQUEST, "Cal respondre el test");
+        }
+
+        if(test != null){
             boolean passed = test.getCorrectAnswer()
-                    .equalsIgnoreCase(dto.getAnswer());
+                    .equalsIgnoreCase(dto.getAnswer().trim());
 
             app.setTestResult(passed ? TestResult.PASSED : TestResult.FAILED);
-        });
+        }
 
         applicationRepository.save(app);
     }
