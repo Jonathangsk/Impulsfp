@@ -9,8 +9,17 @@ public class StudentProfileForCompanyDto extends StudentProfileDto {
 
     private Long applicationId;
     private String status;
+    private String testResult;
 
     // getters & setters
+
+    public String getTestResult() {
+        return testResult;
+    }
+
+    public void setTestResult(String testResult) {
+        this.testResult = testResult;
+    }
 
     public Long getApplicationId() {
         return applicationId;

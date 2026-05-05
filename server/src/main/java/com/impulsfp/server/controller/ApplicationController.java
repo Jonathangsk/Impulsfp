@@ -35,7 +35,7 @@ public class ApplicationController {
             @RequestBody ApplyDto dto){
 
         applicationService.apply(sessionId, dto);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(Map.of("message", "Aplicació enviada correctament"));
     }
 
 
