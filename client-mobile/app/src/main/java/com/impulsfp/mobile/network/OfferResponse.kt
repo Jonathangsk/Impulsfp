@@ -13,5 +13,9 @@ data class OfferResponse(
     val state: String,
     val creationDate: String,
     val applicantsCount: Int?,
-    val cycle: String?
+    val cycle: String?,
+    val testType: String?,
+    val testQuestion: String?,
+    val codeSnippet: String?,
+    val options: String?
 )
