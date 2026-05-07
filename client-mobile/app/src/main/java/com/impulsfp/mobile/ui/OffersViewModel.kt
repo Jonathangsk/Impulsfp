@@ -1,5 +1,6 @@
 package com.impulsfp.mobile.ui
 
+import androidx.compose.runtime.mutableStateMapOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.impulsfp.mobile.communications.ApplicationsController
@@ -29,8 +30,15 @@ class OffersViewModel(
     private val _applyErrorMessage = MutableStateFlow<String?>(null)
     val applyErrorMessage: StateFlow<String?> = _applyErrorMessage.asStateFlow()
 
+    private val technicalTestAnswers = mutableStateMapOf<String, String>()
+
     init {
         loadOffers()
+    }
+
+    private fun technicalTestKey(offerId: String): String {
+        val sessionId = SessionData.getSessionId() ?: ""
+        return "$sessionId-$offerId"
     }
 
     fun loadOffers() {
@@ -93,7 +101,11 @@ class OffersViewModel(
             _applySuccessMessage.value = null
             _applyErrorMessage.value = null
 
-            val result = applicationsController.apply(offerId, sessionId)
+            val result = applicationsController.apply(
+                offerId = offerId,
+                sessionId = sessionId,
+                answer = technicalTestAnswers[technicalTestKey(offerId)]
+            )
 
             result.onSuccess { message ->
                 _applySuccessMessage.value = message
@@ -104,6 +116,17 @@ class OffersViewModel(
                 _applyLoading.value = false
             }
         }
+    }
+
+    fun markTechnicalTestAsCompleted(
+        offerId: String,
+        answer: String
+    ) {
+        technicalTestAnswers[technicalTestKey(offerId)] = answer
+    }
+
+    fun isTechnicalTestCompleted(offerId: String): Boolean {
+        return technicalTestAnswers.containsKey(technicalTestKey(offerId))
     }
 
     fun clearApplyMessages() {
@@ -186,5 +209,9 @@ class OffersViewModel(
 
             matchesQuery && matchesCity && matchesModality
         }
+    }
+
+    fun getTechnicalTestAnswer(offerId: String): String? {
+        return technicalTestAnswers[technicalTestKey(offerId)]
     }
 }

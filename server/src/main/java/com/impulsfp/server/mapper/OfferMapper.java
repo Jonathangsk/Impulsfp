@@ -4,6 +4,7 @@ import com.impulsfp.server.dto.OfferResponseDto;
 import com.impulsfp.server.model.Offer;
 
 import com.impulsfp.server.repository.ApplicationRepository;
+import com.impulsfp.server.repository.OfferTestRepository;
 import org.springframework.stereotype.Component;
 
 
@@ -15,9 +16,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class OfferMapper {
 
+    private final OfferTestRepository offerTestRepository;
     private final ApplicationRepository applicationRepository;
 
-    public OfferMapper(ApplicationRepository applicationRepository) {
+    public OfferMapper(OfferTestRepository offerTestRepository, ApplicationRepository applicationRepository) {
+        this.offerTestRepository = offerTestRepository;
         this.applicationRepository = applicationRepository;
     }
 
@@ -46,6 +49,13 @@ public class OfferMapper {
                         .map(s -> s.getSkill())
                         .toList()
         );
+
+        offerTestRepository.findByOffer(offer).ifPresent(test -> {
+            dto.setTestType(test.getType().name());
+            dto.setTestQuestion(test.getQuestion());
+            dto.setCodeSnippet(test.getCodeSnippet());
+            dto.setOptions(test.getOptions());
+        });
 
         dto.setApplicantsCount(
                 (int) applicationRepository.countByOffer(offer)

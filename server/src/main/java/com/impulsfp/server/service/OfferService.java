@@ -37,12 +37,13 @@ public class OfferService {
     private final ProfileMapper profileMapper;
     private final ApplicationRepository applicationRepository;
     private final ApplicationMapper applicationMapper;
+    private final OfferTestRepository offerTestRepository;
 
     public OfferService(OfferRepository offerRepository,
                         UserRepository userRepository,
                         CompanyRepository companyRepository,
                         StudentRepository studentRepository,
-                        OfferMapper offerMapper, ProfileMapper profileMapper, ApplicationRepository applicationRepository, ApplicationMapper applicationMapper) {
+                        OfferMapper offerMapper, ProfileMapper profileMapper, ApplicationRepository applicationRepository, ApplicationMapper applicationMapper, OfferTestRepository offerTestRepository) {
 
         this.offerRepository = offerRepository;
         this.userRepository = userRepository;
@@ -52,6 +53,7 @@ public class OfferService {
         this.profileMapper = profileMapper;
         this.applicationRepository = applicationRepository;
         this.applicationMapper = applicationMapper;
+        this.offerTestRepository = offerTestRepository;
     }
 
 
@@ -87,14 +89,14 @@ public class OfferService {
         offer.setLocation(dto.getLocation());
         try {
             Modality modality = Modality.valueOf(dto.getModality());
-            // seguir amb la creació de l'oferta
+            offer.setModality(modality);
         } catch (IllegalArgumentException | NullPointerException e) {
             throw new ApiException(ErrorCode.INVALID_REQUEST, "Modality inválida: ");
         }
 
         try {
             ContractType contractType = ContractType.valueOf(dto.getContractType());
-            // seguir amb la creació de la oferta
+            offer.setContractType(contractType);
         } catch (IllegalArgumentException | NullPointerException e) {
             throw new ApiException(ErrorCode.INVALID_REQUEST, "ContractType inválido: ");
         }
@@ -119,7 +121,19 @@ public class OfferService {
 
         offer.setRequiredSkills(skills);
 
-        offerRepository.save(offer);
+        //offerRepository.save(offer);
+
+        Offer savedOffer = offerRepository.save(offer);
+
+        if(dto.getTestType() != null){
+
+            TestType type = TestType.valueOf(dto.getTestType());
+
+            OfferTest test = TestFactory.createTest(type);
+            test.setOffer(savedOffer);
+
+            offerTestRepository.save(test);
+        }
 
         company.setActiveOffers(
                 company.getActiveOffers() == null ? 1 : company.getActiveOffers() + 1

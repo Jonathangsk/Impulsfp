@@ -13,5 +13,9 @@ data class Offer(
     val createdAt: String,
     val state: String,
     val applicantsCount: Int = 0,
-    val cycle: String = ""
+    val cycle: String = "",
+    val testType: String? = null,
+    val testQuestion: String? = null,
+    val codeSnippet: String? = null,
+    val options: List<String> = emptyList()
 )

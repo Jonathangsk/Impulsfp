@@ -33,7 +33,15 @@ open class OffersController {
                             createdAt = offer.creationDate,
                             state = offer.state,
                             applicantsCount = offer.applicantsCount ?: 0,
-                            cycle = offer.cycle ?: ""
+                            cycle = offer.cycle ?: "",
+                            testType = offer.testType,
+                            testQuestion = offer.testQuestion,
+                            codeSnippet = offer.codeSnippet,
+                            options = offer.options
+                                ?.split(";")
+                                ?.map { it.trim() }
+                                ?.filter { it.isNotBlank() }
+                                ?: emptyList()
                         )
                     }
 

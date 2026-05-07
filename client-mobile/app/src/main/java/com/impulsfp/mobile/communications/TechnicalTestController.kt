@@ -1,50 +1,41 @@
 package com.impulsfp.mobile.communications
 
-import com.impulsfp.mobile.data.ApplicationUiModel
 import com.impulsfp.mobile.network.ApiClient
-import com.impulsfp.mobile.network.ApplyRequest
+import com.impulsfp.mobile.network.SubmitTechnicalTestRequest
+import com.impulsfp.mobile.network.TechnicalTestResponse
 import java.io.IOException
 import java.net.ConnectException
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 
-open class ApplicationsController {
+open class TechnicalTestController {
 
-    private val api = ApiClient.applicationsApiService
+    private val apiService = ApiClient.offersApiService
 
-    open suspend fun apply(
-        offerId: String,
-        sessionId: String,
-        answer: String? = null
-    ): Result<String> {
+    /*
+    TEA4 - Proves tècniques
+
+    Recupera una prova tècnica concreta a partir del seu identificador.
+
+    open suspend fun getTechnicalTest(
+        testId: String,
+        sessionId: String
+    ): Result<TechnicalTestResponse> {
         return try {
-            val response = api.applyToOffer(
-                sessionId = sessionId,
-                request = ApplyRequest(
-                    offerId = offerId,
-                    answer = answer
-                )
-            )
-
-            println("APPLY APPLICATION offerId=$offerId")
-            println("APPLY APPLICATION sessionId=$sessionId")
-            println("APPLY APPLICATION code=${response.code()}")
-            println("APPLY APPLICATION body=${response.body()}")
-            println("APPLY APPLICATION errorBody=${response.errorBody()?.string()}")
+            val response = apiService.getTechnicalTest(testId, sessionId)
 
             if (response.isSuccessful) {
                 val body = response.body()
 
                 if (body != null) {
-                    Result.success(body.message)
+                    Result.success(body)
                 } else {
                     Result.failure(Exception("Resposta buida del servidor"))
                 }
             } else {
                 when (response.code()) {
-                    400, 409 -> Result.failure(Exception("Ja estàs inscrit a aquesta oferta"))
                     401, 403 -> Result.failure(Exception("Sessió no vàlida"))
-                    404 -> Result.failure(Exception("Oferta no trobada"))
+                    404 -> Result.failure(Exception("Prova tècnica no trobada"))
                     500, 502, 503 -> Result.failure(Exception("El servidor no està disponible temporalment"))
                     else -> Result.failure(Exception("Error del servidor: ${response.code()}"))
                 }
@@ -62,34 +53,46 @@ open class ApplicationsController {
         }
     }
 
-    open suspend fun getMyApplications(
-        sessionId: String
-    ): Result<List<ApplicationUiModel>> {
+    Envia la resposta seleccionada per l'alumne a la prova tècnica.
+
+    Si el temps ha expirat, es pot enviar la resposta buida i indicar
+    timeExpired = true perquè el backend la marqui com a no superada.
+
+    open suspend fun submitTechnicalTest(
+        offerId: String,
+        sessionId: String,
+        technicalTestId: String,
+        selectedAnswer: String,
+        timeExpired: Boolean = false
+    ): Result<String> {
         return try {
-            val response = api.getMyApplications(sessionId)
+            val response = apiService.submitTechnicalTest(
+                offerId = offerId,
+                sessionId = sessionId,
+                request = SubmitTechnicalTestRequest(
+                    technicalTestId = technicalTestId,
+                    selectedAnswer = selectedAnswer,
+                    timeExpired = timeExpired
+                )
+            )
 
             if (response.isSuccessful) {
-                val list = response.body()?.map {
-                    ApplicationUiModel(
-                        id = it.id,
-                        offerTitle = it.offerTitle,
-                        companyName = it.companyName,
-                        location = it.location,
-                        status = mapStatus(it.status),
-                        appliedAt = it.appliedAt
-                    )
-                } ?: emptyList()
+                val body = response.body()
 
-                Result.success(list)
+                if (body != null) {
+                    Result.success(body.message)
+                } else {
+                    Result.failure(Exception("Resposta buida del servidor"))
+                }
             } else {
                 when (response.code()) {
+                    400 -> Result.failure(Exception("Has de seleccionar una resposta"))
                     401, 403 -> Result.failure(Exception("Sessió no vàlida"))
-                    404 -> Result.failure(Exception("No s'han trobat candidatures"))
+                    404 -> Result.failure(Exception("Oferta o prova tècnica no trobada"))
                     500, 502, 503 -> Result.failure(Exception("El servidor no està disponible temporalment"))
-                    else -> Result.failure(Exception("Error carregant candidatures"))
+                    else -> Result.failure(Exception("Error del servidor: ${response.code()}"))
                 }
             }
-
         } catch (e: UnknownHostException) {
             Result.failure(Exception("No s'ha pogut localitzar el servidor"))
         } catch (e: ConnectException) {
@@ -102,13 +105,5 @@ open class ApplicationsController {
             Result.failure(Exception("S'ha produït un error inesperat"))
         }
     }
-
-    private fun mapStatus(status: String): String {
-        return when (status.uppercase()) {
-            "PENDING" -> "Enviada"
-            "ACCEPTED" -> "Acceptada"
-            "REJECTED" -> "Rebutjada"
-            else -> status
-        }
-    }
+    */
 }

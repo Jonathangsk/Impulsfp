@@ -18,8 +18,17 @@ public class CreateOfferDto {
     private String contractType;
     private Double salary;
     private String cycle;
+    private String testType;
 
     // getters & setters
+
+    public String getTestType() {
+        return testType;
+    }
+
+    public void setTestType(String testType) {
+        this.testType = testType;
+    }
 
     public String getCycle() {
         return cycle;

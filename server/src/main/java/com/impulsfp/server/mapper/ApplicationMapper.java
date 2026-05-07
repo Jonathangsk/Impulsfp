@@ -40,12 +40,12 @@ public class ApplicationMapper {
 
         Student student = app.getStudent();
 
-        // reutilizamos mapper existente
+        //utilitzem el profileMapper per obtenir un StudentProfileDto amb les dades comunes del perfil d'estudiant
         StudentProfileDto base = profileMapper.toStudentDto(student);
 
         StudentProfileForCompanyDto dto = new StudentProfileForCompanyDto();
 
-        // copiamos todos los campos automáticamente
+        //copiem els camps comuns del perfil d'estudiant
         dto.setName(base.getName());
         dto.setSurname(base.getSurname());
         dto.setEmail(base.getEmail());
@@ -62,9 +62,13 @@ public class ApplicationMapper {
         dto.setExperienceLevel(base.getExperienceLevel());
         dto.setUsername(base.getUsername());
 
-        // 🔥 añadimos lo nuevo
+        //afegim els camps específics de l'aplicació
         dto.setApplicationId(app.getId());
         dto.setStatus(app.getStatus().name());
+
+        if(app.getTestResult() != null){
+            dto.setTestResult(app.getTestResult().name());
+        }
 
         return dto;
     }

@@ -1,5 +1,6 @@
 package com.impulsfp.server.controller;
 
+import com.impulsfp.server.dto.ApplyDto;
 import com.impulsfp.server.service.ApplicationService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,17 +27,15 @@ public class ApplicationController {
     /**
      * Endpoint per aplicar-se a una oferta
      * @param sessionId identificador de sessió que s'ha d'utilitzar per identificar l'estudiant que vol aplicar-se a l'oferta, proporcionat com a paràmetre de la petició
-     * @param id identificador de l'oferta a la qual es vol aplicar, proporcionat com a paràmetre de la petició
      * @return ResponseEntity amb un missatge de confirmació si l'aplicació s'ha creat correctament, o un error 401 si el sessionId no és vàlid o l'oferta no existeix
      */
-    @PostMapping("/{id}/apply")
+    @PostMapping("/apply")
     public ResponseEntity<?> apply(
             @RequestParam String sessionId,
-            @PathVariable Long id){
+            @RequestBody ApplyDto dto){
 
-        applicationService.apply(sessionId, id);
-
-        return ResponseEntity.ok(Map.of("message", "Aplicació enviada"));
+        applicationService.apply(sessionId, dto);
+        return ResponseEntity.ok(Map.of("message", "Aplicació enviada correctament"));
     }
 
 
