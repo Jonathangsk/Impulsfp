@@ -49,8 +49,9 @@ namespace IMPULS_Desktop
             comboCycle.Items.Clear();
 
             comboModalitat.Items.AddRange(new string[] { "REMOTE", "HYBRID", "ONSITE" });
-            comboTipusdecontracte.Items.AddRange(new string[] { "FP_DUAL", "FCT"});
+            comboTipusdecontracte.Items.AddRange(new string[] { "FP_DUAL", "FCT", "PRACTICAS_EXTRA", "CONTRATO_FORMACION" });
             comboCycle.Items.AddRange(new string[] { "DAM", "DAW", "ASIX" });
+            comboTest.Items.AddRange(new string[] { "JAVA", "PYTHON", "JAVASCRIPT", "SQL", "CSHARP", "KOTLIN" });
         }
         /// <summary>
         /// Quan es tanca el formulari, es torna a mostrar la pantalla d’empresa.
@@ -98,6 +99,7 @@ namespace IMPULS_Desktop
                     .ToList();
 
                 //Creació objecte oferta.
+            
                 var oferta = new
                 {
                     title = textTitol.Text,
@@ -110,8 +112,8 @@ namespace IMPULS_Desktop
                     cycle = comboCycle.SelectedItem.ToString(),
 
                     salary = salary,
-
-                     hasTest = checkTeProva.Checked
+                    testType = comboTest.SelectedItem.ToString()
+                    
                 };
 
                 using (HttpClient client = new HttpClient())
@@ -168,6 +170,11 @@ namespace IMPULS_Desktop
         }
 
         private void checkBox2_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void comboCycle_SelectedIndexChanged(object sender, EventArgs e)
         {
 
         }

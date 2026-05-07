@@ -3,6 +3,10 @@ using System.Collections.Generic;
 
 namespace IMPULS_Desktop
 {
+    /// <summary>
+    /// Representa una empresa dins del sistema IMPULS.
+    /// Conté informació de contacte, identificació i dades de negoci.
+    /// </summary>
     public class Empresa
     {
         public int Id { get; set; }

@@ -392,5 +392,17 @@ namespace IMPULS_Desktop
         {
 
         }
+
+        private void CanviContrasenya_Click(object sender, EventArgs e)
+        {
+            CanviContrasenya form = new CanviContrasenya(PantallaPrincipal.SessionId);
+            form.Owner = this; // 👈 importante para poder volver atrás
+            form.ShowDialog();
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

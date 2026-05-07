@@ -99,14 +99,12 @@ C:\Users\jgran\Desktop\Impulsfp\client-desktop\IMPULS.Tests\bin\Debug\net6.0-win
 C:\Users\jgran\Desktop\Impulsfp\client-desktop\IMPULS.Tests\bin\Debug\net6.0-windows\IMPULS Desktop.exe
 C:\Users\jgran\Desktop\Impulsfp\client-desktop\IMPULS.Tests\bin\Debug\net6.0-windows\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.dll
 C:\Users\jgran\Desktop\Impulsfp\client-desktop\IMPULS.Tests\bin\Debug\net6.0-windows\Npgsql.dll
-C:\Users\jgran\Desktop\Impulsfp\client-desktop\IMPULS.Tests\bin\Debug\net6.0-windows\Microsoft.Bcl.AsyncInterfaces.dll
 C:\Users\jgran\Desktop\Impulsfp\client-desktop\IMPULS.Tests\bin\Debug\net6.0-windows\IMPULS Desktop.pdb
 C:\Users\jgran\Desktop\Impulsfp\client-desktop\IMPULS.Tests\bin\Debug\net6.0-windows\IMPULS Desktop.xml
 C:\Users\jgran\Desktop\Impulsfp\client-desktop\IMPULS.Tests\bin\Debug\net6.0-windows\IMPULS Desktop.exe.config
 C:\Users\jgran\Desktop\Impulsfp\client-desktop\IMPULS.Tests\bin\Debug\net6.0-windows\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.xml
 C:\Users\jgran\Desktop\Impulsfp\client-desktop\IMPULS.Tests\bin\Debug\net6.0-windows\Npgsql.pdb
 C:\Users\jgran\Desktop\Impulsfp\client-desktop\IMPULS.Tests\bin\Debug\net6.0-windows\Npgsql.xml
-C:\Users\jgran\Desktop\Impulsfp\client-desktop\IMPULS.Tests\bin\Debug\net6.0-windows\Microsoft.Bcl.AsyncInterfaces.xml
 C:\Users\jgran\Desktop\Impulsfp\client-desktop\IMPULS.Tests\obj\Debug\net6.0-windows\IMPULS.Tests.csproj.AssemblyReference.cache
 C:\Users\jgran\Desktop\Impulsfp\client-desktop\IMPULS.Tests\obj\Debug\net6.0-windows\IMPULS.Tests.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\jgran\Desktop\Impulsfp\client-desktop\IMPULS.Tests\obj\Debug\net6.0-windows\IMPULS.Tests.AssemblyInfoInputs.cache

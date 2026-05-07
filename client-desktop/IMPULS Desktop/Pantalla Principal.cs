@@ -166,7 +166,7 @@ namespace IMPULS_Desktop
         /// </summary>
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            CanviContrasenya form = new CanviContrasenya();
+            CanviContrasenya form = new CanviContrasenya((PantallaPrincipal.SessionId));
             form.Owner = this;   
             form.Show();
 

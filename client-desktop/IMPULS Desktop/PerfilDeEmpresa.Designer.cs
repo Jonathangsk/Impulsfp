@@ -35,6 +35,7 @@
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.CanviContrasenya = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.SuspendLayout();
@@ -55,7 +56,7 @@
             this.btnTornar.BackColor = System.Drawing.SystemColors.HotTrack;
             this.btnTornar.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnTornar.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.btnTornar.Location = new System.Drawing.Point(641, 790);
+            this.btnTornar.Location = new System.Drawing.Point(923, 790);
             this.btnTornar.Name = "btnTornar";
             this.btnTornar.Size = new System.Drawing.Size(158, 47);
             this.btnTornar.TabIndex = 8;
@@ -121,12 +122,27 @@
             this.label2.TabIndex = 11;
             this.label2.Text = "Perfil de l\'empresa";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.label2.Click += new System.EventHandler(this.label2_Click);
+            // 
+            // CanviContrasenya
+            // 
+            this.CanviContrasenya.BackColor = System.Drawing.SystemColors.HotTrack;
+            this.CanviContrasenya.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.CanviContrasenya.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.CanviContrasenya.Location = new System.Drawing.Point(417, 790);
+            this.CanviContrasenya.Name = "CanviContrasenya";
+            this.CanviContrasenya.Size = new System.Drawing.Size(331, 47);
+            this.CanviContrasenya.TabIndex = 12;
+            this.CanviContrasenya.Text = "🔐 Canvi de contrasenya";
+            this.CanviContrasenya.UseVisualStyleBackColor = false;
+            this.CanviContrasenya.Click += new System.EventHandler(this.CanviContrasenya_Click);
             // 
             // PerfilDeEmpresa
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1757, 984);
+            this.Controls.Add(this.CanviContrasenya);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.dataGridView2);
@@ -152,5 +168,6 @@
         private System.Windows.Forms.DataGridView dataGridView2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button CanviContrasenya;
     }
 }

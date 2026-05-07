@@ -71,6 +71,8 @@ namespace IMPULS_Desktop
         /// </summary>
         private void dataGridView1_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
+            //var columnName = dataGridView1.Columns[e.ColumnIndex].Name;
+            //var valor = e.Value?.ToString();
             if (dataGridView1.Columns[e.ColumnIndex].Name == "status")
             {
                 var valor = e.Value?.ToString();
@@ -88,6 +90,17 @@ namespace IMPULS_Desktop
                     e.CellStyle.BackColor = Color.LightYellow;
                 }
             }
+            /*else if (columnName == "testResult")
+            {
+                if (valor == "PASSED")
+                {
+                    e.CellStyle.BackColor = Color.LightGreen;
+                }
+                else if (valor == "FAILED")
+                {
+                    e.CellStyle.BackColor = Color.LightCoral;
+                }
+            }*/
         }
         /// <summary>
         /// Carrega els candidats des de l’API
@@ -131,7 +144,7 @@ namespace IMPULS_Desktop
             var c = (Candidatos)dataGridView1.CurrentRow.DataBoundItem;
 
             var confirm = MessageBox.Show(
-                "Acceptar candidatura de " + c.Name + "?",
+                "Acceptar candidatura de " + c.name + "?",
                 "Confirmar",
                 MessageBoxButtons.YesNo);
 
@@ -185,7 +198,7 @@ namespace IMPULS_Desktop
             var c = (Candidatos)dataGridView1.CurrentRow.DataBoundItem;
 
             var confirm = MessageBox.Show(
-                "Rebutjar candidatura de " + c.Name + "?",
+                "Rebutjar candidatura de " + c.name + "?",
                 "Confirmar",
                 MessageBoxButtons.YesNo);
 

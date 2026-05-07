@@ -81,15 +81,17 @@ namespace IMPULS_Desktop
                     // Evitem null a skills
                     foreach (var o in offers)
                     {
-                        if (o.skills == null)
-                            o.skills = new List<string>();
+                        if (o.Skills == null)
+                            o.Skills = new List<string>();
                     }
 
                     return offers ?? new List<Oferta>();
                 }
-                catch (HttpRequestException)
+                catch (HttpRequestException ex)
+
                 {
-                    MessageBox.Show("No se pudo conectar al servidor.");
+                    MessageBox.Show("Error HTTP: " + ex.Message);
+                    //    MessageBox.Show("No sEEEEEEEEEEEEEEEEe pudo conectar al servidor.");
                 }
                 catch (TaskCanceledException)
                 {

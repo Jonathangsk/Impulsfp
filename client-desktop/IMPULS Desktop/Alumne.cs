@@ -3,6 +3,10 @@ using System.Collections.Generic;
 
 namespace IMPULS_Desktop
 {
+    /// <summary>
+    /// Representa un alumne dins del sistema IMPULS.
+    /// Conté informació personal, acadèmica i professional.
+    /// </summary>
     public class Alumne
     {
         public int Id { get; set; }

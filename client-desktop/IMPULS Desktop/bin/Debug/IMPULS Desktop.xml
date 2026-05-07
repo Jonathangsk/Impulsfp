@@ -136,29 +136,18 @@
         </member>
         <member name="T:IMPULS_Desktop.CanviContrasenya">
             <summary>
-            Formulari per al canvi de contrasenya.
-            Permet validar dues contrasenyes i simular el restabliment.
+            Formulari que permet canviar la contrasenya d’un usuari.
+            Conté la lògica de validació i la crida a l’API per actualitzar la contrasenya.
             </summary>
         </member>
-        <member name="M:IMPULS_Desktop.CanviContrasenya.#ctor">
+        <member name="M:IMPULS_Desktop.CanviContrasenya.#ctor(System.String,System.Net.Http.HttpClient,IMPULS_Desktop.Services.IAlertService)">
             <summary>
-            Esdeveniment de càrrega del formulari
+            Constructor con inyección de dependencias para testing.
             </summary>
         </member>
-        <member name="M:IMPULS_Desktop.CanviContrasenya.restaurar_Click(System.Object,System.EventArgs)">
+        <member name="M:IMPULS_Desktop.CanviContrasenya.RestaurarAsync">
             <summary>
-            Botó per restaurar la contrasenya.
-            Comprova que les dues contrasenyes coincideixen.
-            </summary>
-        </member>
-        <member name="M:IMPULS_Desktop.CanviContrasenya.button1_Click(System.Object,System.EventArgs)">
-            <summary>
-            Tanca l’aplicació
-            </summary>
-        </member>
-        <member name="M:IMPULS_Desktop.CanviContrasenya.button2_Click(System.Object,System.EventArgs)">
-            <summary>
-            Torna a la finestra anterior sense guardar canvis
+            Lógica testeable del cambio de contraseña.
             </summary>
         </member>
         <member name="F:IMPULS_Desktop.CanviContrasenya.components">
