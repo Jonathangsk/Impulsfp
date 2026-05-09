@@ -13,6 +13,24 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
+/**
+ * ViewModel encarregat de gestionar la lògica de negoci
+ * relacionada amb les ofertes disponibles.
+ *
+ * Aquesta classe s'encarrega de carregar les ofertes des del servidor,
+ * mantenir l'estat de la interfície mitjançant [OffersUiState]
+ * i aplicar els filtres de cerca, ciutat i modalitat seleccionats
+ * per l'usuari.
+ *
+ * També gestiona el procés d'inscripció a una oferta, incloent-hi
+ * els estats de càrrega, els missatges de confirmació o error
+ * i les respostes associades a proves tècniques.
+ *
+ * Utilitza corrutines i StateFlow per gestionar l'estat reactiu
+ * de la pantalla d'ofertes.
+ *
+ * @author abenitez
+ */
 class OffersViewModel(
     private val offersController: OffersController = OffersController(),
     private val applicationsController: ApplicationsController = ApplicationsController()

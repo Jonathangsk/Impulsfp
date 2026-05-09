@@ -133,4 +133,63 @@ class ApplicationsControllerIntegrationTest {
         val errorMessage = result.exceptionOrNull()?.message
         assertEquals("Error carregant candidatures", errorMessage)
     }
+
+    /**
+     * Verifica que es pot aplicar a una oferta enviant una resposta
+     * de prova tècnica.
+     *
+     * Aquest test depèn que l'oferta indicada existeixi al backend
+     * i que pugui requerir prova tècnica.
+     */
+    @Test
+    fun apply_withTechnicalTestAnswer_returns_controlled_result() = runBlocking {
+        val loginResult = authController.login("benitez", "Prueba123")
+
+        assertTrue("El login previ hauria de ser correcte", loginResult.isSuccess)
+
+        val user = loginResult.getOrNull()
+        assertNotNull("S'hauria de retornar un usuari", user)
+
+        val offerIdWithTest = "6"
+        val answer = "5"
+
+        val result = applicationsController.apply(
+            offerId = offerIdWithTest,
+            sessionId = user!!.sessionId,
+            answer = answer
+        )
+
+        assertTrue(
+            "La resposta hauria de ser correcta o indicar que ja existeix la candidatura",
+            result.isSuccess || result.exceptionOrNull()?.message == "Ja estàs inscrit a aquesta oferta"
+        )
+    }
+
+    /**
+     * Verifica que es pot aplicar a una oferta amb prova tècnica
+     * enviant TIMEOUT com a resposta quan s'esgota el temps.
+     */
+    @Test
+    fun apply_withTimeoutAnswer_returns_controlled_result() = runBlocking {
+        val loginResult = authController.login("benitez", "Prueba123")
+
+        assertTrue("El login previ hauria de ser correcte", loginResult.isSuccess)
+
+        val user = loginResult.getOrNull()
+        assertNotNull("S'hauria de retornar un usuari", user)
+
+        val offerIdWithTest = "6"
+
+        val result = applicationsController.apply(
+            offerId = offerIdWithTest,
+            sessionId = user!!.sessionId,
+            answer = "TIMEOUT"
+        )
+
+        assertTrue(
+            "La resposta hauria de ser correcta o indicar que ja existeix la candidatura",
+            result.isSuccess || result.exceptionOrNull()?.message == "Ja estàs inscrit a aquesta oferta"
+        )
+    }
+
 }

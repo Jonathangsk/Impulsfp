@@ -10,6 +10,22 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
+/**
+ * ViewModel encarregat de gestionar la lògica de negoci
+ * relacionada amb les candidatures de l'usuari.
+ *
+ * Aquesta classe s'encarrega de recuperar les candidatures
+ * enviades per l'usuari autenticat i actualitzar l'estat
+ * de la interfície mitjançant [ApplicationsUiState].
+ *
+ * També controla els diferents estats de càrrega i els
+ * possibles errors produïts durant la comunicació amb el servidor.
+ *
+ * Utilitza corrutines i StateFlow per gestionar l'estat
+ * reactiu de la pantalla de candidatures.
+ *
+ * @author abenitez
+ */
 class ApplicationsViewModel(
     private val applicationsController: ApplicationsController = ApplicationsController()
 ) : ViewModel() {
