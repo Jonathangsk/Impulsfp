@@ -14,8 +14,19 @@ namespace IMPULS_Desktop
     /// </summary>
     public partial class Empreses : Form
     {
-        private static readonly HttpClient client = new HttpClient();
+        private static readonly HttpClient client;
+        private static readonly string baseUrl;
 
+        static Empreses()
+        {
+            var handler = new HttpClientHandler();
+            handler.ServerCertificateCustomValidationCallback =
+                (message, cert, chain, errors) => true;
+
+            client = new HttpClient(handler);
+
+            baseUrl = PantallaPrincipal.apiBase.Replace("/auth", "");
+        }
         /// <summary>
         /// Constructor del formulari Empreses.
         /// Inicialitza els components i assigna els events principals.
@@ -26,7 +37,6 @@ namespace IMPULS_Desktop
             this.Load += Empreses_Load;
             dataGridViewEmpreses.SelectionChanged += dataGridViewEmpreses_SelectionChanged;
         }
-
         /// <summary>
         /// Esdeveniment Load del formulari.
         /// Carrega les empreses des de l’API.
@@ -34,21 +44,16 @@ namespace IMPULS_Desktop
         private async void Empreses_Load(object sender, EventArgs e)
         {
             await CarregarEmpreses();
-
-            dataGridViewEmpreses.SelectionChanged += dataGridViewEmpreses_SelectionChanged;
         }
-
         /// <summary>
         /// Carrega les empreses des del servidor i les mostra al DataGridView.
         /// </summary>
-        
         private async Task CarregarEmpreses()
         {
             try
             {
-                string baseUrl = PantallaPrincipal.apiBase.Replace("/auth", "");
-
-                string url = $"{baseUrl}/admin/companies?sessionId={PantallaPrincipal.SessionId}";
+                string url =
+                    $"{baseUrl}/admin/companies?sessionId={PantallaPrincipal.SessionId}";
 
                 var json = await client.GetStringAsync(url);
 
@@ -67,17 +72,15 @@ namespace IMPULS_Desktop
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.ToString());
+                MessageBox.Show("Error al carregar empreses: " + ex.Message);
             }
         }
-
         /// <summary>
         /// Esdeveniment que es dispara quan es selecciona una empresa.
         /// Carrega les ofertes associades a l’empresa seleccionada.
         /// </summary>
         private async void dataGridViewEmpreses_SelectionChanged(object sender, EventArgs e)
         {
-            
             try
             {
                 var empresa = dataGridViewEmpreses.CurrentRow?.DataBoundItem as Empresa;
@@ -85,11 +88,11 @@ namespace IMPULS_Desktop
                 if (empresa == null)
                     return;
 
-                string baseUrl = PantallaPrincipal.apiBase.Replace("/auth", "");
-                string url = $"{baseUrl}/admin/offers?sessionId={PantallaPrincipal.SessionId}";
+                string url =
+                    $"{baseUrl}/admin/offers?sessionId={PantallaPrincipal.SessionId}";
 
                 string json = await client.GetStringAsync(url);
-                
+
                 var offers = JsonSerializer.Deserialize<List<Oferta>>(
                     json,
                     new JsonSerializerOptions
@@ -98,10 +101,11 @@ namespace IMPULS_Desktop
                     });
 
                 var filtered = offers
-     .Where(o => o.CompanyName != null &&
-                 empresa.Name != null &&
-                 o.CompanyName.Trim().ToLower() == empresa.Name.Trim().ToLower())
-     .ToList();
+                    .Where(o => o.CompanyName != null &&
+                                empresa.Name != null &&
+                                o.CompanyName.Trim().ToLower() ==
+                                empresa.Name.Trim().ToLower())
+                    .ToList();
 
                 dataGridViewOfertes.AutoGenerateColumns = true;
                 dataGridViewOfertes.DataSource = filtered;
@@ -112,7 +116,7 @@ namespace IMPULS_Desktop
             }
         }
         /// <summary>
-        /// Tanca el formulari actual i torna enrere.
+        /// Torna a la pantalla anterior.
         /// </summary>
         private void btnTornar_Click(object sender, EventArgs e)
         {
@@ -125,15 +129,11 @@ namespace IMPULS_Desktop
         {
             Application.Exit();
         }
-
         /// <summary>
         /// Elimina una oferta seleccionada o, si no n’hi ha, elimina una empresa.
         /// </summary>
         private async void btnEliminar_Click(object sender, EventArgs e)
         {
-            string baseUrl = PantallaPrincipal.apiBase.Replace("/auth", "");
-
-            // si hi ha ofertes seleccionades, borrem la oferta
             if (dataGridViewOfertes.SelectedRows.Count > 0)
             {
                 var oferta = dataGridViewOfertes.SelectedRows[0].DataBoundItem as Oferta;
@@ -151,15 +151,14 @@ namespace IMPULS_Desktop
                 {
                     try
                     {
-                        string url = $"{baseUrl}/admin/offers/{oferta.Id}?sessionId={PantallaPrincipal.SessionId}";
+                        string url =
+                            $"{baseUrl}/admin/offers/{oferta.Id}?sessionId={PantallaPrincipal.SessionId}";
 
                         var response = await client.DeleteAsync(url);
 
                         if (response.IsSuccessStatusCode)
                         {
                             MessageBox.Show("Oferta eliminada correctament");
-
-                            // actualitzem ofertes d'aquesta finestra
                             dataGridViewEmpreses_SelectionChanged(null, null);
                         }
                         else
@@ -174,10 +173,10 @@ namespace IMPULS_Desktop
                     }
                 }
 
-                return; 
+                return;
             }
-
             // si no hi han ofertes, borrem empresa
+
             if (dataGridViewEmpreses.SelectedRows.Count > 0)
             {
                 var empresa = dataGridViewEmpreses.SelectedRows[0].DataBoundItem as Empresa;
@@ -195,7 +194,8 @@ namespace IMPULS_Desktop
                 {
                     try
                     {
-                        string url = $"{baseUrl}/admin/companies/{empresa.Id}?sessionId={PantallaPrincipal.SessionId}";
+                        string url =
+                            $"{baseUrl}/admin/companies/{empresa.Id}?sessionId={PantallaPrincipal.SessionId}";
 
                         var response = await client.DeleteAsync(url);
 
@@ -204,7 +204,7 @@ namespace IMPULS_Desktop
                             MessageBox.Show("Empresa eliminada correctament");
 
                             await CarregarEmpreses();
-                            dataGridViewOfertes.DataSource = null; // limpiar ofertas
+                            dataGridViewOfertes.DataSource = null;
                         }
                         else
                         {
@@ -222,12 +222,6 @@ namespace IMPULS_Desktop
             {
                 MessageBox.Show("Selecciona una empresa o una oferta");
             }
-        
-    }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }

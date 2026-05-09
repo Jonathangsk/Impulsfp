@@ -4,6 +4,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Net.WebRequestMethods;
 
 namespace IMPULS_Desktop
 {
@@ -14,10 +15,9 @@ namespace IMPULS_Desktop
     /// </summary>
     public partial class PantallaPrincipal : Form
     {
-        public static string SessionId; // ID de sessió de l'usuari
-        public static string apiBase = "http://0bb0dfb7-9b4c-40bc-a0be.5b8c35470a40.bastion.elmeuescriptori.cat:80/auth";
-       
-        public PantallaPrincipal()
+        public static string SessionId; 
+        public static string apiBase ="https://0bb0dfb7-9b4c-40bc-a0be.5b8c35470a40.bastion.elmeuescriptori.cat/auth";
+    public PantallaPrincipal()
         {
             InitializeComponent();
             this.FormClosing += Form1_FormClosing;
@@ -33,10 +33,12 @@ namespace IMPULS_Desktop
         {
             try
             {
-                using (var client = new HttpClient())
-                {
-                    client.Timeout = TimeSpan.FromSeconds(5);
-
+                var handler = new HttpClientHandler();
+                handler.ServerCertificateCustomValidationCallback =
+                    (message, cert, chain, errors) => true;
+                using (var client = new HttpClient(handler))
+             {
+                    client.Timeout = TimeSpan.FromSeconds(30);
                     var url = $"{apiBase}/login";
                     var requestObj = new { username = usuari, password = contrasenya };
                     var json = JsonSerializer.Serialize(requestObj);
@@ -70,9 +72,11 @@ namespace IMPULS_Desktop
             {
                 MessageBox.Show("No es pot connectar amb el servidor (Isard apagat o URL incorrecta)");
             }
-            catch (TaskCanceledException)
+            catch (TaskCanceledException ex)
+
             {
-                MessageBox.Show("Temps d'espera esgotat (servidor no respon)");
+              MessageBox.Show(ex.Message + "\n\n" + ex.InnerException?.Message);
+
             }
             catch (Exception ex)
             {

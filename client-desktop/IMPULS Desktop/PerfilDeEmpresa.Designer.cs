@@ -62,7 +62,7 @@
             this.btnTornar.TabIndex = 8;
             this.btnTornar.Text = "↩Tornar";
             this.btnTornar.UseVisualStyleBackColor = false;
-            this.btnTornar.Click += new System.EventHandler(this.btnTornar_Click_1);
+            this.btnTornar.Click += new System.EventHandler(this.btnTornar_Click);
             // 
             // btnTancar
             // 
@@ -75,7 +75,7 @@
             this.btnTancar.TabIndex = 7;
             this.btnTancar.Text = "❌Tancar";
             this.btnTancar.UseVisualStyleBackColor = false;
-            this.btnTancar.Click += new System.EventHandler(this.btnTancar_Click_1);
+//            this.btnTancar.Click += new System.EventHandler(this.btnTancar_Click_1);
             // 
             // btnEliminarOferta
             // 
@@ -111,6 +111,7 @@
             this.label1.TabIndex = 10;
             this.label1.Text = "Ofertes de treball";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // label2
             // 

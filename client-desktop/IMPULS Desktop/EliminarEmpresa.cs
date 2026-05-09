@@ -2,8 +2,8 @@
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
+using System.Threading.Tasks;
 using System.Windows.Forms;
-
 
 namespace IMPULS_Desktop
 {
@@ -13,35 +13,43 @@ namespace IMPULS_Desktop
     /// </summary>
     public partial class EliminarEmpresa : Form
     {
-        // Referència al formulari anterior (pantalla empresa)
-
+        // Referència al formulari anterior
         Form empresaForm;
 
+        // Client HTTP amb bypass SSL
+        private readonly HttpClient client;
+
         /// <summary>
-        /// Constructor que rep el formulari d’origen per poder tornar enrere.
+        /// Constructor que rep el formulari d’origen
         /// </summary>
         public EliminarEmpresa(Form empresa)
         {
             InitializeComponent();
+
             empresaForm = empresa;
+
+            var handler = new HttpClientHandler();
+
+            handler.ServerCertificateCustomValidationCallback =
+                (message, cert, chain, errors) => true;
+
+            client = new HttpClient(handler);
         }
 
         /// <summary>
-        /// Botó per tornar a la pantalla anterior sense fer canvis.
+        /// Botó per tornar enrere
         /// </summary>
-        private async void btnTornar_Click(object sender, EventArgs e)
+        private void btnTornar_Click(object sender, EventArgs e)
         {
             empresaForm.Show();
             this.Close();
         }
 
         /// <summary>
-        /// Botó principal per eliminar el compte de l’empresa.
-        /// Fa la petició DELETE a l’API després de confirmar.
+        /// Botó principal per eliminar el compte
         /// </summary>
         private async void button7_Click(object sender, EventArgs e)
         {
-            // Confirmació abans d’eliminar el compte
             var confirm = MessageBox.Show(
                 "Estàs segur que vols eliminar el compte?",
                 "Confirmació",
@@ -52,60 +60,71 @@ namespace IMPULS_Desktop
             if (confirm != DialogResult.Yes)
                 return;
 
+            if (string.IsNullOrWhiteSpace(textContrasenya.Text))
+            {
+                MessageBox.Show("Introdueix la contrasenya");
+                return;
+            }
+
             try
             {
-                using (var client = new HttpClient())
+                string url =
+                    $"{PantallaPrincipal.apiBase.Replace("/auth", "")}/users/me?sessionId={PantallaPrincipal.SessionId}";
+
+                var requestBody = new
                 {
-                    // URL de l’API amb la sessió activa
+                    password = textContrasenya.Text
+                };
 
-                    var url = $"{PantallaPrincipal.apiBase.Replace("/auth", "")}/users/me?sessionId={PantallaPrincipal.SessionId}";
+                var json = JsonSerializer.Serialize(requestBody);
 
-                    // Cos de la petició (contrasenya per confirmar eliminació)
+                var request = new HttpRequestMessage
+                {
+                    Method = HttpMethod.Delete,
+                    RequestUri = new Uri(url),
+                    Content = new StringContent(
+                        json,
+                        Encoding.UTF8,
+                        "application/json"
+                    )
+                };
 
-                    var requestBody = new
-                    {
-                        password = textContrasenya.Text
-                    };
+                var response = await client.SendAsync(request);
 
-                    var json = JsonSerializer.Serialize(requestBody);
+                if (response.IsSuccessStatusCode)
+                {
+                    MessageBox.Show("Compte eliminat correctament");
 
-                    // Es crea una petició DELETE amb body
+                    PantallaPrincipal formPrincipal =
+                        new PantallaPrincipal();
 
-                    var request = new HttpRequestMessage
-                    {
-                        Method = HttpMethod.Delete,
-                        RequestUri = new Uri(url),
-                        Content = new StringContent(json, Encoding.UTF8, "application/json")
-                    };
+                    formPrincipal.Show();
 
-                    // Enviament de la petició
-
-                    var response = await client.SendAsync(request);
-
-                    // Comprovació de resposta
-
-                    if (response.IsSuccessStatusCode)
-                    {
-                        MessageBox.Show("Compte eliminat correctament");
-
-                        // Torna al login
-                        PantallaPrincipal formPrincipal = new PantallaPrincipal();
-                        formPrincipal.Show();
-                        this.Close();
-                    }
-                    else
-                    {
-                        var error = await response.Content.ReadAsStringAsync();
-                        MessageBox.Show("Error eliminant el compte:\n" + error);
-                    }
+                    this.Close();
                 }
+                else
+                {
+                    var error =
+                        await response.Content.ReadAsStringAsync();
+
+                    MessageBox.Show(
+                        "Error eliminant el compte:\n" + error
+                    );
+                }
+            }
+            catch (HttpRequestException ex)
+            {
+                MessageBox.Show("Error HTTP: " + ex.Message);
+            }
+            catch (TaskCanceledException)
+            {
+                MessageBox.Show("Timeout amb el servidor");
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Error: " + ex.Message);
             }
         }
-        
 
         private void textUsuari_TextChanged(object sender, EventArgs e)
         {
@@ -113,9 +132,8 @@ namespace IMPULS_Desktop
         }
 
         /// <summary>
-        /// Botó per tancar l’aplicació.
+        /// Botó per tancar l’aplicació
         /// </summary>
-
         private void tancar_Click(object sender, EventArgs e)
         {
             Application.Exit();

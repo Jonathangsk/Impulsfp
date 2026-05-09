@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
@@ -12,8 +11,6 @@ namespace IMPULS_Desktop
     /// <summary>
     /// <author>Josep Mª</author>
     /// Formulari de perfil d’empresa.
-    /// Permet visualitzar i editar dades de l’empresa i les seves ofertes.
-    /// També permet modificar, eliminar i carregar ofertes des de l’API.
     /// </summary>
     public partial class PerfilDeEmpresa : Form
     {
@@ -22,7 +19,20 @@ namespace IMPULS_Desktop
         private Empresa empresaActual;
         private bool _guardat = false;
 
-  
+        // CLIENT HTTPS CON CERTIFICADO IGNORADO
+        private static readonly HttpClient client;
+
+        static PerfilDeEmpresa()
+        {
+            var handler = new HttpClientHandler();
+
+            handler.ServerCertificateCustomValidationCallback =
+                (message, cert, chain, errors) => true;
+
+            client = new HttpClient(handler);
+
+            client.Timeout = TimeSpan.FromSeconds(30);
+        }
         /// <summary>
         /// Constructor del formulari amb referència a la pantalla d’empresa.
         /// Carrega dades inicials i assigna events als DataGridView.
@@ -32,6 +42,7 @@ namespace IMPULS_Desktop
             InitializeComponent();
 
             _pantallaEmpresa = pantallaEmpresa;
+
             this.FormClosing += PerfilEmpresa_FormClosing;
             this.Load += async (s, e) => await CarregarDades();
 
@@ -56,73 +67,51 @@ namespace IMPULS_Desktop
 
             try
             {
-                using (HttpClient client = new HttpClient())
-                {
-                    client.Timeout = TimeSpan.FromSeconds(10);
+                string baseUrl = PantallaPrincipal.apiBase.Replace("/auth", "");
 
-                    string url =
-                      $"http://0bb0dfb7-9b4c-40bc-a0be.5b8c35470a40.bastion.elmeuescriptori.cat:80/users/me?sessionId={PantallaPrincipal.SessionId}";
-        var json = await client.GetStringAsync(url);
+                string url =
+                    $"{baseUrl}/users/me?sessionId={PantallaPrincipal.SessionId}";
 
-             
+                var json = await client.GetStringAsync(url);
 
-                    // Deserelitzem
-                    var empresa = JsonSerializer.Deserialize<Empresa>(
-                        json,
-                        new JsonSerializerOptions
-                        {
-                            PropertyNameCaseInsensitive = true
-                        });
-
-                    if (empresa != null)
+                var empresa = JsonSerializer.Deserialize<Empresa>(
+                    json,
+                    new JsonSerializerOptions
                     {
-                        empresaActual = empresa;
+                        PropertyNameCaseInsensitive = true
+                    });
 
-                        // Converteix llista de tecnologies a text
-                        empresa.TechnologiesText =
-                            string.Join(", ", empresa.Technologies ?? new List<string>());
+                if (empresa != null)
+                {
+                    empresaActual = empresa;
 
-                        lista.Add(empresa);
+                    empresa.TechnologiesText =
+                        string.Join(", ", empresa.Technologies ?? new List<string>());
 
-                  
-                    }
+                    lista.Add(empresa);
                 }
 
-                // Configuració del datagriew Empresa
                 dataGridView1.AutoGenerateColumns = true;
                 dataGridView1.DataSource = lista;
                 dataGridView1.ReadOnly = false;
                 dataGridView1.AllowUserToAddRows = false;
                 dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
 
-                // ocultar columnes no editables
                 if (dataGridView1.Columns.Contains("Technologies"))
                     dataGridView1.Columns["Technologies"].Visible = false;
 
                 if (dataGridView1.Columns.Contains("Password"))
                     dataGridView1.Columns["Password"].Visible = false;
 
-                // Configuració del datagriew Ofertes
                 dataGridView2.AutoGenerateColumns = true;
-
-               
                 dataGridView2.DataSource = new List<Oferta>();
-
                 dataGridView2.ReadOnly = false;
                 dataGridView2.AllowUserToAddRows = false;
                 dataGridView2.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             }
-            catch (HttpRequestException)
-            {
-                MessageBox.Show("Error de connexió amb el servidor.");
-            }
-            catch (TaskCanceledException)
-            {
-                MessageBox.Show("El servidor triga molt en respondre.");
-            }
             catch (Exception ex)
             {
-                MessageBox.Show("Error inesperat: " + ex.Message);
+                MessageBox.Show("Error carregant dades: " + ex.Message);
             }
         }
         /// <summary>
@@ -146,7 +135,6 @@ namespace IMPULS_Desktop
                 MessageBox.Show("Error cargando ofertas: " + ex.Message);
             }
         }
-
         /// <summary>
         /// Carrega les ofertes de l’empresa des de l’API.
         /// </summary>
@@ -154,32 +142,31 @@ namespace IMPULS_Desktop
         {
             try
             {
-                using (HttpClient client = new HttpClient())
-                {
-       string url =
-                       $"http://0bb0dfb7-9b4c-40bc-a0be.5b8c35470a40.bastion.elmeuescriptori.cat:80/offers/my?sessionId={PantallaPrincipal.SessionId}";
+                string baseUrl = PantallaPrincipal.apiBase.Replace("/auth", "");
 
-                    var json = await client.GetStringAsync(url);
+                string url =
+                    $"{baseUrl}/offers/my?sessionId={PantallaPrincipal.SessionId}";
 
-                    var offers = JsonSerializer.Deserialize<List<Oferta>>(
-                        json,
-                        new JsonSerializerOptions
-                        {
-                            PropertyNameCaseInsensitive = true
-                        });
+                var json = await client.GetStringAsync(url);
 
-                    dataGridView2.DataSource = offers ?? new List<Oferta>();
+                var offers = JsonSerializer.Deserialize<List<Oferta>>(
+                    json,
+                    new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true
+                    });
 
-                    // ocultar columnas si quieres
-                    if (dataGridView2.Columns.Contains("skills"))
-                        dataGridView2.Columns["skills"].Visible = false;
-                }
+                dataGridView2.DataSource = offers ?? new List<Oferta>();
+
+                if (dataGridView2.Columns.Contains("skills"))
+                    dataGridView2.Columns["skills"].Visible = false;
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Error cargando ofertas: " + ex.Message);
             }
         }
+
         /// <summary>
         /// Quan s’edita una cel·la de l’empresa,
         /// es valida el camp i es fa update a l’API.
@@ -190,10 +177,8 @@ namespace IMPULS_Desktop
             {
                 if (empresaActual == null) return;
 
-
                 var columnName = dataGridView1.Columns[e.ColumnIndex].Name;
 
-                // Validar campos no editables
                 if (columnName == "Id" ||
                     columnName == "Email" ||
                     columnName == "VatNumber" ||
@@ -213,50 +198,38 @@ namespace IMPULS_Desktop
                     website = empresaActual.Website,
                     niche = empresaActual.Niche,
                     technologies = empresaActual.Technologies ?? new List<string>()
-
                 };
-         
-        
-      
-                
+
+                string baseUrl = PantallaPrincipal.apiBase.Replace("/auth", "");
+
                 string url =
-                    $"http://0bb0dfb7-9b4c-40bc-a0be.5b8c35470a40.bastion.elmeuescriptori.cat:80/users/me?sessionId={PantallaPrincipal.SessionId}";
+                    $"{baseUrl}/users/me?sessionId={PantallaPrincipal.SessionId}";
 
-                using (HttpClient client = new HttpClient())
+                var json = JsonSerializer.Serialize(body);
+
+                var content = new StringContent(
+                    json,
+                    Encoding.UTF8,
+                    "application/json");
+
+                var response = await client.PutAsync(url, content);
+
+                var responseText = await response.Content.ReadAsStringAsync();
+
+                if (response.IsSuccessStatusCode)
                 {
-                    var json = JsonSerializer.Serialize(body);
-                    
-                    var content = new StringContent(json, Encoding.UTF8, "application/json");
-
-                    var response = await client.PutAsync(url, content);
-
-                    var responseText = await response.Content.ReadAsStringAsync();
-
-                    if (response.IsSuccessStatusCode)
-                    {
-                        MessageBox.Show("Dades Guardades correctament");
-                        await CarregarDades();
-                    }
-                    else
-                    {
-                        MessageBox.Show("ERROR BACKEND:\n" + responseText);
-                    }
+                    MessageBox.Show("Dades guardades correctament");
+                    await CarregarDades();
+                }
+                else
+                {
+                    MessageBox.Show("ERROR BACKEND:\n" + responseText);
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Error: " + ex.Message);
             }
-        }
-     
-        private void btnTancar_Click(object sender, EventArgs e)
-        {
-            Application.Exit();
-        }
-
-        private void btnTornar_Click(object sender, EventArgs e)
-        {
-            this.Close();
         }
         /// <summary>
         /// Converteix un valor a decimal de forma segura.
@@ -276,7 +249,6 @@ namespace IMPULS_Desktop
 
             return result;
         }
-
         /// <summary>
         /// Actualitza una oferta quan s’edita al DataGridView.
         /// </summary>
@@ -294,32 +266,35 @@ namespace IMPULS_Desktop
                 {
                     title = fila.Cells["title"].Value?.ToString(),
                     description = fila.Cells["description"].Value?.ToString(),
-                  
                     location = fila.Cells["location"].Value?.ToString(),
                     modality = fila.Cells["modality"].Value?.ToString(),
                     contractType = fila.Cells["contractType"].Value?.ToString(),
                     salary = ParseDecimalSafe(fila.Cells["salary"].Value)
                 };
 
+                string baseUrl = PantallaPrincipal.apiBase.Replace("/auth", "");
+
                 string url =
-                    $"http://0bb0dfb7-9b4c-40bc-a0be.5b8c35470a40.bastion.elmeuescriptori.cat:80/offers/{id}?sessionId={PantallaPrincipal.SessionId}";
+                    $"{baseUrl}/offers/{id}?sessionId={PantallaPrincipal.SessionId}";
 
-                using (HttpClient client = new HttpClient())
+                var json = JsonSerializer.Serialize(oferta);
+
+                var content = new StringContent(
+                    json,
+                    Encoding.UTF8,
+                    "application/json");
+
+                var response = await client.PutAsync(url, content);
+
+                var responseText = await response.Content.ReadAsStringAsync();
+
+                if (response.IsSuccessStatusCode)
                 {
-                    var json = JsonSerializer.Serialize(oferta);
-                    var content = new StringContent(json, Encoding.UTF8, "application/json");
-
-                    var response = await client.PutAsync(url, content);
-                    var responseText = await response.Content.ReadAsStringAsync();
-
-                    if (response.IsSuccessStatusCode)
-                    {
-                        MessageBox.Show("Oferta actualizada ✔");
-                    }
-                    else
-                    {
-                        MessageBox.Show("ERROR:\n" + responseText);
-                    }
+                    MessageBox.Show("Oferta actualizada ✔");
+                }
+                else
+                {
+                    MessageBox.Show("ERROR:\n" + responseText);
                 }
             }
             catch (Exception ex)
@@ -327,7 +302,6 @@ namespace IMPULS_Desktop
                 MessageBox.Show("Error: " + ex.Message);
             }
         }
- 
         /// <summary>
         /// Elimina una oferta seleccionada després de confirmació.
         /// </summary>
@@ -352,36 +326,49 @@ namespace IMPULS_Desktop
 
             try
             {
-                OfferService service = new OfferService();
-                await service.DeleteOffer(oferta.Id, PantallaPrincipal.SessionId);
+                string baseUrl = PantallaPrincipal.apiBase.Replace("/auth", "");
 
-                await CarregarDades();
+                string url =
+                    $"{baseUrl}/offers/{oferta.Id}?sessionId={PantallaPrincipal.SessionId}";
 
-            }
-            catch (HttpRequestException)
-            {
-                MessageBox.Show("Error de connexió amb el servidor");
+                var response = await client.DeleteAsync(url);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    MessageBox.Show("Oferta eliminada");
+                    await CarregarDades();
+                }
+                else
+                {
+                    string error = await response.Content.ReadAsStringAsync();
+                    MessageBox.Show(error);
+                }
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Error inesperat: " + ex.Message);
             }
         }
-        /// <summary>
+
+         /// <summary>
         /// Torna a la pantalla anterior.
         /// </summary>
-        private void btnTornar_Click_1(object sender, EventArgs e)
+        private void btnTornar_Click(object sender, EventArgs e)
         {
             _pantallaEmpresa.Show();
             this.Close();
         }
+
+    
         /// <summary>
         /// Tanca l’aplicació.
         /// </summary>
-        private void btnTancar_Click_1(object sender, EventArgs e)
+        private void btnTancar_Click(object sender, EventArgs e)
         {
             Application.Exit();
         }
+
+    
 
         private void PerfilDeEmpresa_Load(object sender, EventArgs e)
         {
@@ -395,12 +382,19 @@ namespace IMPULS_Desktop
 
         private void CanviContrasenya_Click(object sender, EventArgs e)
         {
-            CanviContrasenya form = new CanviContrasenya(PantallaPrincipal.SessionId);
-            form.Owner = this; // 👈 importante para poder volver atrás
+            CanviContrasenya form =
+                new CanviContrasenya(PantallaPrincipal.SessionId);
+
+            form.Owner = this;
             form.ShowDialog();
         }
 
         private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label1_Click(object sender, EventArgs e)
         {
 
         }
