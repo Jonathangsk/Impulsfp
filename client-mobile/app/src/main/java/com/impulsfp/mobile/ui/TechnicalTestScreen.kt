@@ -11,7 +11,22 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import com.impulsfp.mobile.data.Offer
 import kotlinx.coroutines.delay
-
+/**
+ * Pantalla encarregada de mostrar i gestionar la prova tècnica
+ * associada a una oferta.
+ *
+ * Aquesta pantalla presenta la pregunta de la prova, el possible
+ * fragment de codi i les opcions de resposta disponibles.
+ *
+ * També controla el temps màxim per completar la prova mitjançant
+ * un compte enrere i registra automàticament la prova com a no
+ * completada si el temps s'esgota.
+ *
+ * En finalitzar correctament, desa la resposta seleccionada
+ * al ViewModel d'ofertes i retorna a la pantalla anterior.
+ *
+ * @author abenitez
+ */
 @Composable
 fun TechnicalTestScreen(
     offer: Offer,

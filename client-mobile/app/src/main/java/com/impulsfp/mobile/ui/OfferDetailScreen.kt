@@ -29,7 +29,24 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import com.impulsfp.mobile.data.Offer
-
+/**
+ * Pantalla encarregada de mostrar el detall d'una oferta concreta.
+ *
+ * Aquesta pantalla presenta tota la informació rellevant d'una oferta,
+ * incloent-hi el títol, l'empresa, la descripció, la ubicació,
+ * el tipus de contracte, el salari, el cicle formatiu i les tecnologies
+ * requerides.
+ *
+ * També gestiona el procés d'inscripció de l'usuari a l'oferta,
+ * mostrant missatges de confirmació o error segons la resposta
+ * del servidor.
+ *
+ * En cas que l'oferta tingui una prova tècnica associada, controla
+ * la navegació cap a la pantalla de prova i limita la inscripció
+ * fins que aquesta hagi estat completada.
+ *
+ * @author abenitez
+ */
 @Composable
 fun OfferDetailScreen(
     offer: Offer,

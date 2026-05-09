@@ -2,6 +2,12 @@ package com.impulsfp.mobile.network
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import okhttp3.OkHttpClient
+import java.security.SecureRandom
+import java.security.cert.X509Certificate
+import javax.net.ssl.SSLContext
+import javax.net.ssl.TrustManager
+import javax.net.ssl.X509TrustManager
 
 /**
  * Objecte encarregat de configurar Retrofit i proporcionar
@@ -37,7 +43,7 @@ object ApiClient {
      */
 
     //private var baseUrl: String = "http://10.0.2.2:8080/" //Servidor en local
-    private var baseUrl: String = "http://0bb0dfb7-9b4c-40bc-a0be.5b8c35470a40.bastion.elmeuescriptori.cat/" //Servidor en Isard
+    private var baseUrl: String = "https://0bb0dfb7-9b4c-40bc-a0be.5b8c35470a40.bastion.elmeuescriptori.cat/" //Servidor en Isard
 
     /**
      * Instància única de Retrofit.
@@ -74,6 +80,7 @@ object ApiClient {
         if (retrofit == null) {
             retrofit = Retrofit.Builder()
                 .baseUrl(baseUrl)
+                .client(getUnsafeOkHttpClient())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
         }
@@ -111,4 +118,37 @@ object ApiClient {
      */
     val applicationsApiService: ApplicationsApiService
         get() = getRetrofit().create(ApplicationsApiService::class.java)
+
+    private fun getUnsafeOkHttpClient(): OkHttpClient {
+        val trustAllCerts = arrayOf<TrustManager>(
+            object : X509TrustManager {
+                override fun checkClientTrusted(
+                    chain: Array<out X509Certificate>?,
+                    authType: String?
+                ) {
+                }
+
+                override fun checkServerTrusted(
+                    chain: Array<out X509Certificate>?,
+                    authType: String?
+                ) {
+                }
+
+                override fun getAcceptedIssuers(): Array<X509Certificate> {
+                    return arrayOf()
+                }
+            }
+        )
+
+        val sslContext = SSLContext.getInstance("SSL")
+        sslContext.init(null, trustAllCerts, SecureRandom())
+
+        val sslSocketFactory = sslContext.socketFactory
+        val trustManager = trustAllCerts[0] as X509TrustManager
+
+        return OkHttpClient.Builder()
+            .sslSocketFactory(sslSocketFactory, trustManager)
+            .hostnameVerifier { _, _ -> true }
+            .build()
+    }
 }

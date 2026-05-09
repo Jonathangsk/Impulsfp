@@ -37,7 +37,21 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.impulsfp.mobile.data.Offer
 import com.impulsfp.mobile.data.SessionData
-
+/**
+ * Pantalla encarregada de mostrar el llistat d'ofertes disponibles.
+ *
+ * Aquesta pantalla permet visualitzar les ofertes rebudes del servidor
+ * i aplicar filtres de cerca per text, ciutat i modalitat de treball.
+ *
+ * També gestiona els diferents estats de la interfície, com la càrrega
+ * de dades, la visualització d'errors i el cas en què no es troben
+ * ofertes que coincideixin amb els filtres seleccionats.
+ *
+ * La pantalla integra la navegació principal de l'aplicació mitjançant
+ * la barra superior i permet accedir al detall de cada oferta.
+ *
+ * @author abenitez
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun OffersScreen(

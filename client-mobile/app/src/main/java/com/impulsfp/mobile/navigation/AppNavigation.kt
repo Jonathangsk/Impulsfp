@@ -22,6 +22,21 @@ import com.impulsfp.mobile.ui.ProfileViewModel
 import com.impulsfp.mobile.ui.RegisterScreen
 import com.impulsfp.mobile.ui.TechnicalTestScreen
 
+/**
+ * Classe encarregada de gestionar la navegació principal de l'aplicació.
+ *
+ * Defineix totes les pantalles disponibles i les rutes de navegació
+ * utilitzades dins l'aplicació mitjançant Navigation Compose.
+ *
+ * També s'encarrega de controlar el flux de navegació entre pantalles,
+ * la gestió del back stack i la comunicació entre diferents seccions
+ * de la interfície d'usuari.
+ *
+ * Les rutes dinàmiques permeten navegar a pantalles concretes
+ * utilitzant identificadors com l'identificador d'una oferta.
+ *
+ * @author abenitez
+ */
 sealed class AppScreen(val route: String) {
     object Login : AppScreen("login")
     object Register : AppScreen("register")

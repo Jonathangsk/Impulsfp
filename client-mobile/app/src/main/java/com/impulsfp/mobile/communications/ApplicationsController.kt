@@ -8,10 +8,41 @@ import java.net.ConnectException
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 
+/**
+ * Classe encarregada de gestionar la comunicació amb el servidor
+ * per a les operacions relacionades amb les candidatures de l'usuari.
+ *
+ * Aquesta classe permet inscriure l'usuari autenticat a una oferta
+ * i recuperar el llistat de candidatures enviades.
+ *
+ * També s'encarrega de tractar els possibles errors de connexió,
+ * autenticació o resposta del servidor, retornant missatges descriptius
+ * per facilitar la gestió des de la capa de presentació.
+ *
+ * @author abenitez
+ */
 open class ApplicationsController {
 
     private val api = ApiClient.applicationsApiService
 
+    /**
+     * Inscriu l'usuari autenticat a una oferta.
+     *
+     * Envia al servidor la sol·licitud de candidatura associada
+     * a l'oferta indicada, utilitzant l'identificador de sessió
+     * de l'usuari autenticat.
+     *
+     * Opcionalment, permet enviar una resposta o missatge associat
+     * a la candidatura.
+     *
+     * @param offerId Identificador de l'oferta a la qual es vol inscriure l'usuari
+     * @param sessionId Identificador de sessió de l'usuari autenticat
+     * @param answer Resposta opcional enviada juntament amb la candidatura
+     *
+     * @return [Result] amb:
+     * - Missatge de confirmació si la inscripció és correcta
+     * - Excepció amb missatge descriptiu si es produeix algun error
+     */
     open suspend fun apply(
         offerId: String,
         sessionId: String,
@@ -62,6 +93,22 @@ open class ApplicationsController {
         }
     }
 
+    /**
+     * Recupera les candidatures de l'usuari autenticat.
+     *
+     * Fa una petició al backend utilitzant l'identificador de sessió
+     * i transforma la resposta en una llista d'objectes [ApplicationUiModel]
+     * aptes per ser mostrats a la interfície de l'aplicació.
+     *
+     * També converteix l'estat intern de la candidatura rebut del servidor
+     * en un text més entenedor per a l'usuari.
+     *
+     * @param sessionId Identificador de sessió de l'usuari autenticat
+     *
+     * @return [Result] amb:
+     * - Llista de [ApplicationUiModel] si la consulta és correcta
+     * - Excepció amb missatge descriptiu si es produeix algun error
+     */
     open suspend fun getMyApplications(
         sessionId: String
     ): Result<List<ApplicationUiModel>> {
@@ -103,6 +150,16 @@ open class ApplicationsController {
         }
     }
 
+    /**
+     * Converteix l'estat intern d'una candidatura en un text llegible.
+     *
+     * Rep l'estat retornat pel servidor i el transforma en una etiqueta
+     * més clara per mostrar-la a la interfície d'usuari.
+     *
+     * @param status Estat original de la candidatura retornat pel servidor
+     *
+     * @return Text descriptiu de l'estat de la candidatura
+     */
     private fun mapStatus(status: String): String {
         return when (status.uppercase()) {
             "PENDING" -> "Enviada"

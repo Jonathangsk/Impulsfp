@@ -27,6 +27,23 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.impulsfp.mobile.data.ApplicationUiModel
 
+/**
+ * Pantalla encarregada de mostrar les candidatures enviades
+ * per l'usuari autenticat.
+ *
+ * Aquesta pantalla permet visualitzar el llistat de candidatures,
+ * incloent-hi la informació principal de cada oferta i l'estat
+ * actual del procés de selecció.
+ *
+ * També gestiona diferents estats de la interfície com la càrrega
+ * de dades, la visualització d'errors i el cas en què l'usuari
+ * encara no ha enviat cap candidatura.
+ *
+ * La pantalla integra la navegació principal de l'aplicació
+ * mitjançant la barra superior i la gestió de sessió de l'usuari.
+ *
+ * @author abenitez
+ */
 @Composable
 fun ApplicationsScreen(
     onHomeClick: () -> Unit,

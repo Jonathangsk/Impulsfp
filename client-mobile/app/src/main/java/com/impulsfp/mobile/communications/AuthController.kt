@@ -74,11 +74,20 @@ open class AuthController {
         } catch (e: ConnectException) {
             Result.failure(Exception("No s'ha pogut connectar amb el servidor"))
         } catch (e: SocketTimeoutException) {
+            e.printStackTrace()
             Result.failure(Exception("Temps d'espera esgotat en connectar amb el servidor"))
+        } catch (e: javax.net.ssl.SSLHandshakeException) {
+            e.printStackTrace()
+            Result.failure(Exception("Error SSL: ${e.message}"))
+        } catch (e: javax.net.ssl.SSLPeerUnverifiedException) {
+            e.printStackTrace()
+            Result.failure(Exception("Error SSL hostname: ${e.message}"))
         } catch (e: IOException) {
-            Result.failure(Exception("Error de xarxa en connectar amb el servidor"))
+            e.printStackTrace()
+            Result.failure(Exception("Error de xarxa: ${e.javaClass.simpleName} - ${e.message}"))
         } catch (e: Exception) {
-            Result.failure(Exception("S'ha produït un error inesperat"))
+            e.printStackTrace()
+            Result.failure(Exception("Error inesperat: ${e.javaClass.simpleName} - ${e.message}"))
         }
     }
 

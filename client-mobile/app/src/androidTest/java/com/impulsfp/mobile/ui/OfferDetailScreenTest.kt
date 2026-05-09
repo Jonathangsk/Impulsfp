@@ -72,10 +72,10 @@ class OfferDetailScreenTest {
                 onProfileClick = {},
                 onLogoutClick = {},
                 onBackClick = {},
+                onTechnicalTestClick = { _ -> },
                 offersViewModel = offersViewModel
             )
         }
-
         composeTestRule.waitForIdle()
 
         composeTestRule.onNodeWithTag("offerDetailScreen").assertIsDisplayed()
@@ -102,6 +102,7 @@ class OfferDetailScreenTest {
                 onProfileClick = {},
                 onLogoutClick = {},
                 onBackClick = {},
+                onTechnicalTestClick = { _ -> },
                 offersViewModel = offersViewModel
             )
         }
@@ -129,6 +130,7 @@ class OfferDetailScreenTest {
                 onProfileClick = {},
                 onLogoutClick = {},
                 onBackClick = {},
+                onTechnicalTestClick = { _ -> },
                 offersViewModel = offersViewModel
             )
         }
