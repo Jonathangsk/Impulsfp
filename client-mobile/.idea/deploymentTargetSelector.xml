@@ -13,13 +13,10 @@
         </DropdownSelection>
         <DialogSelection />
       </SelectionState>
-      <SelectionState runConfigName="TechnicalTestScreenTest">
+      <SelectionState runConfigName="AppNavigationFlowTest">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="OfferDetailScreenTest">
-        <option name="selectionMode" value="DROPDOWN" />
-      </SelectionState>
-      <SelectionState runConfigName="offer_detail_to_technical_test_navigation_works()">
+      <SelectionState runConfigName="Tests in 'com.impulsfp.mobile.ui'">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
     </selectionStates>

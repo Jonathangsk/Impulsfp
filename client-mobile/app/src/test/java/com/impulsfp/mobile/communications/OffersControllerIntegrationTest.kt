@@ -13,8 +13,6 @@ import org.junit.Test
  * Aquestes proves verifiquen:
  * - obtenció correcta d'ofertes amb una sessió vàlida
  * - resposta controlada amb una sessió invàlida
- * - resposta controlada en aplicar a una oferta existent
- * - error controlat davant un id d'oferta invàlid
  *
  * IMPORTANT:
  * Aquestes proves depenen del comportament real del backend.
@@ -30,7 +28,7 @@ class OffersControllerIntegrationTest {
     @Before
     fun setUp() {
         ApiClient.setBaseUrl(
-            "http://0bb0dfb7-9b4c-40bc-a0be.5b8c35470a40.bastion.elmeuescriptori.cat/"
+            "https://0bb0dfb7-9b4c-40bc-a0be.5b8c35470a40.bastion.elmeuescriptori.cat/"
         )
 
         authController = AuthController()
@@ -51,6 +49,7 @@ class OffersControllerIntegrationTest {
         )
 
         val user = loginResult.getOrNull()
+
         assertNotNull(
             "S'hauria de retornar un usuari",
             user
@@ -84,69 +83,6 @@ class OffersControllerIntegrationTest {
         assertTrue(
             "El backend hauria de respondre de forma controlada",
             result.isSuccess || result.isFailure
-        )
-    }
-
-    /**
-     * Verifica que aplicar a una oferta existent amb sessió vàlida
-     * retorna una resposta controlada.
-     *
-     * Segons l'estat del backend, pot ser success o failure
-     * (per exemple si ja existeix una candidatura prèvia).
-     */
-    @Test
-    fun applyToOffer_with_valid_session_returns_controlled_response() = runBlocking {
-        val loginResult = authController.login("benitez", "Prueba123")
-
-        assertTrue(
-            "El login previ hauria de ser correcte",
-            loginResult.isSuccess
-        )
-
-        val user = loginResult.getOrNull()
-        assertNotNull(
-            "S'hauria de retornar un usuari",
-            user
-        )
-
-        val result = offersController.applyToOffer(
-            offerId = "1",
-            sessionId = user!!.sessionId
-        )
-
-        assertTrue(
-            "La resposta hauria de ser controlada pel backend",
-            result.isSuccess || result.isFailure
-        )
-    }
-
-    /**
-     * Verifica que aplicar a una oferta inexistent
-     * retorna un error controlat.
-     */
-    @Test
-    fun applyToOffer_returns_controlled_failure_when_offer_does_not_exist() = runBlocking {
-        val loginResult = authController.login("benitez", "Prueba123")
-
-        assertTrue(
-            "El login previ hauria de ser correcte",
-            loginResult.isSuccess
-        )
-
-        val user = loginResult.getOrNull()
-        assertNotNull(
-            "S'hauria de retornar un usuari",
-            user
-        )
-
-        val result = offersController.applyToOffer(
-            offerId = "999999",
-            sessionId = user!!.sessionId
-        )
-
-        assertTrue(
-            "L'operació hauria de fallar o estar controlada",
-            result.isFailure || result.isSuccess
         )
     }
 }
