@@ -4,6 +4,42 @@
         <name>IMPULS Desktop</name>
     </assembly>
     <members>
+        <member name="T:IMPULS_Desktop.Services.AlertService">
+            <summary>
+            Servicio d’alertes per a Windows Forms.
+            Mostra missatges a l’usuari utilitzant MessageBox.
+            Implementa IAlertService per permetre testing amb mocks.
+            </summary>
+        </member>
+        <member name="M:IMPULS_Desktop.Services.AlertService.Mostrar(System.String,System.String,System.String)">
+            <summary>
+            Mostra un missatge emergent a l’usuari.
+            </summary>
+            <param name="titul">Títol de l’alerta</param>
+            <param name="missatge">Missatge a mostrar</param>
+            <param name="boto">Text del botó (no utilitzat en WinForms)</param>
+            <returns>Task completada</returns>
+        </member>
+        <member name="T:IMPULS_Desktop.Services.IAlertService">
+            <summary>
+            Servei d’alertes per mostrar missatges a l’usuari.
+            Permet desacoblar la UI per facilitar testing.
+            </summary>
+        </member>
+        <member name="M:IMPULS_Desktop.Services.IAlertService.Mostrar(System.String,System.String,System.String)">
+            <summary>
+            Mostra una alerta a l’usuari.
+            </summary>
+            <param name="titol">Títol de l’alerta.</param>
+            <param name="missatge">Missatge principal.</param>
+            <param name="boto">Text del botó de confirmació.</param>
+        </member>
+        <member name="T:IMPULS_Desktop.Alumne">
+            <summary>
+            Representa un alumne dins del sistema IMPULS.
+            Conté informació personal, acadèmica i professional.
+            </summary>
+        </member>
         <member name="T:IMPULS_Desktop.Alumnes">
             <summary>
             Formulari que mostra i gestiona els alumnes del sistema.
@@ -40,7 +76,7 @@
         </member>
         <member name="M:IMPULS_Desktop.Alumnes.btnTancar_Click(System.Object,System.EventArgs)">
             <summary>
-            Tanca completament l’aplicació.
+            Botó per tancar l’aplicació
             </summary>
         </member>
         <member name="F:IMPULS_Desktop.Alumnes.components">
@@ -58,6 +94,33 @@
             <summary>
             Required method for Designer support - do not modify
             the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:IMPULS_Desktop.ApiClient">
+            <summary>
+            Client HTTP per comunicar-se amb l’API.
+            Encapsula HttpClient per facilitar testing i desacoblament.
+            </summary>
+        </member>
+        <member name="M:IMPULS_Desktop.ApiClient.GetAsync(System.String)">
+            <summary>
+            Realitza una petició GET a l’API.
+            </summary>
+        </member>
+        <member name="M:IMPULS_Desktop.ApiClient.PutAsync(System.String,System.Net.Http.HttpContent)">
+            <summary>
+            Realitza una petició PUT a l’API.
+            </summary>
+        </member>
+        <member name="M:IMPULS_Desktop.ApiClient.DeleteAsync(System.String)">
+            <summary>
+            Realitza una petició DELETE a l’API.
+            </summary>
+        </member>
+        <member name="T:IMPULS_Desktop.Candidatos">
+            <summary>
+            Representa un candidat dins del sistema IMPULS.
+            Conté la informació personal, acadèmica i d’estat de l’aplicació.
             </summary>
         </member>
         <member name="T:IMPULS_Desktop.Candidats">
@@ -136,29 +199,67 @@
         </member>
         <member name="T:IMPULS_Desktop.CanviContrasenya">
             <summary>
-            Formulari per al canvi de contrasenya.
-            Permet validar dues contrasenyes i simular el restabliment.
+            Formulari que permet canviar la contrasenya d’un usuari.
+            Conté la lògica de validació i la crida a l’API per actualitzar la contrasenya.
             </summary>
         </member>
-        <member name="M:IMPULS_Desktop.CanviContrasenya.#ctor">
+        <member name="F:IMPULS_Desktop.CanviContrasenya.sessionId">
             <summary>
-            Esdeveniment de càrrega del formulari
+            SessionId de l’usuari autenticat.
+            </summary>
+        </member>
+        <member name="F:IMPULS_Desktop.CanviContrasenya.client">
+            <summary>
+            Client HTTP per comunicar-se amb l’API.
+            </summary>
+        </member>
+        <member name="F:IMPULS_Desktop.CanviContrasenya.alertService">
+            <summary>
+            Servei per mostrar alertes i missatges.
+            </summary>
+        </member>
+        <member name="M:IMPULS_Desktop.CanviContrasenya.#ctor(System.String,System.Net.Http.HttpClient,IMPULS_Desktop.Services.IAlertService)">
+            <summary>
+            Constructor amb injecció de dependències per testing.
+            </summary>
+        </member>
+        <member name="M:IMPULS_Desktop.CanviContrasenya.RestaurarAsync">
+            <summary>
+            Lògica testeable del canvi de contrasenya.
             </summary>
         </member>
         <member name="M:IMPULS_Desktop.CanviContrasenya.restaurar_Click(System.Object,System.EventArgs)">
             <summary>
-            Botó per restaurar la contrasenya.
-            Comprova que les dues contrasenyes coincideixen.
+            Event del botó restaurar.
+            Executa el canvi de contrasenya.
             </summary>
         </member>
-        <member name="M:IMPULS_Desktop.CanviContrasenya.button1_Click(System.Object,System.EventArgs)">
+        <member name="P:IMPULS_Desktop.CanviContrasenya.TxtContrasenyaActual">
             <summary>
-            Tanca l’aplicació
+            Propietat per obtenir o assignar
+            la contrasenya actual.
             </summary>
         </member>
-        <member name="M:IMPULS_Desktop.CanviContrasenya.button2_Click(System.Object,System.EventArgs)">
+        <member name="P:IMPULS_Desktop.CanviContrasenya.TxtNovaContrasenya">
             <summary>
-            Torna a la finestra anterior sense guardar canvis
+            Propietat per obtenir o assignar
+            la nova contrasenya.
+            </summary>
+        </member>
+        <member name="P:IMPULS_Desktop.CanviContrasenya.TxtConfirmacio">
+            <summary>
+            Propietat per obtenir o assignar
+            la confirmació de contrasenya.
+            </summary>
+        </member>
+        <member name="M:IMPULS_Desktop.CanviContrasenya.tornar_Click(System.Object,System.EventArgs)">
+            <summary>
+            Torna al formulari anterior.
+            </summary>
+        </member>
+        <member name="M:IMPULS_Desktop.CanviContrasenya.tancar_Click(System.Object,System.EventArgs)">
+            <summary>
+            Tanca completament l’aplicació.
             </summary>
         </member>
         <member name="F:IMPULS_Desktop.CanviContrasenya.components">
@@ -186,23 +287,22 @@
         </member>
         <member name="M:IMPULS_Desktop.EliminarEmpresa.#ctor(System.Windows.Forms.Form)">
             <summary>
-            Constructor que rep el formulari d’origen per poder tornar enrere.
+            Constructor que rep el formulari d’origen
             </summary>
         </member>
         <member name="M:IMPULS_Desktop.EliminarEmpresa.btnTornar_Click(System.Object,System.EventArgs)">
             <summary>
-            Botó per tornar a la pantalla anterior sense fer canvis.
+            Botó per tornar enrere
             </summary>
         </member>
         <member name="M:IMPULS_Desktop.EliminarEmpresa.button7_Click(System.Object,System.EventArgs)">
             <summary>
-            Botó principal per eliminar el compte de l’empresa.
-            Fa la petició DELETE a l’API després de confirmar.
+            Botó principal per eliminar el compte
             </summary>
         </member>
         <member name="M:IMPULS_Desktop.EliminarEmpresa.tancar_Click(System.Object,System.EventArgs)">
             <summary>
-            Botó per tancar l’aplicació.
+            Botó per tancar l’aplicació
             </summary>
         </member>
         <member name="F:IMPULS_Desktop.EliminarEmpresa.components">
@@ -220,6 +320,12 @@
             <summary>
             Required method for Designer support - do not modify
             the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:IMPULS_Desktop.Empresa">
+            <summary>
+            Representa una empresa dins del sistema IMPULS.
+            Conté informació de contacte, identificació i dades de negoci.
             </summary>
         </member>
         <member name="T:IMPULS_Desktop.Empreses">
@@ -253,7 +359,7 @@
         </member>
         <member name="M:IMPULS_Desktop.Empreses.btnTornar_Click(System.Object,System.EventArgs)">
             <summary>
-            Tanca el formulari actual i torna enrere.
+            Torna a la pantalla anterior.
             </summary>
         </member>
         <member name="M:IMPULS_Desktop.Empreses.btnTancar_Click(System.Object,System.EventArgs)">
@@ -283,6 +389,31 @@
             the contents of this method with the code editor.
             </summary>
         </member>
+        <member name="T:IMPULS_Desktop.IApiClient">
+            <summary>
+            Abstracció del client HTTP per accedir a l’API.
+            Permet desacoblar HttpClient per facilitar testing i manteniment.
+            </summary>
+        </member>
+        <member name="M:IMPULS_Desktop.IApiClient.GetAsync(System.String)">
+            <summary>
+            Realitza una petició HTTP GET.
+            </summary>
+            <param name="url">URL de l’endpoint.</param>
+        </member>
+        <member name="M:IMPULS_Desktop.IApiClient.PutAsync(System.String,System.Net.Http.HttpContent)">
+            <summary>
+            Realitza una petició HTTP PUT.
+            </summary>
+            <param name="url">URL de l’endpoint.</param>
+            <param name="content">Contingut de la petició.</param>
+        </member>
+        <member name="M:IMPULS_Desktop.IApiClient.DeleteAsync(System.String)">
+            <summary>
+            Realitza una petició HTTP DELETE.
+            </summary>
+            <param name="url">URL de l’endpoint.</param>
+        </member>
         <member name="T:IMPULS_Desktop.LoginResponse">
             <summary>
             Representa la resposta de l'API de login.
@@ -302,8 +433,6 @@
             <summary>
             <author>Josep Mª</author>
             Formulari de perfil d’empresa.
-            Permet visualitzar i editar dades de l’empresa i les seves ofertes.
-            També permet modificar, eliminar i carregar ofertes des de l’API.
             </summary>
         </member>
         <member name="M:IMPULS_Desktop.PerfilDeEmpresa.#ctor(IMPULS_Desktop.PantallaEmpresa)">
@@ -355,12 +484,12 @@
             Elimina una oferta seleccionada després de confirmació.
             </summary>
         </member>
-        <member name="M:IMPULS_Desktop.PerfilDeEmpresa.btnTornar_Click_1(System.Object,System.EventArgs)">
+        <member name="M:IMPULS_Desktop.PerfilDeEmpresa.btnTornar_Click(System.Object,System.EventArgs)">
             <summary>
             Torna a la pantalla anterior.
             </summary>
         </member>
-        <member name="M:IMPULS_Desktop.PerfilDeEmpresa.btnTancar_Click_1(System.Object,System.EventArgs)">
+        <member name="M:IMPULS_Desktop.PerfilDeEmpresa.btnTancar_Click(System.Object,System.EventArgs)">
             <summary>
             Tanca l’aplicació.
             </summary>
@@ -382,15 +511,15 @@
             the contents of this method with the code editor.
             </summary>
         </member>
+        <member name="T:IMPULS_Desktop.Oferta">
+            <summary>
+            Representa una oferta laboral dins del sistema IMPULS.
+            Conté informació sobre el lloc de treball i les seves condicions.
+            </summary>
+        </member>
         <member name="T:IMPULS_Desktop.OfertesDeTreball">
             <summary>
             Formulari que mostra les ofertes de treball d’una empresa.
-            Permet visualitzar, editar, eliminar i veure candidats.
-            </summary>
-        </member>
-        <member name="F:IMPULS_Desktop.OfertesDeTreball.client">
-            <summary>
-            Client HTTP per fer peticions a l’API.
             </summary>
         </member>
         <member name="M:IMPULS_Desktop.OfertesDeTreball.#ctor(IMPULS_Desktop.PantallaEmpresa)">
@@ -432,7 +561,7 @@
         </member>
         <member name="M:IMPULS_Desktop.OfertesDeTreball.btnTancar_Click(System.Object,System.EventArgs)">
             <summary>
-            Tanca l’aplicació.
+            Botó per tancar l’aplicació
             </summary>
         </member>
         <member name="M:IMPULS_Desktop.OfertesDeTreball.btnTornar_Click(System.Object,System.EventArgs)">
@@ -464,41 +593,32 @@
         </member>
         <member name="T:IMPULS_Desktop.RegistreNovaEmpresa">
             <summary>
-            <author>Josep Mª</author>
             Formulari de registre d’una nova empresa.
-            Permet introduir dades, validar-les i enviar-les a una API.
-            </summary>
-        </member>
-        <member name="M:IMPULS_Desktop.RegistreNovaEmpresa.#ctor(System.Windows.Forms.Form)">
-            <summary>
-            Constructor del formulari.
-            Guarda el formulari anterior per poder tornar enrere.
             </summary>
         </member>
         <member name="M:IMPULS_Desktop.RegistreNovaEmpresa.RegistrarEmpresaAPI(IMPULS_Desktop.Empresa,System.Collections.Generic.List{System.String})">
             <summary>
-            Envia les dades de l’empresa a l’API per registrar-la.
-            Si l’operació és correcta, guarda la sessió i retorna true.
-            Gestiona errors de connexió, timeout i errors del servidor.
+            Registrar empresa a la API.
             </summary>
         </member>
         <member name="M:IMPULS_Desktop.RegistreNovaEmpresa.btnDesar_Click(System.Object,System.EventArgs)">
             <summary>
-            Esdeveniment del botó Guardar.
-            Valida tots els camps del formulari,
-            crea l’objecte Empresa i envia les dades a l’API.
-            Si tot és correcte, neteja el formulari i torna a la pantalla anterior.
+            Botó desar.
             </summary>
         </member>
         <member name="M:IMPULS_Desktop.RegistreNovaEmpresa.ValidarUsername(System.String)">
             <summary>
-            Valida el nom d’usuari.
-            Ha de tenir entre 4 i 20 caràcters alfanumèrics.
+            Validar username.
+            </summary>
+        </member>
+        <member name="M:IMPULS_Desktop.RegistreNovaEmpresa.ValidarPassword(System.String)">
+            <summary>
+            Validar password.
             </summary>
         </member>
         <member name="M:IMPULS_Desktop.RegistreNovaEmpresa.btnReset_Click(System.Object,System.EventArgs)">
             <summary>
-            Esborra tots els camps del formulari.
+            Reset formulari.
             </summary>
         </member>
         <member name="F:IMPULS_Desktop.RegistreNovaEmpresa.components">
@@ -619,6 +739,11 @@
             Invoca LogoutAPI i, si és correcte, neteja la sessió i tanca el formulari.
             </summary>
         </member>
+        <member name="M:IMPULS_Desktop.Administrador.btnTancar_Click(System.Object,System.EventArgs)">
+            <summary>
+            Botó per tancar l’aplicació
+            </summary>
+        </member>
         <member name="F:IMPULS_Desktop.Administrador.components">
             <summary>
             Required designer variable.
@@ -724,6 +849,11 @@
             Punt d'entrada principal de l'aplicació.
             </summary>
         </member>
+        <member name="T:IMPULS_Desktop.PublicarOferta">
+            <summary>
+            Formulari per crear i publicar ofertes de feina.
+            </summary>
+        </member>
         <member name="M:IMPULS_Desktop.PublicarOferta.#ctor(IMPULS_Desktop.PantallaEmpresa)">
             <summary>
             Constructor alternatiu sense pantalla anterior.
@@ -732,30 +862,27 @@
         </member>
         <member name="M:IMPULS_Desktop.PublicarOferta.InicializarCombos">
             <summary>
-            Inicialitza els ComboBox del formulari amb les opcions disponibles:
-            modalitat, tipus de contracte i cicle formatiu.
+            Inicialitza els ComboBox.
             </summary>
         </member>
         <member name="M:IMPULS_Desktop.PublicarOferta.PublicarOferta_FormClosing(System.Object,System.Windows.Forms.FormClosingEventArgs)">
             <summary>
-            Quan es tanca el formulari, es torna a mostrar la pantalla d’empresa.
+            Quan es tanca el formulari.
             </summary>
         </member>
         <member name="M:IMPULS_Desktop.PublicarOferta.btnDesar_Click(System.Object,System.EventArgs)">
             <summary>
-            Esdeveniment del botó Guardar.
-            Valida els camps, crea l’objecte oferta i l’envia a l’API.
-            Si té èxit, neteja el formulari.
+            Crear oferta.
             </summary>
         </member>
         <member name="M:IMPULS_Desktop.PublicarOferta.btnTancar_Click(System.Object,System.EventArgs)">
             <summary>
-            Tanca completament l’aplicació.
+            Tanca aplicació.
             </summary>
         </member>
         <member name="M:IMPULS_Desktop.PublicarOferta.btnTornar_Click(System.Object,System.EventArgs)">
             <summary>
-            Torna a la pantalla d’empresa i tanca aquest formulari.
+            Tornar enrere.
             </summary>
         </member>
         <member name="F:IMPULS_Desktop.PublicarOferta.components">

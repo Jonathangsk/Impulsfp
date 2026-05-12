@@ -5,7 +5,6 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 import retrofit2.http.POST
 import retrofit2.http.Path
-
 interface OffersApiService {
 
     @GET("offers")
@@ -13,9 +12,4 @@ interface OffersApiService {
         @Query("sessionId") sessionId: String
     ): Response<List<OfferResponse>>
 
-    @POST("offers/{offerId}/apply")
-    suspend fun applyToOffer(
-        @Path("offerId") offerId: String,
-        @Query("sessionId") sessionId: String
-    ): Response<ApplyOfferResponse>
 }

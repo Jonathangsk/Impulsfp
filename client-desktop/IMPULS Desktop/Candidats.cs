@@ -15,13 +15,13 @@ namespace IMPULS_Desktop
     /// </summary>
     public partial class Candidats : Form
     {
-        private readonly HttpClient client = new HttpClient();
+        private readonly HttpClient client;
         private List<Candidatos> candidats = new List<Candidatos>();
 
         private int ofertaId = 1;
-        private string apiUrl =>
 
-    $"http://0bb0dfb7-9b4c-40bc-a0be.5b8c35470a40.bastion.elmeuescriptori.cat/offers/{ofertaId}/applicants?sessionId={PantallaPrincipal.SessionId}";
+        private string apiUrl =>
+            $"{PantallaPrincipal.apiBase.Replace("/auth", "")}/offers/{ofertaId}/applicants?sessionId={PantallaPrincipal.SessionId}";
 
         /// <summary>
         /// Constructor del formulari
@@ -29,7 +29,14 @@ namespace IMPULS_Desktop
         public Candidats(int ofertaId)
         {
             InitializeComponent();
+
             this.ofertaId = ofertaId;
+
+            var handler = new HttpClientHandler();
+            handler.ServerCertificateCustomValidationCallback =
+                (message, cert, chain, errors) => true;
+
+            client = new HttpClient(handler);
         }
 
         /// <summary>
@@ -38,20 +45,17 @@ namespace IMPULS_Desktop
         /// </summary>
         private async void Candidats_Load(object sender, EventArgs e)
         {
-            // Configuració del DataGridView
             dataGridView1.ReadOnly = true;
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dataGridView1.MultiSelect = false;
 
-            // Event per colorear estats
             dataGridView1.CellFormatting += dataGridView1_CellFormatting;
 
-            // Carregar dades
             await CarregarCandidats();
 
-            // Ajustar tamany despres de carregar
             AjustarAlturaGrid();
         }
+
         /// <summary>
         /// Ajusta l’alçada del DataGridView segons les files
         /// </summary>
@@ -66,15 +70,17 @@ namespace IMPULS_Desktop
 
             dataGridView1.Height = height;
         }
+
         /// <summary>
         /// Pinta les files segons l’estat del candidat
         /// </summary>
         private void dataGridView1_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
-            if (dataGridView1.Columns[e.ColumnIndex].Name == "status")
-            {
-                var valor = e.Value?.ToString();
+            var columnName = dataGridView1.Columns[e.ColumnIndex].Name;
+            var valor = e.Value?.ToString();
 
+            if (columnName == "status")
+            {
                 if (valor == "ACCEPTED")
                 {
                     e.CellStyle.BackColor = Color.LightGreen;
@@ -88,28 +94,49 @@ namespace IMPULS_Desktop
                     e.CellStyle.BackColor = Color.LightYellow;
                 }
             }
+            else if (columnName == "testResult")
+            {
+                if (valor == "PASSED")
+                {
+                    e.CellStyle.BackColor = Color.LightGreen;
+                }
+                else if (valor == "FAILED")
+                {
+                    e.CellStyle.BackColor = Color.LightCoral;
+                }
+            }
         }
+
         /// <summary>
         /// Carrega els candidats des de l’API
         /// </summary>
-        private async System.Threading.Tasks.Task CarregarCandidats()
+        private async Task CarregarCandidats()
         {
             try
             {
                 var response = await client.GetAsync(apiUrl);
+
                 response.EnsureSuccessStatusCode();
 
                 var json = await response.Content.ReadAsStringAsync();
 
-                candidats = JsonSerializer.Deserialize<List<Candidatos>>(json,
-                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+                candidats = JsonSerializer.Deserialize<List<Candidatos>>(
+                    json,
+                    new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true
+                    });
 
                 dataGridView1.DataSource = null;
                 dataGridView1.DataSource = candidats;
             }
-            catch (HttpRequestException)
+            catch (HttpRequestException ex)
             {
-                MessageBox.Show("No es pot conectar amb el servidor");
+                MessageBox.Show("Error HTTP: " + ex.Message);
+            }
+            catch (TaskCanceledException)
+            {
+                MessageBox.Show("Timeout amb el servidor");
             }
             catch (Exception ex)
             {
@@ -131,7 +158,7 @@ namespace IMPULS_Desktop
             var c = (Candidatos)dataGridView1.CurrentRow.DataBoundItem;
 
             var confirm = MessageBox.Show(
-                "Acceptar candidatura de " + c.Name + "?",
+                "Acceptar candidatura de " + c.name + "?",
                 "Confirmar",
                 MessageBoxButtons.YesNo);
 
@@ -141,6 +168,7 @@ namespace IMPULS_Desktop
             try
             {
                 await CambiarEstat(c.applicationId, "ACCEPTED");
+
                 MessageBox.Show("Candidatura acceptada");
 
                 await CarregarCandidats();
@@ -148,7 +176,6 @@ namespace IMPULS_Desktop
             catch (HttpRequestException ex)
             {
                 MessageBox.Show("Error HTTP: " + ex.Message);
-                MessageBox.Show("Error de connexió");
             }
         }
 
@@ -158,19 +185,26 @@ namespace IMPULS_Desktop
         private async Task CambiarEstat(int applicationId, string nuevoEstado)
         {
             var json = JsonSerializer.Serialize(new { status = nuevoEstado });
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var content = new StringContent(
+                json,
+                Encoding.UTF8,
+                "application/json"
+            );
 
             var request = new HttpRequestMessage(
                 new HttpMethod("PATCH"),
-                $"http://0bb0dfb7-9b4c-40bc-a0be.5b8c35470a40.bastion.elmeuescriptori.cat/applications/{applicationId}?sessionId={PantallaPrincipal.SessionId}"
+                $"{PantallaPrincipal.apiBase.Replace("/auth", "")}/applications/{applicationId}?sessionId={PantallaPrincipal.SessionId}"
             )
             {
                 Content = content
             };
 
             var response = await client.SendAsync(request);
+
             response.EnsureSuccessStatusCode();
         }
+
         /// <summary>
         /// Rebutja un candidat seleccionat
         /// </summary>
@@ -185,7 +219,7 @@ namespace IMPULS_Desktop
             var c = (Candidatos)dataGridView1.CurrentRow.DataBoundItem;
 
             var confirm = MessageBox.Show(
-                "Rebutjar candidatura de " + c.Name + "?",
+                "Rebutjar candidatura de " + c.name + "?",
                 "Confirmar",
                 MessageBoxButtons.YesNo);
 
@@ -195,14 +229,14 @@ namespace IMPULS_Desktop
             try
             {
                 await CambiarEstat(c.applicationId, "REJECTED");
-              
+
                 MessageBox.Show("Candidatura rebutjada");
 
                 await CarregarCandidats();
             }
-            catch (HttpRequestException)
+            catch (HttpRequestException ex)
             {
-                MessageBox.Show("Error de connexió");
+                MessageBox.Show("Error HTTP: " + ex.Message);
             }
         }
 

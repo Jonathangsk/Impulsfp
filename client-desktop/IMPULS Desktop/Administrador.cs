@@ -98,6 +98,9 @@ namespace IMPULS_Desktop
             this.Close();
         }
 
+        /// <summary>
+        /// Botó per tancar l’aplicació
+        /// </summary>
         private void btnTancar_Click(object sender, EventArgs e)
         {
             Application.Exit();

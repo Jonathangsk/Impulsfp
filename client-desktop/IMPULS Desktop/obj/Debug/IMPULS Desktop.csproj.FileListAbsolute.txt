@@ -88,3 +88,5 @@ C:\Users\jgran\Desktop\Impulsfp\client-desktop\IMPULS Desktop\obj\Debug\IMPULS_D
 C:\Users\jgran\Desktop\Impulsfp\client-desktop\IMPULS Desktop\obj\Debug\IMPULS_Desktop.EliminarEmpresa.resources
 C:\Users\jgran\Desktop\Impulsfp\client-desktop\IMPULS Desktop\obj\Debug\IMPULS_Desktop.Alumnes.resources
 C:\Users\jgran\Desktop\Impulsfp\client-desktop\IMPULS Desktop\obj\Debug\IMPULS_Desktop.Empreses.resources
+C:\Users\jgran\Desktop\Impulsfp\client-desktop\IMPULS Desktop\bin\Debug\Newtonsoft.Json.dll
+C:\Users\jgran\Desktop\Impulsfp\client-desktop\IMPULS Desktop\bin\Debug\Newtonsoft.Json.xml

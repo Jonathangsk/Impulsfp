@@ -1,6 +1,7 @@
 package com.impulsfp.mobile.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -19,7 +20,23 @@ import com.impulsfp.mobile.ui.OffersViewModel
 import com.impulsfp.mobile.ui.ProfileScreen
 import com.impulsfp.mobile.ui.ProfileViewModel
 import com.impulsfp.mobile.ui.RegisterScreen
+import com.impulsfp.mobile.ui.TechnicalTestScreen
 
+/**
+ * Classe encarregada de gestionar la navegació principal de l'aplicació.
+ *
+ * Defineix totes les pantalles disponibles i les rutes de navegació
+ * utilitzades dins l'aplicació mitjançant Navigation Compose.
+ *
+ * També s'encarrega de controlar el flux de navegació entre pantalles,
+ * la gestió del back stack i la comunicació entre diferents seccions
+ * de la interfície d'usuari.
+ *
+ * Les rutes dinàmiques permeten navegar a pantalles concretes
+ * utilitzant identificadors com l'identificador d'una oferta.
+ *
+ * @author abenitez
+ */
 sealed class AppScreen(val route: String) {
     object Login : AppScreen("login")
     object Register : AppScreen("register")
@@ -27,8 +44,13 @@ sealed class AppScreen(val route: String) {
     object Profile : AppScreen("profile")
     object EditProfile : AppScreen("edit_profile")
     object Applications : AppScreen("applications")
+
     object OfferDetail : AppScreen("offer_detail/{offerId}") {
         fun createRoute(offerId: String) = "offer_detail/$offerId"
+    }
+
+    object TechnicalTest : AppScreen("technical_test/{offerId}") {
+        fun createRoute(offerId: String) = "technical_test/$offerId"
     }
 }
 
@@ -38,6 +60,7 @@ fun AppNavigation(
 ) {
     val navController = rememberNavController()
     val profileViewModel: ProfileViewModel = viewModel()
+    val offersViewModel: OffersViewModel = viewModel()
 
     NavHost(
         navController = navController,
@@ -71,7 +94,9 @@ fun AppNavigation(
         }
 
         composable(AppScreen.Offers.route) {
-            val offersViewModel: OffersViewModel = viewModel()
+            LaunchedEffect(Unit) {
+                offersViewModel.loadOffers()
+            }
 
             OffersScreen(
                 onLogout = {
@@ -98,7 +123,6 @@ fun AppNavigation(
                 navArgument("offerId") { type = NavType.StringType }
             )
         ) { backStackEntry ->
-            val offersViewModel: OffersViewModel = viewModel()
 
             val offerId = backStackEntry.arguments?.getString("offerId")
             val offersUiState by offersViewModel.uiState.collectAsState()
@@ -129,7 +153,37 @@ fun AppNavigation(
                     onBackClick = {
                         navController.popBackStack()
                     },
+                    onTechnicalTestClick = { selectedOffer ->
+                        navController.navigate(
+                            AppScreen.TechnicalTest.createRoute(selectedOffer.id)
+                        )
+                    },
                     offersViewModel = offersViewModel
+                )
+            }
+        }
+
+        composable(
+            route = AppScreen.TechnicalTest.route,
+            arguments = listOf(
+                navArgument("offerId") { type = NavType.StringType }
+            )
+        ) { backStackEntry ->
+
+            val offerId = backStackEntry.arguments?.getString("offerId")
+            val offersUiState by offersViewModel.uiState.collectAsState()
+            val offer = offersUiState.offers.find { it.id == offerId }
+
+            if (offer != null) {
+                TechnicalTestScreen(
+                    offer = offer,
+                    offersViewModel = offersViewModel,
+                    onBackClick = {
+                        navController.popBackStack()
+                    },
+                    onTestCompleted = {
+                        navController.popBackStack()
+                    }
                 )
             }
         }

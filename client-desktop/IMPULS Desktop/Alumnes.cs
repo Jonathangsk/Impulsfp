@@ -13,9 +13,22 @@ namespace IMPULS_Desktop
     /// </summary>
     public partial class Alumnes : Form
     {
-        // Client HTTP reutilitzable per fer peticions a l’API
-        private static readonly HttpClient client = new HttpClient();
+        // HttpClient global amb bypass de certificat (DEV)
+        private static readonly HttpClient client;
 
+        // Base URL sense /auth
+        private static readonly string baseUrl;
+
+        static Alumnes()
+        {
+            var handler = new HttpClientHandler();
+            handler.ServerCertificateCustomValidationCallback =
+                (message, cert, chain, errors) => true;
+
+            client = new HttpClient(handler);
+
+            baseUrl = PantallaPrincipal.apiBase.Replace("/auth", "");
+        }
         /// <summary>
         /// Constructor del formulari Alumnes.
         /// Inicialitza components i assigna l’esdeveniment Load.
@@ -33,23 +46,21 @@ namespace IMPULS_Desktop
         {
             await CarregarAlumnes();
         }
-
         /// <summary>
         /// Carrega els alumnes des de l’API i els mostra al DataGridView.
         /// </summary>
-
         private async Task CarregarAlumnes()
         {
             try
             {
                 // URL de l’endpoint d’administració amb sessionId
-                var url = $"http://0bb0dfb7-9b4c-40bc-a0be.5b8c35470a40.bastion.elmeuescriptori.cat:80/admin/students?sessionId={PantallaPrincipal.SessionId}";
+                string url =
+                    $"{baseUrl}/admin/students?sessionId={PantallaPrincipal.SessionId}";
 
                 // Petició GET al servidor
                 var json = await client.GetStringAsync(url);
 
                 // Deserialització del JSON a llista d’objectes Alumne
-
                 var lista = JsonSerializer.Deserialize<List<Alumne>>(
                     json,
                     new JsonSerializerOptions
@@ -68,7 +79,6 @@ namespace IMPULS_Desktop
                 MessageBox.Show("Error al carregar alumnes: " + ex.Message);
             }
         }
-
         /// <summary>
         /// Elimina l’alumne seleccionat al DataGridView.
         /// Fa una petició DELETE a l’API d’administració.
@@ -97,17 +107,16 @@ namespace IMPULS_Desktop
             {
                 try
                 {
-                    string baseUrl = PantallaPrincipal.apiBase.Replace("/auth", "");
-
                     // Endpoint DELETE amb sessionId
-                    string url = $"{baseUrl}/admin/students/{alumne.Id}?sessionId={PantallaPrincipal.SessionId}";
+
+                    string url =
+                        $"{baseUrl}/admin/students/{alumne.Id}?sessionId={PantallaPrincipal.SessionId}";
 
                     var response = await client.DeleteAsync(url);
 
                     if (response.IsSuccessStatusCode)
                     {
                         MessageBox.Show("Alumne eliminat correctament");
-                        //carreguem les dades novament per actualitzar la vista
                         await CarregarAlumnes();
                     }
                     else
@@ -129,15 +138,12 @@ namespace IMPULS_Desktop
         {
             this.Close();
         }
-
         /// <summary>
-        /// Tanca completament l’aplicació.
+        /// Botó per tancar l’aplicació
         /// </summary>
         private void btnTancar_Click(object sender, EventArgs e)
         {
             Application.Exit();
         }
-
-     
     }
 }

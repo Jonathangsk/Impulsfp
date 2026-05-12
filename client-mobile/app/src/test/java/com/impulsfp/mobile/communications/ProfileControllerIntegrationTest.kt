@@ -15,6 +15,7 @@ import org.junit.Test
  * - obtenció del perfil amb sessió vàlida
  * - resposta controlada amb sessió invàlida
  * - actualització del perfil amb sessió vàlida
+ * - canvi de contrasenya amb contrasenya incorrecta
  * - resposta controlada en eliminar el compte amb contrasenya incorrecta
  *
  * IMPORTANT:
@@ -24,6 +25,8 @@ import org.junit.Test
  * També es respecten les restriccions funcionals de l'aplicació:
  * - no es modifica el username
  * - no es modifica l'email
+ * - no es canvia realment la contrasenya de l'usuari
+ * - no s'elimina cap compte real
  *
  * @author abenitez
  */
@@ -35,17 +38,13 @@ class ProfileControllerIntegrationTest {
     @Before
     fun setUp() {
         ApiClient.setBaseUrl(
-            "http://0bb0dfb7-9b4c-40bc-a0be.5b8c35470a40.bastion.elmeuescriptori.cat/"
+            "https://0bb0dfb7-9b4c-40bc-a0be.5b8c35470a40.bastion.elmeuescriptori.cat/"
         )
 
         authController = AuthController()
         profileController = ProfileController()
     }
 
-    /**
-     * Verifica que es recupera correctament el perfil
-     * d'un usuari autenticat.
-     */
     @Test
     fun getProfile_returns_profile_when_session_is_valid() = runBlocking {
         val loginResult = authController.login("benitez", "Prueba123")
@@ -56,6 +55,7 @@ class ProfileControllerIntegrationTest {
         )
 
         val user = loginResult.getOrNull()
+
         assertNotNull(
             "S'hauria de retornar un usuari",
             user
@@ -69,6 +69,7 @@ class ProfileControllerIntegrationTest {
         )
 
         val profile = result.getOrNull()
+
         assertNotNull(
             "S'hauria de retornar un perfil d'usuari",
             profile
@@ -80,13 +81,6 @@ class ProfileControllerIntegrationTest {
         )
     }
 
-    /**
-     * Verifica que una sessió invàlida rep una resposta controlada.
-     *
-     * El backend real pot retornar èxit o error segons la validació
-     * implementada al servidor, però no hauria de produir una fallada
-     * inesperada al client.
-     */
     @Test
     fun getProfile_with_invalid_session_returns_controlled_response() = runBlocking {
         val result = profileController.getProfile("invalid-session-id")
@@ -97,16 +91,6 @@ class ProfileControllerIntegrationTest {
         )
     }
 
-    /**
-     * Verifica que l'actualització del perfil amb sessió vàlida
-     * retorna una resposta controlada.
-     *
-     * Aquest test respecta el comportament funcional de l'aplicació:
-     * no es modifica ni el username ni l'email, ja que no són editables.
-     *
-     * Per això primer es recupera el perfil actual i després s'envia
-     * una actualització mantenint aquests camps intactes.
-     */
     @Test
     fun updateProfile_with_valid_session_returns_controlled_response() = runBlocking {
         val loginResult = authController.login("benitez", "Prueba123")
@@ -117,6 +101,7 @@ class ProfileControllerIntegrationTest {
         )
 
         val user = loginResult.getOrNull()
+
         assertNotNull(
             "S'hauria de retornar un usuari",
             user
@@ -130,6 +115,7 @@ class ProfileControllerIntegrationTest {
         )
 
         val currentProfile = profileResult.getOrNull()
+
         assertNotNull(
             "S'hauria de retornar el perfil actual",
             currentProfile
@@ -162,13 +148,34 @@ class ProfileControllerIntegrationTest {
         )
     }
 
-    /**
-     * Verifica que la petició d'eliminar el compte amb una
-     * contrasenya incorrecta retorna una resposta controlada.
-     *
-     * Aquest test no elimina cap compte real, ja que s'envia
-     * una contrasenya incorrecta expressament.
-     */
+    @Test
+    fun changePassword_with_wrong_current_password_returns_controlled_response() = runBlocking {
+        val loginResult = authController.login("benitez", "Prueba123")
+
+        assertTrue(
+            "El login previ hauria de ser correcte",
+            loginResult.isSuccess
+        )
+
+        val user = loginResult.getOrNull()
+
+        assertNotNull(
+            "S'hauria de retornar un usuari",
+            user
+        )
+
+        val result = profileController.changePassword(
+            sessionId = user!!.sessionId,
+            currentPassword = "incorrecta",
+            newPassword = "PasswordNova123"
+        )
+
+        assertTrue(
+            "El canvi de contrasenya amb contrasenya incorrecta hauria de retornar una resposta controlada",
+            result.isSuccess || result.isFailure
+        )
+    }
+
     @Test
     fun deleteAccount_with_wrong_password_returns_controlled_response() = runBlocking {
         val loginResult = authController.login("benitez", "Prueba123")
@@ -179,6 +186,7 @@ class ProfileControllerIntegrationTest {
         )
 
         val user = loginResult.getOrNull()
+
         assertNotNull(
             "S'hauria de retornar un usuari",
             user

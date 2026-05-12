@@ -50,8 +50,8 @@
             this.label8 = new System.Windows.Forms.Label();
             this.btnTancar = new System.Windows.Forms.Button();
             this.btnDesar = new System.Windows.Forms.Button();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.checkTeProva = new System.Windows.Forms.CheckBox();
+            this.comboTest = new System.Windows.Forms.ComboBox();
+            this.Test = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -99,7 +99,8 @@
             // groupBox1
             // 
             this.groupBox1.BackColor = System.Drawing.Color.Gainsboro;
-            this.groupBox1.Controls.Add(this.checkTeProva);
+            this.groupBox1.Controls.Add(this.Test);
+            this.groupBox1.Controls.Add(this.comboTest);
             this.groupBox1.Controls.Add(this.btnTornar);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.comboCycle);
@@ -147,6 +148,7 @@
             this.comboCycle.Name = "comboCycle";
             this.comboCycle.Size = new System.Drawing.Size(140, 33);
             this.comboCycle.TabIndex = 11;
+            this.comboCycle.SelectedIndexChanged += new System.EventHandler(this.comboCycle_SelectedIndexChanged);
             // 
             // comboTipusdecontracte
             // 
@@ -283,27 +285,24 @@
             this.btnDesar.UseVisualStyleBackColor = false;
             this.btnDesar.Click += new System.EventHandler(this.btnDesar_Click);
             // 
-            // checkBox1
+            // comboTest
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(0, 0);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(95, 20);
-            this.checkBox1.TabIndex = 6;
-            this.checkBox1.Text = "checkBox1";
-            this.checkBox1.UseVisualStyleBackColor = true;
+            this.comboTest.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.comboTest.FormattingEnabled = true;
+            this.comboTest.Location = new System.Drawing.Point(353, 536);
+            this.comboTest.Name = "comboTest";
+            this.comboTest.Size = new System.Drawing.Size(140, 33);
+            this.comboTest.TabIndex = 33;
             // 
-            // checkTeProva
+            // Test
             // 
-            this.checkTeProva.AutoSize = true;
-            this.checkTeProva.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkTeProva.Location = new System.Drawing.Point(353, 528);
-            this.checkTeProva.Name = "checkTeProva";
-            this.checkTeProva.Size = new System.Drawing.Size(97, 33);
-            this.checkTeProva.TabIndex = 32;
-            this.checkTeProva.Text = "Prova";
-            this.checkTeProva.UseVisualStyleBackColor = true;
-            this.checkTeProva.CheckedChanged += new System.EventHandler(this.checkBox2_CheckedChanged);
+            this.Test.BackColor = System.Drawing.Color.White;
+            this.Test.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Test.Location = new System.Drawing.Point(13, 536);
+            this.Test.Name = "Test";
+            this.Test.Size = new System.Drawing.Size(197, 29);
+            this.Test.TabIndex = 34;
+            this.Test.Text = "Test";
             // 
             // PublicarOferta
             // 
@@ -313,14 +312,12 @@
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.ClientSize = new System.Drawing.Size(939, 1055);
-            this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.groupBox1);
             this.Name = "PublicarOferta";
             this.Text = "Nova oferta";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -347,7 +344,7 @@
         private System.Windows.Forms.ComboBox comboCycle;
         private System.Windows.Forms.ComboBox comboTipusdecontracte;
         private System.Windows.Forms.Button btnTornar;
-        private System.Windows.Forms.CheckBox checkTeProva;
-        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.Label Test;
+        private System.Windows.Forms.ComboBox comboTest;
     }
 }
