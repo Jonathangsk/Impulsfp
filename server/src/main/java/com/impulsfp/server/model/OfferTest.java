@@ -3,6 +3,12 @@ package com.impulsfp.server.model;
 import com.impulsfp.server.enums.TestType;
 import jakarta.persistence.*;
 
+/**
+ * Entitat que representa les proves tècniques associades a les ofertes de feina; conté informació sobre el tipus de prova, la pregunta, el codi associat i les opcions de resposta.
+ *
+ * @author Jonathan Giraldo Giraldo
+ */
+
 @Entity
 @Table(name = "offer_tests")
 public class OfferTest {

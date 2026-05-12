@@ -10,6 +10,11 @@ import com.impulsfp.server.enums.TestType;
  */
 public class TestFactory {
 
+    /**
+     * Crea un test d'oferta basat en el tipus de test proporcionat. El test es configura amb una pregunta, un fragment de codi, opcions de resposta i la resposta correcta segons el tipus de test.
+     * @param type El tipus de test que es vol crear (JAVA, SQL, PYTHON, etc.).
+     * @return Una instància de OfferTest configurada segons el tipus especificat.
+     */
     public static OfferTest createTest(TestType type){
 
         OfferTest test = new OfferTest();

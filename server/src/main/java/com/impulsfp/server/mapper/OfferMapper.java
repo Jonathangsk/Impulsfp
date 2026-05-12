@@ -24,6 +24,11 @@ public class OfferMapper {
         this.applicationRepository = applicationRepository;
     }
 
+    /**
+     * Converteix una entitat Offer a un DTO OfferResponseDto; Mapeja tots els camps de l'oferta, incloent el nom de l'empresa i les habilitats requerides, i també compta el nombre de sol·licituds associades a l'oferta utilitzant el repositori d'aplicacions.
+     * @param offer L'entitat Offer que es vol convertir a DTO; Ha de contenir tota la informació necessària per omplir els camps del DTO, incloent les relacions amb l'empresa i les habilitats.
+     * @return Un objecte OfferResponseDto que representa l'oferta de feina, amb tots els camps mapejats i el nombre de sol·licituds associades a l'oferta.
+     */
     public OfferResponseDto toDto(Offer offer){
 
         OfferResponseDto dto = new OfferResponseDto();
